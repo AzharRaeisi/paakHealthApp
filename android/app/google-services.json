@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "420482979366",
+    "project_id": "paakhealth-dcbd9",
+    "storage_bucket": "paakhealth-dcbd9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:420482979366:android:1ba8d4f6430ca3cc2f78e7",
+        "android_client_info": {
+          "package_name": "com.paakhealth.paakhealth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "420482979366-olc2dmd361anuhq24hmidpekev19qspr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVTlFSQE17nZaN-r4nZ0EogiiIWg01BTA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "420482979366-olc2dmd361anuhq24hmidpekev19qspr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
