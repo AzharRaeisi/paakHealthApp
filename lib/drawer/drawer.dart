@@ -3,12 +3,16 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:paakhealth/models/api_response.dart';
 import 'package:paakhealth/screens/blood_bank_screen.dart';
 import 'package:paakhealth/screens/customer_addresses_screen.dart';
+import 'package:paakhealth/screens/edit_profile_screen.dart';
 import 'package:paakhealth/screens/home_new_screen.dart';
 import 'package:paakhealth/screens/my_appointment_screen.dart';
 import 'package:paakhealth/screens/my_orders.dart';
 import 'package:paakhealth/screens/wallet_screen.dart';
+import 'package:paakhealth/screens/welcome_back_screen.dart';
+import 'package:paakhealth/services/account_services.dart';
 import 'package:paakhealth/util/colors.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -62,9 +66,11 @@ class _MainDrawerState extends State<MainDrawer> {
                         radius: MediaQuery.of(context).size.width / 3,
                         backgroundImage: customer_image == null
                             ? AssetImage('assets/avatar.png')
-                            : NetworkImage(
-                                customer_image,
-                              ),
+                            : customer_image.isEmpty
+                                ? AssetImage('assets/avatar.png')
+                                : NetworkImage(
+                                    customer_image,
+                                  ),
                       ),
                     ),
                     SizedBox(height: 14),
@@ -85,7 +91,7 @@ class _MainDrawerState extends State<MainDrawer> {
               _buildDrawerItem(title: 'Blood Bank'),
               _buildDrawerItem(title: 'My Wallet'),
               _buildDrawerItem(title: 'Customer Addresses'),
-              _buildDrawerItem(title: 'Contact Us'),
+              // _buildDrawerItem(title: 'About Us'),
               _buildDrawerItem(title: 'Edit Profile'),
               _buildDrawerItem(title: 'Logout'),
             ],
@@ -97,7 +103,7 @@ class _MainDrawerState extends State<MainDrawer> {
 
   Widget _buildDrawerItem({String title}) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
         _selectItem = title;
         setState(() {});
 
@@ -105,7 +111,6 @@ class _MainDrawerState extends State<MainDrawer> {
           Navigator.pop(context);
           // Navigator.popUntil(context, ModalRoute.withName('/home'));
           Get.to(() => MainHomeScreen());
-
         } else if (title == 'My Appointments') {
           Navigator.pop(context);
           Get.to(() => MyAppointmentScreen());
@@ -122,6 +127,20 @@ class _MainDrawerState extends State<MainDrawer> {
           Navigator.pop(context);
 
           Get.to(() => MyOrdersScreen());
+        } else if (title == 'Edit Profile') {
+          Navigator.pop(context);
+
+          // Get.to(() => EditProfileScreen(customer_image: customer_image,));
+          Get.to(() => EditProfileScreen());
+        } else if (title == 'Logout') {
+
+
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.clear();
+
+          Navigator.pop(context);
+
+          Get.offAll(() => WelcomeBackScreen());
         }
       },
       child: Column(
@@ -171,10 +190,39 @@ class _MainDrawerState extends State<MainDrawer> {
     );
   }
 
+  Future<void> getProfile() async {
+    var accountServices = AccountServices();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString(SharedPreVariables.TOKEN);
+
+    print(token);
+    APIResponse response = await accountServices.getProfile(token);
+    if (response != null) {
+      if (response.status == '1') {
+
+        Map<String, dynamic> map = response.data;
+        String imageUrl = map['profile_image'];
+
+        await prefs.setString(SharedPreVariables.CUSTOMER_IMAGE, imageUrl);
+        customer_image = imageUrl;
+
+        setState(() {});
+      } else {
+        Get.snackbar('', response.message);
+      }
+    } else {
+      print('API response is null');
+      Get.snackbar('', 'Oops! Server is Down');
+    }
+  }
+
   Future<void> setCustomerData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     customer_name = prefs.getString(SharedPreVariables.CUSTOMER_NAME);
     customer_image = prefs.getString(SharedPreVariables.CUSTOMER_IMAGE);
+    if (customer_image.isEmpty) {
+      getProfile();
+    }
     setState(() {});
   }
 }

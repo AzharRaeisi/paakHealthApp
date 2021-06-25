@@ -49,7 +49,7 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Image.asset('assets/paakhealth.png'),
+                  Center(child: Image.asset('assets/paakhealth.png')),
                   SizedBox(height: 20),
                   Text(
                     'Welcome',

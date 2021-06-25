@@ -35,6 +35,12 @@ class _MyAppointmentScreenState extends State<MyAppointmentScreen> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_rounded),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
           iconTheme: IconThemeData(color: AppColors.primaryColor),
           title: Text(
             'My Appointments',

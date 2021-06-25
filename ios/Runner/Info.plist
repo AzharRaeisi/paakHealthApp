@@ -44,9 +44,29 @@
 		<key>UIStatusBarHidden</key>
 		<false/>
 		<key>LSApplicationQueriesSchemes</key>
+		<array>
+			<string>https</string>
+			<string>http</string>
+		</array>
+		<key>CFBundleURLTypes</key>
         <array>
-          <string>https</string>
-          <string>http</string>
+            <dict>
+                <key>CFBundleURLSchemes</key>
+                <array>
+                    <string>fb1836870602390859</string>
+                </array>
+            </dict>
+        </array>
+        <key>FacebookAppID</key>
+        <string>1836870602390859</string>
+        <key>FacebookDisplayName</key>
+        <string>PaakHealth</string>
+        <key>LSApplicationQueriesSchemes</key>
+        <array>
+            <string>fbapi</string>
+            <string>fb-messenger-share-api</string>
+            <string>fbauth2</string>
+            <string>fbshareextension</string>
         </array>
 	</dict>
 </plist>

@@ -260,7 +260,7 @@ class _CartScreenState extends State<CartScreen> {
                     height: 70,
                     child: FadeInImage(
                       image: NetworkImage(model.medicine_image),
-                      placeholder: AssetImage('assets/avatar.png'),
+                      placeholder: AssetImage('assets/m_ph.png'),
                       fit: BoxFit.cover,
                     )),
                 Flexible(

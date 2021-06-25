@@ -215,7 +215,7 @@ class _MedicinesScreenState extends State<MedicinesScreen> {
                     height: 140,
                     child: FadeInImage(
                       image: NetworkImage(model.image),
-                      placeholder: AssetImage('assets/paakhealth.png'),
+                      placeholder: AssetImage('assets/m_ph.png'),
                       fit: BoxFit.cover,
                     )),
                 Flexible(

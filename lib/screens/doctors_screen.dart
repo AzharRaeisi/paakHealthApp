@@ -72,6 +72,12 @@ class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_rounded),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           iconTheme: IconThemeData(color: AppColors.primaryColor),
           title: Text(
             'Doctor Appointment',

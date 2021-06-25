@@ -1,6 +1,11 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:paakhealth/models/api_response.dart';
 import 'package:paakhealth/screens/forgot_pass_screen.dart';
 import 'package:paakhealth/screens/home_screen.dart';
@@ -9,7 +14,9 @@ import 'package:paakhealth/services/account_services.dart';
 import 'package:paakhealth/util/colors.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import 'package:http/http.dart' as http;
 class WelcomeBackScreen extends StatefulWidget {
   @override
   _WelcomeBackScreenState createState() => _WelcomeBackScreenState();
@@ -38,7 +45,7 @@ class _WelcomeBackScreenState extends State<WelcomeBackScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Image.asset('assets/paakhealth.png'),
+                  Center(child: Image.asset('assets/paakhealth.png')),
                   SizedBox(height: 20),
                   Text(
                     'Welcome Back',
@@ -62,12 +69,15 @@ class _WelcomeBackScreenState extends State<WelcomeBackScreen> {
                     alignment: Alignment.centerRight,
                     child: GestureDetector(
                         onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => VerifyMeScreen()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => VerifyMeScreen()));
                         },
-                        child: Text('Verify me', style: TextStyle(
-                          color: AppColors.primaryColor
-                        ),)),
+                        child: Text(
+                          'Verify me',
+                          style: TextStyle(color: AppColors.primaryColor),
+                        )),
                   ),
                   SizedBox(height: 20),
                   isProcessing
@@ -75,29 +85,32 @@ class _WelcomeBackScreenState extends State<WelcomeBackScreen> {
                           child: CircularProgressIndicator(),
                         )
                       : _primaryBtn(btnText: 'SIGN IN'),
-                  SizedBox(height: 12,),
+                  SizedBox(
+                    height: 12,
+                  ),
                   IntrinsicHeight(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-
                         GestureDetector(
                           onTap: () {
                             Get.to(() => ForgotPasswordScreen(
-                              val: false,
-                            ));
+                                  val: false,
+                                ));
                           },
                           child: Text(
                             'Forgot Username?',
                             style: TextStyle(color: Colors.grey),
                           ),
                         ),
-                        VerticalDivider(width: 20, ),
+                        VerticalDivider(
+                          width: 20,
+                        ),
                         GestureDetector(
                           onTap: () {
                             Get.to(() => ForgotPasswordScreen(
-                              val: true,
-                            ));
+                                  val: true,
+                                ));
                           },
                           child: Text(
                             'Forgot Password?',
@@ -114,7 +127,7 @@ class _WelcomeBackScreenState extends State<WelcomeBackScreen> {
                   SizedBox(height: 40),
                   _row(
                       firstStr: "Don't have account?",
-                      secondStr: 'Create Account')
+                      secondStr: 'Create Account'),
                 ],
               ),
             ),
@@ -299,7 +312,6 @@ class _WelcomeBackScreenState extends State<WelcomeBackScreen> {
     );
   }
 
-
   // todo facebook and google icon sizes
 
   Widget _fbAndGmailRow() {
@@ -307,12 +319,50 @@ class _WelcomeBackScreenState extends State<WelcomeBackScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GestureDetector(
-          onTap: () {
+          onTap: () async {
             // todo facebook button clicked
             if (isProcessing)
               Get.snackbar('Processing', 'Please wait.');
-            else
+            else {
               print('you can login through facebook');
+
+              final facebookLogin = FacebookLogin();
+              final facebookLoginResult = await facebookLogin.logIn(['email']);
+
+              // print(facebookLoginResult.accessToken);
+              // print(facebookLoginResult.accessToken.token);
+              // print(facebookLoginResult.accessToken.expires);
+              // print(facebookLoginResult.accessToken.permissions);
+              // print(facebookLoginResult.accessToken.userId);
+              // print(facebookLoginResult.accessToken.isValid());
+              //
+              // print(facebookLoginResult.errorMessage);
+              // print(facebookLoginResult.status);
+
+              final token = facebookLoginResult.accessToken.token;
+
+              /// for profile details also use the below code
+              final graphResponse = await http.get(
+                  Uri.parse('https://graph.facebook.com/v2.12/me?fields=name,picture.width(800).height(800),email&access_token=$token'));
+              final profile = json.decode(graphResponse.body);
+              print(profile['name']);
+              print(profile['picture']);
+              print(profile['email']);
+              print(profile['id']);
+
+              /*
+                from profile you will get the below params
+                {
+                 "name": "Iiro Krankka",
+                 "first_name": "Iiro",
+                 "last_name": "Krankka",
+                 "email": "iiro.krankka\u0040gmail.com",
+                 "id": "<user id here>"
+                }
+               */
+              // todo check
+              socailLogIn(email: profile['email'], socialType: 'facebook', socialId: profile['id'], photoUrl: profile['picture']);
+            }
           },
           child: CircleAvatar(
             radius: 20,
@@ -322,12 +372,39 @@ class _WelcomeBackScreenState extends State<WelcomeBackScreen> {
         ),
         SizedBox(width: 14),
         GestureDetector(
-          onTap: () {
+          onTap: () async {
             // todo google button clicked
             if (isProcessing)
               Get.snackbar('Processing', 'Please wait.');
-            else
-              print('you can login through facebook');
+            else {
+              print('you can login through google');
+
+              GoogleSignIn _googleSignIn = GoogleSignIn(
+                scopes: [
+                  'email',
+                  // you can add extras if you require
+                ],
+              );
+
+              _googleSignIn.signIn().then((GoogleSignInAccount acc) async {
+                GoogleSignInAuthentication auth = await acc.authentication;
+                print('================================================');
+                print(acc.id);
+                print(acc.email);
+                print(acc.displayName);
+                print(acc.photoUrl);
+                print('================================================');
+                print('================================================');
+
+                // acc.authentication.then((GoogleSignInAuthentication auth) async {
+                //   print(auth.idToken);
+                //   print(auth.accessToken);
+                // });
+
+                socailLogIn(email: acc.email, photoUrl: acc.photoUrl, socialId: acc.id, socialType: 'google');
+
+              });
+            }
           },
           child: CircleAvatar(
             radius: 20,
@@ -366,5 +443,35 @@ class _WelcomeBackScreenState extends State<WelcomeBackScreen> {
     // logger.i(prefs.getString('token'));
     // logger.i(prefs.getString('refresh_token'));
     // logger.i(prefs.getInt('expiry_time'));
+  }
+
+  Future<void> socailLogIn(
+      {String email, String photoUrl, String socialId, String socialType}) async {
+    var accountServices = AccountServices();
+    // todo change device token
+
+    APIResponse response = await accountServices.socialLogin(
+      email: email,
+      profile_image: photoUrl,
+      social_id: socialId,
+      social_type: socialType,
+      device_token: 'token',
+    );
+    if (response != null) {
+      if (response.status == '1') {
+        Get.snackbar('', response.message);
+        _setData(response.data);
+        Get.offAll(HomeScreen());
+      } else {
+        Get.snackbar('', response.message);
+      }
+    } else {
+      print('API response is null');
+      Get.snackbar('', 'Oops! Server is Down');
+    }
+
+    setState(() {
+      isProcessing = false;
+    });
   }
 }

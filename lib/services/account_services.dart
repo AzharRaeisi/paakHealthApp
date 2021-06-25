@@ -115,33 +115,6 @@ class AccountServices {
     });
   }
 
-  Future saveProfile({String token, String name, String email, String gender, String  profile_image}) {
-
-    return http.post(
-      Uri.parse(NetUtils.BASE_URL + '/save-profile'),
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-        'x-api-key': token
-      },
-      body: jsonEncode(<String, dynamic>{
-        'name': name,
-        'email': email,
-        'gender': gender,
-        'profile_image': profile_image,
-      }),
-    ).then((data) {
-      final jsonData = json.decode(data.body);
-
-      return APIResponse(
-          data: jsonData['result'],
-          status: jsonData['status'],
-          message: jsonData['msg']);
-    }).catchError((onError) {
-      logger.e(onError);
-      // return APIResponse(data: '', status: '', message: '');
-    });
-  }
-
   Future checkPhoneVerification({String phone}) {
 
     return http
@@ -215,28 +188,6 @@ class AccountServices {
       // return APIResponse(data: '', status: '', message: '');
     });
   }
-
-  Future getProfile({String token}) {
-
-    return http.get(
-      Uri.parse(NetUtils.BASE_URL + '/get_profile'),
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-        'x-api-key': token
-      },
-    ).then((data) {
-      final jsonData = json.decode(data.body);
-
-      return APIResponse(
-          data: jsonData['result'],
-          status: jsonData['status'],
-          message: jsonData['msg']);
-    }).catchError((onError) {
-      logger.e(onError);
-      // return APIResponse(data: '', status: '', message: '');
-    });
-  }
-
 
   Future getUsername({String phone}) {
 
@@ -413,5 +364,82 @@ class AccountServices {
   }
 
 
+
+  Future getProfile(String token,) {
+    return http.get(
+      Uri.parse(NetUtils.BASE_URL + '/get-profile'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'x-api-key': token
+      },
+    ).then((data) {
+      final jsonData = json.decode(data.body);
+
+      return APIResponse(
+          data: jsonData['result'],
+          status: jsonData['status'],
+          message: jsonData['msg']);
+    }).catchError((onError) {
+      logger.e(onError);
+      // return APIResponse(data: '', status: '', message: '');
+    });
+  }
+
+
+  Future saveProfile({String token, String name, String email, String gender, String  profile_image}) {
+
+    print('save  profile   ');
+    return http.post(
+      Uri.parse(NetUtils.BASE_URL + '/save-profile'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'x-api-key': token
+      },
+      body: jsonEncode(<String, dynamic>{
+        'name': name,
+        'email': email,
+        'gender': gender,
+        'profile_image': profile_image,
+      }),
+    ).then((data) {
+      final jsonData = json.decode(data.body);
+
+      return APIResponse(
+          status: jsonData['status'],
+          message: jsonData['msg']);
+    }).catchError((onError) {
+      logger.e(onError);
+      // return APIResponse(data: '', status: '', message: '');
+    });
+  }
+
+  Future socialLogin({String social_type, String email, String profile_image, String social_id, String  device_token}) {
+
+    print('socail login');
+    return http.post(
+      Uri.parse(NetUtils.BASE_URL + '/social-login'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'social_type': social_type,
+        'email': email,
+        'profile_image': profile_image,
+        'social_id': social_id,
+        'device_type': deviceType,
+        'device_token': device_token,
+      }),
+    ).then((data) {
+      final jsonData = json.decode(data.body);
+
+      return APIResponse(
+          data: jsonData['result'],
+          status: jsonData['status'],
+          message: jsonData['msg']);
+    }).catchError((onError) {
+      logger.e(onError);
+      // return APIResponse(data: '', status: '', message: '');
+    });
+  }
 
 }

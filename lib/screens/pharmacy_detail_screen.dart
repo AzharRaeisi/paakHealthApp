@@ -71,7 +71,7 @@ class _PharcmayDetailScreenState extends State<PharcmayDetailScreen> {
               padding: EdgeInsets.all(30),
               child: FadeInImage(
                 image: NetworkImage(storeModel.profile_image),
-                placeholder: AssetImage('assets/avatar.png'),
+                placeholder: AssetImage('assets/p_ph.png'),
                 fit: BoxFit.cover,
               )),
           Container(

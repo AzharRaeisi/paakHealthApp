@@ -31,6 +31,12 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_rounded),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         iconTheme: IconThemeData(color: AppColors.primaryColor),
         title: Text(
           'Order Details',
@@ -167,7 +173,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                                     image:
                                         NetworkImage(prescriptionImages[index]),
                                     placeholder:
-                                        AssetImage('assets/avatar.png'),
+                                        AssetImage('assets/app_logo.png'),
                                     fit: BoxFit.contain,
                                   )),
                             ),
@@ -179,7 +185,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
             Expanded(
               child: orderModel.order_details.length == 0
                   ? Text(
-                      'Not Available',
+                      '',
                       style: TextStyle(color: Colors.grey[600], fontSize: 12),
                     )
                   : ListView.builder(

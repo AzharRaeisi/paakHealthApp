@@ -90,7 +90,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
               child: FadeInImage(
                 image: NetworkImage(
                     model.order_image),
-                placeholder: AssetImage('assets/avatar.png'),
+                placeholder: AssetImage('assets/app_logo.png'),
                 fit: BoxFit.cover,
               )),
           Flexible(

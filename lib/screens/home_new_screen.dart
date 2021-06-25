@@ -10,6 +10,7 @@ import 'package:paakhealth/models/banner_model.dart';
 import 'package:paakhealth/models/doctor_model.dart';
 import 'package:paakhealth/models/medicine_model.dart';
 import 'package:paakhealth/models/store_model.dart';
+import 'package:paakhealth/screens/blood_bank_screen.dart';
 import 'package:paakhealth/screens/doctor_detail_screen.dart';
 import 'package:paakhealth/screens/doctors_screen.dart';
 import 'package:paakhealth/screens/delivery_info_screen.dart';
@@ -30,8 +31,8 @@ class MainHomeScreen extends StatefulWidget {
 }
 
 class _MainHomeScreenState extends State<MainHomeScreen> {
-  File _image;
-  List<BannerModel> mainBanners = [];
+  // File _image;
+  // List<BannerModel> mainBanners = [];
   List<StoreModel> stores = [];
   List<MedicineModel> medicines = [];
   List<DoctorModel> doctors = [];
@@ -56,96 +57,203 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // Container(
+              //     height: 170,
+              //     child: CarouselSlider(
+              //       options: CarouselOptions(
+              //         height: 170,
+              //         viewportFraction: 1.0,
+              //         enlargeCenterPage: false,
+              //         autoPlay: true,
+              //         ),
+              //       items: imgList.map((item) => Container(
+              //         child: Center(
+              //             child: Image.network(item, fit: BoxFit.cover, height: 170)
+              //         ),
+              //       )).toList(),
+              //     )
+              // ),
               Container(
-                  height: 170,
-                  child: CarouselSlider(
-                    options: CarouselOptions(
-                      height: 170,
-                      viewportFraction: 1.0,
-                      enlargeCenterPage: false,
-                      autoPlay: true,
+                height: 250,
+                padding: EdgeInsets.all(10),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              color: Color(0xFFC3E8E3)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              textWidget(
+                                  'ONLINE DOCTOR', Color(0xFF509EC8)),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              button('CONSULT NOW', Color(0xFF509EC8)),
+                              // Spacer(),
+                              Expanded(child: Align(
+                                alignment: Alignment.center,
+                                  child: Image.asset('assets/doctor.png', fit: BoxFit.cover,)))
+                            ],
+                          )),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Expanded(
+                            child: Container(
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0)),
+                                    color: Color(0xFFC6EAF1)),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    textWidget('MEDICINES', Color(0xFF1B2780)),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    button('ORDER NOW', Color(0xFF1B2780)),
+                                    Expanded(
+                                        child: Align(
+                                          alignment: Alignment.centerRight,
+                                          child: Image.asset(
+                                              'assets/medicine.png'),
+                                        ))
+                                  ],
+                                )),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Expanded(
+                            child: Container(
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0)),
+                                    color: Color(0xFFFDDFE0)),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    textWidget(
+                                        'BLOOD BANK', Color(0xFFFA5A60)),
+                                    SizedBox(width: 5,),
+                                    Row(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: [
+                                        button('DONATE NOW', Color(0xFFFA5A60)),
+                                        SizedBox(width: 5,),
+                                        Expanded(
+                                            child: Image.asset(
+                                                'assets/blood.png'))
+                                      ],
+                                    )
+                                  ],
+                                )),
+                          ),
+                        ],
                       ),
-                    items: imgList.map((item) => Container(
-                      child: Center(
-                          child: Image.network(item, fit: BoxFit.cover, height: 170)
-                      ),
-                    )).toList(),
-                  )
+                    ),
+                  ],
+                ),
               ),
-              Container(
-                margin: EdgeInsets.only(left: 10, top: 10, bottom: 10),
-                child: Text('Online Pharmacy',
-                    style: TextStyle(
-                      color: AppColors.primaryColor,
-                      fontSize: 14,
-                    )),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(left: 10, top: 10, bottom: 10),
+                    child: Text('Online Pharmacy',
+                        style: TextStyle(
+                          color: AppColors.primaryColor,
+                          fontSize: 14,
+                        )),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(right: 10),
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.to(() => OnlinePharmacyScreen(
+                              stores: stores,
+                            ));
+                      },
+                      child: Text('See More...',
+                          style: TextStyle(
+                            fontSize: 12,
+                          )),
+                    ),
+                  ),
+                ],
               ),
               onlinepharmacy(),
-              Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                      padding: EdgeInsets.only(right: 10, top: 10),
+
+              SizedBox(
+                height: 25,
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(left: 10),
+                    child: Text('Medicines',
+                        style: TextStyle(
+                          color: AppColors.primaryColor,
+                          fontSize: 14,
+                        )),
+                  ),
+                  Container(
+                      padding: EdgeInsets.only(right: 10),
                       child: GestureDetector(
                         onTap: () {
-                          Get.to(() => OnlinePharmacyScreen(
-                                stores: stores,
+                          Get.to(() => MedicinesScreen(
+                                medicines: medicines,
+                                storeId: 0,
                               ));
                         },
                         child: Text('See More...',
                             style: TextStyle(
                               fontSize: 12,
                             )),
-                      ))),
-              SizedBox(
-                height: 10,
-              ),
-
-              Container(
-                margin: EdgeInsets.only(left: 10),
-                child: Text('Medicines',
-                    style: TextStyle(
-                      color: AppColors.primaryColor,
-                      fontSize: 14,
-                    )),
+                      ))
+                ],
               ),
 
               SizedBox(
                 height: 10,
               ),
               medicinesRow(),
-              Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                      padding: EdgeInsets.only(right: 10, top: 10),
-                      child: GestureDetector(
-                        onTap: () {
-                          Get.to(() => MedicinesScreen(
-                            medicines: medicines,
-                            storeId: 0,
-                          ));
-                        },
-                        child: Text('See More...',
-                            style: TextStyle(
-                              fontSize: 12,
-                            )),
-                      ))),
-
-              Container(
-                margin: EdgeInsets.only(left: 10),
-                child: Text('Doctors',
-                    style: TextStyle(
-                      color: AppColors.primaryColor,
-                      fontSize: 14,
-                    )),
-              ),
               SizedBox(
-                height: 10,
+                height: 25,
               ),
-              doctorItem(),
-              Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                      padding: EdgeInsets.only(right: 10, top: 10),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(left: 10),
+                    child: Text('Doctors',
+                        style: TextStyle(
+                          color: AppColors.primaryColor,
+                          fontSize: 14,
+                        )),
+                  ),
+                  Container(
+                      padding: EdgeInsets.only(right: 10),
                       child: GestureDetector(
                         onTap: () {
                           Get.to(
@@ -155,19 +263,25 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
                             style: TextStyle(
                               fontSize: 12,
                             )),
-                      ))),
+                      ))
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              doctorItem(),
               // SizedBox(height: 20),
-              Icon(
-                Icons.local_hospital_outlined,
-                color: AppColors.primaryColor,
-              ),
-              Text(
-                'Order with prescription',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 12),
-              ),
-              SizedBox(height: 5),
-              _primaryBtn(btnText: 'Upload')
+              // Icon(
+              //   Icons.local_hospital_outlined,
+              //   color: AppColors.primaryColor,
+              // ),
+              // Text(
+              //   'Order with prescription',
+              //   textAlign: TextAlign.center,
+              //   style: TextStyle(fontSize: 12),
+              // ),
+              // SizedBox(height: 5),
+              // _primaryBtn(btnText: 'Upload')
             ],
           ),
         ),
@@ -175,89 +289,92 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
     );
   }
 
-  Widget _primaryBtn({String btnText}) {
-    return Container(
-      height: 170,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: <Color>[
-            Color(0xFF69C4F0),
-            Color(0xFF00B2EE),
-          ],
-        ),
-        // borderRadius: BorderRadius.all(Radius.circular(5.0)),
-      ),
-      alignment: Alignment.center,
-      padding: EdgeInsets.symmetric(vertical: 5),
-      child: TextButton.icon(
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            builder: ((builder) => bottomSheet()),
-          );
-        },
-        icon: Icon(
-          Icons.camera_alt_outlined,
-          color: Colors.white,
-        ),
-        label: Text(
-          btnText,
-          style: TextStyle(color: Colors.white, fontSize: 18),
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
-  }
+  // Widget _primaryBtn({String btnText}) {
+  //   return Container(
+  //     height: 170,
+  //     decoration: const BoxDecoration(
+  //       gradient: LinearGradient(
+  //         colors: <Color>[
+  //           Color(0xFF69C4F0),
+  //           Color(0xFF00B2EE),
+  //         ],
+  //       ),
+  //       // borderRadius: BorderRadius.all(Radius.circular(5.0)),
+  //     ),
+  //     alignment: Alignment.center,
+  //     padding: EdgeInsets.symmetric(vertical: 5),
+  //     child: TextButton.icon(
+  //       onPressed: () {
+  //         showModalBottomSheet(
+  //           context: context,
+  //           builder: ((builder) => bottomSheet()),
+  //         );
+  //       },
+  //       icon: Icon(
+  //         Icons.camera_alt_outlined,
+  //         color: Colors.white,
+  //       ),
+  //       label: Text(
+  //         btnText,
+  //         style: TextStyle(color: Colors.white, fontSize: 18),
+  //         textAlign: TextAlign.center,
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  Widget bottomSheet() {
-    return Container(
-      height: 100,
-      width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Choose Profile Photo'),
-          SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextButton.icon(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    getImage(ImageSource.camera);
-                  },
-                  icon: Icon(Icons.camera),
-                  label: Text('Camera')),
-              TextButton.icon(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    getImage(ImageSource.gallery);
-                  },
-                  icon: Icon(Icons.image),
-                  label: Text('Gallery')),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget bottomSheet() {
+  //   return Container(
+  //     height: 100,
+  //     width: MediaQuery.of(context).size.width,
+  //     margin: EdgeInsets.all(20),
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         Text('Choose Profile Photo'),
+  //         SizedBox(height: 20),
+  //         Row(
+  //           mainAxisAlignment: MainAxisAlignment.center,
+  //           children: [
+  //             TextButton.icon(
+  //                 onPressed: () {
+  //                   Navigator.pop(context);
+  //                   getImage(ImageSource.camera);
+  //                 },
+  //                 icon: Icon(Icons.camera),
+  //                 label: Text('Camera')),
+  //             TextButton.icon(
+  //                 onPressed: () {
+  //                   Navigator.pop(context);
+  //                   getImage(ImageSource.gallery);
+  //                 },
+  //                 icon: Icon(Icons.image),
+  //                 label: Text('Gallery')),
+  //           ],
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  void getImage(ImageSource source) async {
-    final pickedFile = await ImagePicker().getImage(source: source);
-
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => DeliveryInfoScreen(image: _image, storeId: 0,)));
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
+  // void getImage(ImageSource source) async {
+  //   final pickedFile = await ImagePicker().getImage(source: source);
+  //
+  //   setState(() {
+  //     if (pickedFile != null) {
+  //       _image = File(pickedFile.path);
+  //       Navigator.push(
+  //           context,
+  //           MaterialPageRoute(
+  //               builder: (context) => DeliveryInfoScreen(
+  //                     image: _image,
+  //                     storeId: 0,
+  //                   )));
+  //     } else {
+  //       print('No image selected.');
+  //     }
+  //   });
+  // }
 
   @override
   void initState() {
@@ -294,12 +411,14 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
         // print(response.data['store']);
         // print(response.data['medicine']);
         // print(response.data['doctors']);
-        Iterable bannersIterable = response.data['banners'];
-        mainBanners = bannersIterable.map((list) => BannerModel.fromMap(list)).toList();
 
-        mainBanners.forEach((element) {
-          imgList.add(element.image);
-        });
+        // Iterable bannersIterable = response.data['banners'];
+        // mainBanners =
+        //     bannersIterable.map((list) => BannerModel.fromMap(list)).toList();
+        //
+        // mainBanners.forEach((element) {
+        //   imgList.add(element.image);
+        // });
 
         Iterable storeIterable = response.data['store'];
         stores = storeIterable.map((list) => StoreModel.fromMap(list)).toList();
@@ -323,21 +442,10 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
     }
   }
 
-
-
-
-
-
-
-
-
   //  ////////////////////////////////////////////////
   //  ////////////////////////////////////////////////
   //  ////////////////////////////////////////////////
   //  ////////////////////////////////////////////////
-
-
-
 
   Widget doctorItem() {
     return Container(
@@ -352,79 +460,85 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
                   scrollDirection: Axis.horizontal,
                   itemCount: doctors.length,
                   physics: BouncingScrollPhysics(),
-                  itemBuilder: (BuildContext context, int index) => GestureDetector(
-                    onTap: (){
-                      Get.to(() => DoctorDetailScreen(id: doctors[index].id));
-                    },
-                    child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 5),
-                        child: Column(children: [
-                          CircleAvatar(
-                              radius: 42.0,
-                              backgroundColor: AppColors.primaryColor,
-                              child: CircleAvatar(
-                                radius: 40,
-                                backgroundImage:
-                                    NetworkImage(doctors[index].image),
-                              )),
-                          SizedBox(
-                            height: 7,
-                          ),
-                          Text(
-                            doctors[index].name,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                            ),
-                          ),
-                          Container(
-                            width: 80,
-                            child: Text(
-                              doctors[index].expertise.length > 15
-                                  ? doctors[index].expertise.substring(0, 12) +
-                                      '...'
-                                  : doctors[index].expertise,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 10,
-                              ),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Icon(
-                                Icons.location_on,
-                                color: AppColors.primaryColor,
-                                size: 16,
-                              ),
+                  itemBuilder: (BuildContext context, int index) =>
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(
+                              () => DoctorDetailScreen(id: doctors[index].id));
+                        },
+                        child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 5),
+                            child: Column(children: [
+                              CircleAvatar(
+                                  radius: 42.0,
+                                  backgroundColor: AppColors.primaryColor,
+                                  child: CircleAvatar(
+                                    radius: 40,
+                                    backgroundImage:
+                                        NetworkImage(doctors[index].image),
+                                  )),
                               SizedBox(
-                                width: 5,
+                                height: 7,
                               ),
                               Text(
-                                doctors[index].address,
+                                doctors[index].name,
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    color: AppColors.primaryColor, fontSize: 10),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
                               ),
-                            ],
-                          )
-                        ])),
-                  )),
+                              Container(
+                                width: 80,
+                                child: Text(
+                                  doctors[index].expertise.length > 15
+                                      ? doctors[index]
+                                              .expertise
+                                              .substring(0, 12) +
+                                          '...'
+                                      : doctors[index].expertise,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                  ),
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Icon(
+                                    Icons.location_on,
+                                    color: AppColors.primaryColor,
+                                    size: 16,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    doctors[index].address,
+                                    style: TextStyle(
+                                        color: AppColors.primaryColor,
+                                        fontSize: 10),
+                                  ),
+                                ],
+                              )
+                            ])),
+                      )),
             ),
           ),
-          SizedBox(
-            width: 5,
-          ),
-          GestureDetector(
-            onTap: () {
-              Get.to(() => DoctorAppointmentScreen(doctors: doctors));
-            },
-            child: Icon(Icons.arrow_forward_ios),
-          ),
-          SizedBox(
-            width: 5,
-          ),
+          // SizedBox(
+          //   width: 5,
+          // ),
+          // GestureDetector(
+          //   onTap: () {
+          //     Get.to(() => DoctorAppointmentScreen(doctors: doctors));
+          //   },
+          //   child: Icon(Icons.arrow_forward_ios),
+          // ),
+          // SizedBox(
+          //   width: 5,
+          // ),
         ],
       ),
     );
@@ -465,8 +579,7 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
                                           width: 2)),
                                   child: FadeInImage(
                                     image: NetworkImage(medicines[index].image),
-                                    placeholder:
-                                        AssetImage('assets/avatar.png'),
+                                    placeholder: AssetImage('assets/m_ph.png'),
                                   ),
                                 ),
                                 SizedBox(
@@ -502,21 +615,21 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
                       )),
             ),
           ),
-          SizedBox(
-            width: 5,
-          ),
-          GestureDetector(
-            onTap: () {
-              Get.to(() => MedicinesScreen(
-                    medicines: medicines,
-                storeId: 0,
-                  ));
-            },
-            child: Icon(Icons.arrow_forward_ios),
-          ),
-          SizedBox(
-            width: 5,
-          ),
+          // SizedBox(
+          //   width: 5,
+          // ),
+          // GestureDetector(
+          //   onTap: () {
+          //     Get.to(() => MedicinesScreen(
+          //           medicines: medicines,
+          //           storeId: 0,
+          //         ));
+          //   },
+          //   child: Icon(Icons.arrow_forward_ios),
+          // ),
+          // SizedBox(
+          //   width: 5,
+          // ),
         ],
       ),
     );
@@ -553,30 +666,69 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
                                   color: AppColors.primaryColor, width: 2)),
                           child: FadeInImage(
                             image: NetworkImage(stores[index].profile_image),
-                            placeholder: AssetImage('assets/avatar.png'),
+                            placeholder: AssetImage('assets/p_ph.png'),
                           ),
                         ),
                       )),
             ),
           ),
-          SizedBox(
-            width: 5,
-          ),
-          GestureDetector(
-            onTap: () {
-              Get.to(() => OnlinePharmacyScreen(
-                    stores: stores,
-                  ));
-            },
-            child: Icon(Icons.arrow_forward_ios),
-          ),
-          SizedBox(
-            width: 5,
-          ),
+          // SizedBox(
+          //   width: 5,
+          // ),
+          // GestureDetector(
+          //   onTap: () {
+          //     Get.to(() => OnlinePharmacyScreen(
+          //           stores: stores,
+          //         ));
+          //   },
+          //   child: Icon(Icons.arrow_forward_ios),
+          // ),
+          // SizedBox(
+          //   width: 5,
+          // ),
         ],
       ),
     );
   }
 
+  textWidget(String s, Color color) {
+    return Text(s, style: TextStyle(color: color, fontSize: 16));
+  }
 
+  button(String s, Color color) {
+    return GestureDetector(
+      onTap: () {
+        print(s + 'clicked');
+        if(s.contains("CONSULT NOW")) {
+          Get.to(
+                  () => DoctorAppointmentScreen(doctors: doctors));
+        }else if(s.contains("ORDER NOW")){
+          Get.to(() => MedicinesScreen(
+            medicines: medicines,
+            storeId: 0,
+          ));
+        }else if(s.contains("DONATE NOW")){
+          Get.to(
+                  () => BloodBankScreen());
+        }
+      },
+      child: Row(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.all(Radius.circular(12.0)),
+            ),
+            alignment: Alignment.center,
+            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+            child: Text(
+              s,
+              style: TextStyle(color: Colors.white, fontSize: 10),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

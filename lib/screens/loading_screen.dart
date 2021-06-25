@@ -26,7 +26,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage("assets/splash.png"),
-          fit: BoxFit.cover,
+          fit: BoxFit.fill,
         ),
       ),
       child: Scaffold(
@@ -34,16 +34,11 @@ class _LoadingScreenState extends State<LoadingScreen> {
         body: SafeArea(
           child: Container(
               padding: EdgeInsets.all(20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset('assets/paakhealth.png'),
-                  SizedBox(height: 20),
-                  SpinKitFadingFour(
-                    color: AppColors.primaryColor,
-                    size: 50.0,
-                  ),
-                ],
+              child: Center(
+                child: SpinKitFadingFour(
+                  color: Colors.white,
+                  size: 50.0,
+                ),
               )),
         ),
       ),
@@ -60,6 +55,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   Future<void> checkLoginStatus() async {
     // todo make a delay
+    await Future.delayed(Duration(seconds: 3));
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String token = preferences.getString(SharedPreVariables.TOKEN);
     String expiryDateTimeString =

@@ -99,22 +99,8 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
                     if (value.user != null) {
                       print('user logged in');
                       // todo call the /check-verification-code api
-                      var accountServices = AccountServices();
-                      // todo change device token
-                      APIResponse response = await accountServices.checkVerificationCode(phone: widget.phone);
-                      if (response != null){
-                        if (response.status == '1'){
-                          Get.snackbar('', response.message);
-                          _setData(response.data);
-                          Get.to(SetupProfileeScreen());
 
-                        }else{
-                          Get.snackbar('', response.message);
-                        }
-                      }else{
-                        print('API response is null');
-                        Get.snackbar('','Oops! Server is Down');
-                      }
+                      callCheckVerificationCode();
                     } else {
                       Get.snackbar('then else',value.toString());
 
@@ -173,6 +159,7 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
               if (value.user != null) {
                 print('user logged in');
                 // todo call the /check-verification-code api
+                callCheckVerificationCode();
               } else {
                 print('user not logged in');
               }
@@ -221,6 +208,7 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
             print('user logged in');
             // value.user.phoneNumber
             // todo call the /check-verification-code api
+            callCheckVerificationCode();
           }
         });
       },
@@ -235,9 +223,9 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
         });
       },
       codeAutoRetrievalTimeout: (String verificationID) {
-        setState(() {
+        // setState(() {
           _verificationCode = verificationID;
-        });
+        // });
       },
       timeout: Duration(seconds: 120)
     );
@@ -274,5 +262,25 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
     // logger.i(prefs.getString('token'));
     // logger.i(prefs.getString('refresh_token'));
     // logger.i(prefs.getInt('expiry_time'));
+  }
+
+  Future<void> callCheckVerificationCode() async {
+    var accountServices = AccountServices();
+    // todo change device token
+    APIResponse response = await accountServices.checkVerificationCode(phone: widget.phone);
+    if (response != null){
+      if (response.status == '1'){
+        Get.snackbar('', response.message);
+        _setData(response.data);
+        Get.to(SetupProfileeScreen());
+
+      }else{
+        Get.snackbar('', response.message);
+      }
+    }else{
+      print('API response is null');
+      Get.snackbar('','Oops! Server is Down');
+    }
+
   }
 }

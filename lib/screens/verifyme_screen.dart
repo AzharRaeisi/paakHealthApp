@@ -122,7 +122,7 @@ class VerifyMeScreen extends StatelessWidget {
             if (response.status == '1'){
               Get.snackbar('', response.message);
             }else if(response.status == '2'){
-              Get.to(EnterCodeScreen(phone: _phoneController.text));
+              Get.to(() => EnterCodeScreen(phone: _phoneController.text));
             }
             else{
               Get.snackbar('', response.message);

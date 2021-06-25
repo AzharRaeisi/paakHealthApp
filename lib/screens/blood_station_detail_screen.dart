@@ -142,7 +142,7 @@ class _BloodStationDetailScreenState extends State<BloodStationDetailScreen> {
                                         radius: 30,
                                         backgroundColor: Colors.white,
                                         child: Icon(
-                                          Icons.https,
+                                          Icons.vpn_lock,
                                           color: Colors.blue,
                                         ),
                                       ),

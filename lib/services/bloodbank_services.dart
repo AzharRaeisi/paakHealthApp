@@ -93,4 +93,46 @@ class BloodBankServices {
       // return APIResponse(data: '', status: '', message: '');
     });
   }
+
+  Future donateBlood(
+      {String token,
+      String name,
+      String phone,
+      String address,
+      String latitude,
+      String longitude,
+      String blood_group,
+      String comments,
+      int city}) {
+    print('blood_group');
+    print(blood_group);
+    print(city);
+
+    return http
+        .post(
+      Uri.parse(NetUtils.BASE_URL + '/donate-blood'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'x-api-key': token
+      },
+      body: jsonEncode(<String, dynamic>{
+        'name': name,
+        'phone': phone,
+        'address': address,
+        'latitude': latitude,
+        'longitude': longitude,
+        'blood_group': blood_group,
+        'comments': comments,
+        'city': city
+      }),
+    )
+        .then((data) {
+      final jsonData = json.decode(data.body);
+
+      return APIResponse(status: jsonData['status'], message: jsonData['msg']);
+    }).catchError((onError) {
+      logger.e(onError);
+      // return APIResponse(data: '', status: '', message: '');
+    });
+  }
 }

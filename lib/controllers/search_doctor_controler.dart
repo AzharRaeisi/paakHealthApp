@@ -1,7 +1,7 @@
 
 import 'package:get/get.dart';
 import 'package:paakhealth/models/doctor_expertise_model.dart';
-import 'package:paakhealth/models/doctor_model.dart';
+// import 'package:paakhealth/models/doctor_model.dart';
 
 class SearchDoctorController extends GetxController{
 

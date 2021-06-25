@@ -77,7 +77,7 @@ class _ProductDetialScreenState extends State<ProductDetialScreen> {
               child: FadeInImage(
                 image: NetworkImage(
                     medicineModel.image),
-                placeholder: AssetImage('assets/paakhealth.png'),
+                placeholder: AssetImage('assets/m_ph.png'),
                 fit: BoxFit.cover,
               ),
             ),

@@ -7,6 +7,7 @@ import 'package:paakhealth/models/blood_group_model.dart';
 import 'package:paakhealth/models/blood_station_model.dart';
 import 'package:paakhealth/models/city_model.dart';
 import 'package:paakhealth/models/donar_model.dart';
+import 'package:paakhealth/screens/become_donor_screen.dart';
 import 'package:paakhealth/screens/blood_bank_detail_screen.dart';
 import 'package:paakhealth/screens/blood_station_detail_screen.dart';
 import 'package:paakhealth/services/bloodbank_services.dart';
@@ -76,6 +77,15 @@ class _BloodBankScreenState extends State<BloodBankScreen> {
         centerTitle: true,
         elevation: 2,
         backgroundColor: Colors.white,
+        actions: [
+          IconButton(onPressed: () {
+            showModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  return findBloodBank();
+                });
+          }, icon: Icon(Icons.search))
+        ],
       ),
       body: Container(
         padding: EdgeInsets.all(10),
@@ -452,6 +462,7 @@ class _BloodBankScreenState extends State<BloodBankScreen> {
                 //                 fontSize: 12,
                 //               )),
                 //         ))),
+                becomeDonor(btnText: 'Become a Donor')
               ],
             );
           }
@@ -460,16 +471,16 @@ class _BloodBankScreenState extends State<BloodBankScreen> {
         ,
       ),
 
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-              context: context,
-              builder: (context) {
-                return findBloodBank();
-              });
-        },
-        child: Icon(Icons.search),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     showModalBottomSheet(
+      //         context: context,
+      //         builder: (context) {
+      //           return findBloodBank();
+      //         });
+      //   },
+      //   child: Icon(Icons.search),
+      // ),
     );
   }
 
@@ -709,6 +720,32 @@ class _BloodBankScreenState extends State<BloodBankScreen> {
     );
   }
 
+  becomeDonor({String btnText}) {
+    return GestureDetector(
+      onTap: () async {
+        Get.to(() => BecomeDonorScreen());
+      },
+      child: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: <Color>[
+              Color(0xFF69C4F0),
+              Color(0xFF00B2EE),
+            ],
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+        ),
+        alignment: Alignment.center,
+        padding: EdgeInsets.symmetric(vertical: 10),
+        child: Text(
+          btnText,
+          style: TextStyle(color: Colors.white, fontSize: 18),
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
+
   Future<void> searchDonor() async {
     Navigator.pop(context);
 
@@ -757,4 +794,6 @@ class _BloodBankScreenState extends State<BloodBankScreen> {
     });
 
   }
+
+
 }
