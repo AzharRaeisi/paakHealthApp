@@ -156,7 +156,7 @@ class AccountServices {
 
     return http
         .post(
-      Uri.parse(NetUtils.BASE_URL + '/check-phone-verification'),
+      Uri.parse(NetUtils.BASE_URL + '/check-verification-code'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },

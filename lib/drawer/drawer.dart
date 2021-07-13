@@ -1,20 +1,19 @@
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paakhealth/models/api_response.dart';
-import 'package:paakhealth/screens/blood_bank_screen.dart';
-import 'package:paakhealth/screens/customer_addresses_screen.dart';
-import 'package:paakhealth/screens/edit_profile_screen.dart';
-import 'package:paakhealth/screens/home_new_screen.dart';
-import 'package:paakhealth/screens/my_appointment_screen.dart';
-import 'package:paakhealth/screens/my_orders.dart';
-import 'package:paakhealth/screens/wallet_screen.dart';
-import 'package:paakhealth/screens/welcome_back_screen.dart';
+import 'package:paakhealth/screens/address/address_book_screen.dart';
+import 'package:paakhealth/screens/appointment/my_appointment_screen.dart';
+import 'package:paakhealth/screens/auth/login_screen.dart';
+import 'package:paakhealth/screens/blood_bank/blood_bank_screen.dart';
+import 'package:paakhealth/screens/order/my_orders.dart';
+import 'package:paakhealth/screens/profile/edit_profile_screen.dart';
+import 'package:paakhealth/screens/wallet/wallet_screen.dart';
 import 'package:paakhealth/services/account_services.dart';
 import 'package:paakhealth/util/colors.dart';
 import 'package:paakhealth/util/prefernces.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MainDrawer extends StatefulWidget {
@@ -107,40 +106,72 @@ class _MainDrawerState extends State<MainDrawer> {
         _selectItem = title;
         setState(() {});
 
-        if (title == 'Home') {
-          Navigator.pop(context);
-          // Navigator.popUntil(context, ModalRoute.withName('/home'));
-          Get.to(() => MainHomeScreen());
-        } else if (title == 'My Appointments') {
-          Navigator.pop(context);
-          Get.to(() => MyAppointmentScreen());
+        // if (title == 'Home') {
+        //   // Navigator.pop(context);
+        // } else
+        if (title == 'My Appointments') {
+          // Navigator.pop(context);
+          // Get.to(() => MyAppointmentScreen());
+          pushNewScreen(
+            context,
+            screen: MyAppointmentScreen(),
+            withNavBar: true, // OPTIONAL VALUE. True by default.
+            pageTransitionAnimation: PageTransitionAnimation.cupertino,
+          );
         } else if (title == 'My Wallet') {
-          Navigator.pop(context);
-          Get.to(() => WalletScreen());
+          // Navigator.pop(context);
+          // Get.to(() => WalletScreen());
+          pushNewScreen(
+            context,
+            screen: WalletScreen(),
+            withNavBar: true, // OPTIONAL VALUE. True by default.
+            pageTransitionAnimation: PageTransitionAnimation.cupertino,
+          );
         } else if (title == 'Customer Addresses') {
-          Navigator.pop(context);
-          Get.to(() => CustomerAddressesScreen());
+          // Navigator.pop(context);
+          // Get.to(() => CustomerAddressesScreen());
+          pushNewScreen(
+            context,
+            screen: CustomerAddressesScreen(),
+            withNavBar: true, // OPTIONAL VALUE. True by default.
+            pageTransitionAnimation: PageTransitionAnimation.cupertino,
+          );
         } else if (title == 'Blood Bank') {
-          Navigator.pop(context);
-          Get.to(() => BloodBankScreen());
+          // Navigator.pop(context);
+          // Get.to(() => BloodBankScreen());
+          pushNewScreen(
+            context,
+            screen: BloodBankScreen(),
+            withNavBar: true, // OPTIONAL VALUE. True by default.
+            pageTransitionAnimation: PageTransitionAnimation.cupertino,
+          );
         } else if (title == 'My Orders') {
-          Navigator.pop(context);
-
-          Get.to(() => MyOrdersScreen());
+          // Navigator.pop(context);
+          //
+          // Get.to(() => MyOrdersScreen());
+          pushNewScreen(
+            context,
+            screen: MyOrdersScreen(),
+            withNavBar: true, // OPTIONAL VALUE. True by default.
+            pageTransitionAnimation: PageTransitionAnimation.cupertino,
+          );
         } else if (title == 'Edit Profile') {
-          Navigator.pop(context);
+          // Navigator.pop(context);
 
-          // Get.to(() => EditProfileScreen(customer_image: customer_image,));
-          Get.to(() => EditProfileScreen());
+          // Get.to(() => EditProfileScreen());
+          pushNewScreen(
+            context,
+            screen: EditProfileScreen(),
+            withNavBar: true, // OPTIONAL VALUE. True by default.
+            pageTransitionAnimation: PageTransitionAnimation.cupertino,
+          );
         } else if (title == 'Logout') {
-
-
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.clear();
 
           Navigator.pop(context);
 
-          Get.offAll(() => WelcomeBackScreen());
+          Get.offAll(() => LoginScreen());
         }
       },
       child: Column(
@@ -199,7 +230,6 @@ class _MainDrawerState extends State<MainDrawer> {
     APIResponse response = await accountServices.getProfile(token);
     if (response != null) {
       if (response.status == '1') {
-
         Map<String, dynamic> map = response.data;
         String imageUrl = map['profile_image'];
 

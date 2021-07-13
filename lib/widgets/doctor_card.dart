@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paakhealth/models/doctor_model.dart';
-import 'package:paakhealth/screens/doctor_detail_screen.dart';
+import 'package:paakhealth/screens/doctor/doctor_detail_screen.dart';
 import 'package:paakhealth/util/colors.dart';
+import 'package:paakhealth/util/font.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class DoctorCard extends StatelessWidget {
   DoctorCard({this.doctor, Key key}) : super(key: key);
@@ -12,73 +14,122 @@ class DoctorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         Get.to(() => DoctorDetailScreen(id: doctor.id));
       },
       child: Container(
-        height: 200,
+        height: 225,
         margin: EdgeInsets.all(5),
-        decoration:
-            BoxDecoration(border: Border.all(color: Colors.lightBlueAccent[100])),
+        decoration: BoxDecoration(
+          color: Colors.white,
+            border: Border.all(color: Colors.lightBlueAccent[100])),
         child: Stack(
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-
-                SizedBox(
-                  height: 5,
-                ),
-                CircleAvatar(
-                  backgroundImage: NetworkImage(doctor.image),
-                  radius: 50,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  doctor.name,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 7,),
-                Text(
-                    doctor.expertise.length > 20
-                  ? doctor.expertise.substring(0, 17) + '...'
-                  : doctor.expertise,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 14),
-                ),
-                Spacer(),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Icon(
-                      Icons.location_on,
-                      color: AppColors.primaryColor,
+                    SizedBox(
+                      height: 20,
                     ),
-                    SizedBox(width: 12,),
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(doctor.image),
+                      radius: 50,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Text(
-                      doctor.address,
-                      style: TextStyle(color: AppColors.primaryColor),
-                    )
+                      doctor.name,
+                      style: TextStyle(
+                          fontFamily: AppFont.Gotham,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xFF393132),
+                          fontSize: 18),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(
+                      height: 7,
+                    ),
+                    Text(
+                      doctor.expertise.length > 20
+                          ? doctor.expertise.substring(0, 17) + '...'
+                          : doctor.expertise,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 14,
+                        fontFamily: AppFont.Gotham,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xFF726966),
+                      ),
+                    ),
+                    Spacer(),
+                    GestureDetector(
+                      onTap: () {
+                        pushNewScreen(
+                          context,
+                          screen: DoctorDetailScreen(
+                            id: doctor.id,
+                            bookNow: true,
+                          ),
+                          withNavBar: true,
+                          // OPTIONAL VALUE. True by default.
+                          pageTransitionAnimation:
+                              PageTransitionAnimation.cupertino,
+                        );
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: <Color>[
+                              Color(0xFF69C4F0),
+                              Color(0xFF00B2EE),
+                            ],
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        ),
+                        child: Text(
+                          'BOOK NOW',
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.white,
+                              fontFamily: AppFont.Gotham,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+
                   ],
                 ),
-
-                SizedBox(height: 7,),
               ],
             ),
             Positioned(
                 left: 7,
                 top: 7,
-                child: Icon(
-                  Icons.circle,
-                  size: 10,
-                  color: Colors.greenAccent,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.circle,
+                      size: 10,
+                      color: Colors.greenAccent,
+                    ),
+                    Text(
+                      ' Rs ' + doctor.fees.toString(),
+                      style: TextStyle(
+                          fontFamily: AppFont.Gotham,
+                          fontWeight: FontWeight.w500),
+                    )
+                  ],
                 )),
             Positioned(
-              right: 7,
+                right: 7,
                 top: 7,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -89,13 +140,17 @@ class DoctorCard extends StatelessWidget {
                       color: AppColors.primaryColor,
                       size: 16,
                     ),
-                    SizedBox(width: 3,),
+                    SizedBox(
+                      width: 3,
+                    ),
                     Text(
                       doctor.rating,
+                      style: TextStyle(
+                          fontFamily: AppFont.Gotham,
+                          fontWeight: FontWeight.w700),
                     )
                   ],
-                )
-            )
+                ))
           ],
         ),
       ),

@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:logger/logger.dart';
-import 'package:paakhealth/screens/home_screen.dart';
-import 'package:paakhealth/screens/setup_profile_screen.dart';
-import 'package:paakhealth/screens/welcome_back_screen.dart';
-import 'package:paakhealth/screens/welcome_screen.dart';
-import 'package:paakhealth/util/colors.dart';
+import 'package:paakhealth/screens/home/landing_screen.dart';
+import 'package:paakhealth/screens/auth/login_screen.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
@@ -80,12 +77,12 @@ class _LoadingScreenState extends State<LoadingScreen> {
         // Navigator.pushReplacement(
         //     context, MaterialPageRoute(builder: (context) => WelcomeBackScreen()));
         Get.snackbar('', 'Your Token Expired, please Login Again');
-        Get.off(() => WelcomeBackScreen());
+        Get.off(() => LoginScreen());
       }
     } else {
       // Navigator.pushReplacement(
       //     context, MaterialPageRoute(builder: (context) => WelcomeScreen()));
-      Get.off(() => SetupProfileScreen());
+      Get.off(() => LoginScreen());
     }
   }
 
