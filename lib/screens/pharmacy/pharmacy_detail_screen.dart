@@ -6,15 +6,16 @@ import 'package:image_picker/image_picker.dart';
 import 'package:paakhealth/models/api_response.dart';
 import 'package:paakhealth/models/medicine_model.dart';
 import 'package:paakhealth/models/store_model.dart';
-import 'package:paakhealth/screens/purchase/delivery_info_screen.dart';
 import 'package:paakhealth/screens/medicine/medicine_screen.dart';
-import 'package:paakhealth/screens/medicine/product_detial_screen.dart';
+import 'package:paakhealth/screens/purchase/delivery_info_screen.dart';
 import 'package:paakhealth/services/home_services.dart';
 import 'package:paakhealth/util/colors.dart';
+import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:paakhealth/util/text_style.dart';
-import 'package:paakhealth/widgets/medicine_widget.dart';
-import 'package:paakhealth/widgets/medicine_widget_add_to_cart.dart';
+import 'package:paakhealth/widgets/medicine/medicine_widget.dart';
+import 'package:paakhealth/widgets/medicine/medicine_widget_add_to_cart.dart';
+import 'package:paakhealth/widgets/primaryButton.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -57,7 +58,7 @@ class _PharcmayDetailScreenState extends State<PharcmayDetailScreen> {
         iconTheme: IconThemeData(color: AppColors.primaryColor),
         title: Text(
           loading ? 'Loading' : storeModel.name,
-          style: AppTextStyle.appTextStyle,
+          style: AppTextStyle.appbarTextStyle,
         ),
         centerTitle: true,
         elevation: 2,
@@ -67,97 +68,108 @@ class _PharcmayDetailScreenState extends State<PharcmayDetailScreen> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          :
-      Column(
-        children: [
-          Container(
-              height: 200,
-              padding: EdgeInsets.all(30),
-              child: FadeInImage(
-                image: NetworkImage(storeModel.profile_image),
-                placeholder: AssetImage('assets/p_ph.png'),
-                fit: BoxFit.cover,
-              )),
-          Container(
-            color: AppColors.primaryColor,
-            padding: EdgeInsets.all(10),
-            child: IntrinsicHeight(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  rowItem(Icons.add_location, storeModel.city),
-                  VerticalDivider(
-                    color: Colors.white,
-                    width: 26,
-                  ),
-                  rowItem(Icons.phone, storeModel.phone),
-                  VerticalDivider(
-                    color: Colors.white,
-                    width: 26,
-                  ),
-                  rowItem(Icons.access_time_rounded,
-                      storeModel.working_hours),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            alignment: Alignment.centerLeft,
-            margin: EdgeInsets.only(left: 10),
-            child: Text('Medicines',
-                style: TextStyle(
+          : Column(
+              children: [
+                Container(
+                    height: 200,
+                    padding: EdgeInsets.all(30),
+                    child: FadeInImage(
+                      image: NetworkImage(storeModel.profile_image),
+                      placeholder: AssetImage('assets/p_ph.png'),
+                      fit: BoxFit.cover,
+                    )),
+                Container(
                   color: AppColors.primaryColor,
-                  fontSize: 14,
-                )),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: ResponsiveGridList(
-                  desiredItemWidth: MediaQuery.of(context).size.width * .20,
-                  scroll: false,
-                  children: sampleMedicineList.map((e) {
-                    return MedicineAddToCartWidget(
-                      medicine: e,
-                    );
-                  }).toList()),
-            ),
-          ),
-          Align(
-              alignment: Alignment.centerRight,
-              child: Container(
-                  padding: EdgeInsets.only(right: 10, top: 10, bottom: 10),
-                  child: GestureDetector(
-                    onTap: () {
-                      // Get.to(() => MedicinesScreen(
-                      //   medicines: completeMedicineList,
-                      //   storeId: storeModel.id,
-                      // ));
-                      pushNewScreen(
-                        context,
-                        screen: MedicinesScreen(
-                          medicines: completeMedicineList,
-                          storeId: storeModel.id,
+                  padding: EdgeInsets.all(10),
+                  child: IntrinsicHeight(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        rowItem(Icons.add_location, storeModel.city),
+                        VerticalDivider(
+                          color: Colors.white,
+                          width: 26,
                         ),
-                        withNavBar: true, // OPTIONAL VALUE. True by default.
-                        pageTransitionAnimation: PageTransitionAnimation.cupertino,
-                      );
-                    },
-                    child: Text('See More...',
-                        style: TextStyle(
-                          fontSize: 12,
-                        )),
-                  ))),
-
-          _primaryBtn(btnText: 'Upload Prescribtion to ' + storeModel.name)
-        ],
-      ),
+                        rowItem(Icons.phone, storeModel.phone),
+                        VerticalDivider(
+                          color: Colors.white,
+                          width: 26,
+                        ),
+                        rowItem(Icons.access_time_rounded,
+                            storeModel.working_hours),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.only(left: 10),
+                  child: Text('Medicines',
+                      style: TextStyle(
+                        color: AppColors.primaryColor,
+                        fontFamily: AppFont.Gotham,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                      )),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
+                    child: ResponsiveGridList(
+                        desiredItemWidth:
+                            MediaQuery.of(context).size.width * .30,
+                        scroll: false,
+                        children: sampleMedicineList.map((e) {
+                          int i = sampleMedicineList.indexOf(e);
+                          return MedicineWidget(
+                            medicine: e,
+                            favorite: (){
+                              changeFavorite(e.id, i);
+                            },
+                          );
+                        }).toList()),
+                  ),
+                ),
+                Align(
+                    alignment: Alignment.centerRight,
+                    child: Container(
+                        padding:
+                            EdgeInsets.only(right: 10, top: 10, bottom: 10),
+                        child: GestureDetector(
+                          onTap: () {
+                            // Get.to(() => MedicinesScreen(
+                            //   medicines: completeMedicineList,
+                            //   storeId: storeModel.id,
+                            // ));
+                            pushNewScreen(
+                              context,
+                              screen: MedicinesScreen(
+                                medicines: completeMedicineList,
+                                storeId: storeModel.id,
+                              ),
+                              withNavBar:
+                                  true, // OPTIONAL VALUE. True by default.
+                              pageTransitionAnimation:
+                                  PageTransitionAnimation.cupertino,
+                            );
+                          },
+                          child: Text('See More...',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontFamily: AppFont.Avenirl,
+                                fontWeight: FontWeight.w400,
+                              )),
+                        ))),
+                // _primaryBtn(
+                //     btnText: 'Upload Prescribtion to ' + storeModel.name)
+              ],
+            ),
     );
   }
 
@@ -171,7 +183,11 @@ class _PharcmayDetailScreenState extends State<PharcmayDetailScreen> {
         ),
         Text(
           text,
-          style: TextStyle(color: Colors.white, fontSize: 12),
+          style: TextStyle(
+              fontFamily: AppFont.Avenirl,
+              fontWeight: FontWeight.w400,
+              color: Colors.white,
+              fontSize: 12),
         )
       ],
     );
@@ -194,9 +210,9 @@ class _PharcmayDetailScreenState extends State<PharcmayDetailScreen> {
         completeMedicineList =
             medicineListItr.map((list) => MedicineModel.fromMap(list)).toList();
 
-        if(completeMedicineList.length > 12){
+        if (completeMedicineList.length > 12) {
           sampleMedicineList = completeMedicineList.sublist(0, 11);
-        }else{
+        } else {
           sampleMedicineList = completeMedicineList;
         }
 
@@ -220,43 +236,13 @@ class _PharcmayDetailScreenState extends State<PharcmayDetailScreen> {
 
   Widget _primaryBtn({String btnText}) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         showModalBottomSheet(
           context: context,
           builder: ((builder) => bottomSheet()),
         );
       },
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: <Color>[
-              Color(0xFF69C4F0),
-              Color(0xFF00B2EE),
-            ],
-          ),
-          // borderRadius: BorderRadius.all(Radius.circular(5.0)),
-        ),
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.camera_alt_outlined,
-              color: Colors.white,
-            ),
-            SizedBox(width: 10,),
-            Expanded(
-              child: Text(
-                btnText,
-                style: TextStyle(color: Colors.white, fontSize: 18),
-                textAlign: TextAlign.center,
-              )
-            ),
-          ],
-        ),
-      ),
+      child: AppPrimaryButton(text: btnText,),
     );
   }
 
@@ -303,11 +289,40 @@ class _PharcmayDetailScreenState extends State<PharcmayDetailScreen> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => DeliveryInfoScreen(image: _image, storeId: storeModel.id,)));
+                builder: (context) => DeliveryInfoScreen(
+                      image: _image,
+                      storeId: storeModel.id,
+                    )));
       } else {
         print('No image selected.');
       }
     });
   }
 
+
+  Future<void> changeFavorite(int id, int index) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString(SharedPreVariables.TOKEN);
+
+    var homeService = HomeServices();
+    APIResponse response =
+    await homeService.markMedicineFavorite(token: token, medicine_id: id);
+    if (response != null) {
+      if (response.status == '1') {
+        // Get.snackbar('', response.message);
+        print('response.data');
+
+        sampleMedicineList[index].is_favorite = response.favoriteStatus;
+        setState(() {
+
+        });
+        // Get.snackbar('', response.message);
+      } else {
+        Get.snackbar('', response.message);
+      }
+    } else {
+      print('API response is null');
+      Get.snackbar('', 'Oops! Server is Down');
+    }
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paakhealth/models/blood_station_model.dart';
 import 'package:paakhealth/util/colors.dart';
+import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/util/text_style.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -17,6 +18,7 @@ class _BloodStationDetailScreenState extends State<BloodStationDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.bgColor,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_rounded),
@@ -27,7 +29,7 @@ class _BloodStationDetailScreenState extends State<BloodStationDetailScreen> {
         iconTheme: IconThemeData(color: AppColors.primaryColor),
         title: Text(
           'Details',
-          style: AppTextStyle.appTextStyle,
+          style: AppTextStyle.appbarTextStyle,
         ),
         centerTitle: true,
         elevation: 2,
@@ -66,7 +68,8 @@ class _BloodStationDetailScreenState extends State<BloodStationDetailScreen> {
                                 widget.model.name,
                                 style: TextStyle(
                                   fontSize: 20,
-                                  fontWeight: FontWeight.bold,
+                                  fontFamily: AppFont.Gotham,
+                                  fontWeight: FontWeight.w700,
                                   color: Colors.white,
                                 ),
                               ),
@@ -83,7 +86,8 @@ class _BloodStationDetailScreenState extends State<BloodStationDetailScreen> {
                                   ),
                                   Text(widget.model.city,
                                       style: TextStyle(
-                                        fontWeight: FontWeight.bold,
+                                        fontFamily: AppFont.Gotham,
+                                        fontWeight: FontWeight.w700,
                                         fontSize: 12,
                                         color: Colors.white60,
                                       ))
@@ -111,7 +115,7 @@ class _BloodStationDetailScreenState extends State<BloodStationDetailScreen> {
                                         backgroundColor: Colors.white,
                                         child: Icon(
                                           Icons.call,
-                                          color: Colors.blue,
+                                          color: AppColors.primaryColor,
                                         ),
                                       ),
                                       elevation: 5,
@@ -124,6 +128,8 @@ class _BloodStationDetailScreenState extends State<BloodStationDetailScreen> {
                                     height: 10,
                                   ),
                                   Text('Call',style: TextStyle(
+                                    fontFamily: AppFont.Avenirl,
+                                    fontWeight: FontWeight.w400,
                                     fontSize: 12,
                                   ))
                                 ],
@@ -144,7 +150,7 @@ class _BloodStationDetailScreenState extends State<BloodStationDetailScreen> {
                                         backgroundColor: Colors.white,
                                         child: Icon(
                                           Icons.vpn_lock,
-                                          color: Colors.blue,
+                                          color: AppColors.primaryColor,
                                         ),
                                       ),
                                       elevation: 5,
@@ -157,6 +163,8 @@ class _BloodStationDetailScreenState extends State<BloodStationDetailScreen> {
                                     height: 10,
                                   ),
                                   Text('Visit',style: TextStyle(
+                                    fontFamily: AppFont.Avenirl,
+                                    fontWeight: FontWeight.w400,
                                     fontSize: 12,
                                   ))
                                 ],
@@ -168,9 +176,13 @@ class _BloodStationDetailScreenState extends State<BloodStationDetailScreen> {
                     ),
                   ],
                 ),
+                SizedBox(
+                  height: 20,
+                ),
                 IntrinsicHeight(
                   child: Container(
-                    margin: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                    color: AppColors.boxColor,
+                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                     child:Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -193,59 +205,96 @@ class _BloodStationDetailScreenState extends State<BloodStationDetailScreen> {
                                 widget.model.distance.toString().substring(0, 5) + ' KM',
                                 style: TextStyle(
                                     color: AppColors.primaryColor,
-                                    fontWeight: FontWeight.bold,
+                                    fontFamily: AppFont.Gotham,
+                                    fontWeight: FontWeight.w700,
                                     fontSize: 16),
                               ),
                               Text('away',style: TextStyle(
+                                fontFamily: AppFont.Avenirl,
+                                fontWeight: FontWeight.w700,
                                 fontSize: 12,
                               ))
                             ],
                           ),
                         ),
 
-                        Icon(
-                          Icons.star_border,
-                          color: Colors.teal,
-                          size: 20,
-                        ),
-                        Text(
-                          widget.model.rating,
-                          style: TextStyle(
-                            fontSize: 12,
-                          ),
-                        ),
+                        // Icon(
+                        //   Icons.star_border,
+                        //   color: Colors.teal,
+                        //   size: 20,
+                        // ),
+                        // Text(
+                        //   widget.model.rating,
+                        //   style: TextStyle(
+                        //     fontSize: 12,
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
                 ),
-                Divider(
-                  indent: 14,
-                  endIndent: 14,
-                ),
 
+                SizedBox(
+                  height: 10,
+                ),
                 Container(
-                  margin: EdgeInsets.only(left: 20, top: 20),
+                  color: Colors.white,
+                  padding: EdgeInsets.only(left: 20, top: 20, bottom: 10),
                   child: Row(
                     children: [
-                      Text(
-                          'Address: ',
+                      Text('Address: ',
                           style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              fontSize: 12
-                          )),
+                              fontFamily: AppFont.Gotham,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.headingColor,
+                              fontSize: 12)),
                       Expanded(
-                        child: Text(
-                            widget.model.address,
-                            style: TextStyle(
-                                color: Colors.black54,
-                                fontSize: 12
-                            )),
+                        child: Text(widget.model.address,
+                            style:
+                            TextStyle(
+                                fontFamily: AppFont.Avenirl,
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.textColor, fontSize: 12)),
                       ),
                     ],
                   ),
                 ),
-
+                Container(
+                  color: Colors.white,
+                  padding: EdgeInsets.only(left: 20, bottom: 20),
+                  child: Row(
+                    children: [
+                      Text('Latitude: ',
+                          style: TextStyle(
+                              fontFamily: AppFont.Gotham,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.headingColor,
+                              fontSize: 12)),
+                      Expanded(
+                        child: Text(widget.model.latitude,
+                            style:
+                            TextStyle(
+                                fontFamily: AppFont.Avenirl,
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.textColor, fontSize: 12)),
+                      ),
+                      Text('Longitude: ',
+                          style: TextStyle(
+                              fontFamily: AppFont.Gotham,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.headingColor,
+                              fontSize: 12)),
+                      Expanded(
+                        child: Text(widget.model.longitude,
+                            style:
+                            TextStyle(
+                                fontFamily: AppFont.Avenirl,
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.textColor, fontSize: 12)),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           )),

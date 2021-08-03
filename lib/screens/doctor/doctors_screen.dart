@@ -15,7 +15,8 @@ import 'package:paakhealth/util/colors.dart';
 import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:paakhealth/util/text_style.dart';
-import 'package:paakhealth/widgets/doctor_card.dart';
+import 'package:paakhealth/widgets/doctor/doctor_card.dart';
+import 'package:paakhealth/widgets/primaryButton.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -81,7 +82,7 @@ class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen> {
           iconTheme: IconThemeData(color: AppColors.primaryColor),
           title: Text(
             'Doctor Appointment',
-            style: AppTextStyle.appTextStyle,
+            style: AppTextStyle.appbarTextStyle,
           ),
           centerTitle: true,
           elevation: 2,
@@ -125,7 +126,7 @@ class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen> {
                       margin: EdgeInsets.fromLTRB(0, 5, 5, 5),
                       padding: EdgeInsets.symmetric(horizontal: 3),
                       decoration: BoxDecoration(
-                        color: Color(0xFF707070),
+                        color: AppColors.primaryColor,
                         borderRadius: BorderRadius.all(
                           Radius.circular(50.0),
                         ),
@@ -367,24 +368,7 @@ class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen> {
           placeOrderPrescribtion();
         }
       },
-      child: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: <Color>[
-              Color(0xFF69C4F0),
-              Color(0xFF00B2EE),
-            ],
-          ),
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-        ),
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(vertical: 10),
-        child: Text(
-          btnText,
-          style: TextStyle(color: Colors.white, fontSize: 18),
-          textAlign: TextAlign.center,
-        ),
-      ),
+      child: AppPrimaryButton(text: btnText,),
     );
   }
 

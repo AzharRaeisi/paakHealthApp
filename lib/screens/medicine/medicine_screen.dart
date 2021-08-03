@@ -15,8 +15,9 @@ import 'package:paakhealth/util/colors.dart';
 import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:paakhealth/util/text_style.dart';
-import 'package:paakhealth/widgets/medicine_widget.dart';
-import 'package:paakhealth/widgets/medicine_widget_add_to_cart.dart';
+import 'package:paakhealth/widgets/medicine/medicine_widget.dart';
+import 'package:paakhealth/widgets/medicine/medicine_widget_add_to_cart.dart';
+import 'package:paakhealth/widgets/primaryButton.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -89,7 +90,7 @@ class _MedicinesScreenState extends State<MedicinesScreen> {
         iconTheme: IconThemeData(color: AppColors.primaryColor),
         title: Text(
           'Medicines',
-          style: AppTextStyle.appTextStyle,
+          style: AppTextStyle.appbarTextStyle,
         ),
         centerTitle: true,
         elevation: 2,
@@ -126,7 +127,7 @@ class _MedicinesScreenState extends State<MedicinesScreen> {
                   margin: EdgeInsets.fromLTRB(0, 5, 5, 5),
                   padding: EdgeInsets.symmetric(horizontal: 3),
                   decoration: BoxDecoration(
-                    color: Color(0xFF707070),
+                    color: AppColors.primaryColor,
                     borderRadius: BorderRadius.all(Radius.circular(50.0)),
                   ),
                   child: IconButton(
@@ -136,13 +137,7 @@ class _MedicinesScreenState extends State<MedicinesScreen> {
                       color: Colors.white,),
                   ),
                 ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(
-                    50,
-                  ),
-                  borderSide:
-                  BorderSide(color: Colors.greenAccent, width: 0.0),
-                ),
+                border: InputBorder.none,
               ),
             ),
           ),
@@ -225,37 +220,7 @@ class _MedicinesScreenState extends State<MedicinesScreen> {
           builder: ((builder) => bottomSheet()),
         );
       },
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: <Color>[
-              Color(0xFF69C4F0),
-              Color(0xFF00B2EE),
-            ],
-          ),
-          // borderRadius: BorderRadius.all(Radius.circular(5.0)),
-        ),
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.camera_alt_outlined,
-              color: Colors.white,
-            ),
-            SizedBox(width: 10,),
-            Expanded(
-                child: Text(
-                  btnText,
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                  textAlign: TextAlign.center,
-                )
-            ),
-          ],
-        ),
-      ),
+      child: AppPrimaryButton(text: btnText,),
     );
   }
 
@@ -275,128 +240,6 @@ class _MedicinesScreenState extends State<MedicinesScreen> {
 
       getSearchProductList();
     }
-  }
-
-  Widget _medicineItem(MedicineModel model, int index) {
-    return GestureDetector(
-      onTap: () {
-        // Get.to(() => ProductDetialScreen(id: model.id));
-        pushNewScreen(
-          context,
-          screen: ProductDetialScreen(id: model.id),
-          withNavBar: true, // OPTIONAL VALUE. True by default.
-          pageTransitionAnimation: PageTransitionAnimation.cupertino,
-        );
-      },
-      child: Container(
-        color: Colors.white,
-        padding: EdgeInsets.all(10),
-        margin: EdgeInsets.fromLTRB(0, 0, 0, 3),
-        child: Column(
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                    width: 100,
-                    child: FadeInImage(
-                      image: NetworkImage(model.image),
-                      placeholder: AssetImage('assets/m_ph.png'),
-                      fit: BoxFit.cover,
-                    )),
-                Flexible(
-                  flex: 1,
-                  child: Stack(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              model.name,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16),
-                            ),
-                            Text(
-                              model.weight_quantity,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                  color: Colors.grey),
-                            ),
-                            Text(
-                              model.medicine_type,
-                              style: TextStyle(fontSize: 12, color: Colors.grey),
-                            ),
-                            SizedBox(height: 50),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Rs. ' + model.sale_price.toString() + '.00',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                      color: AppColors.primaryColor),
-                                ),
-                                model.is_prescribed == 0
-                                    ? GestureDetector(
-                                        onTap: () {
-                                          addtoCart(model);
-                                        },
-                                        child: Text(
-                                          'Add to Cart',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      )
-                                    : GestureDetector(
-                                        onTap: () {
-                                          // todo handle upload prescribtion
-                                          showModalBottomSheet(
-                                            context: context,
-                                            builder: ((builder) => bottomSheet()),
-                                          );
-                                        },
-                                        child: Text(
-                                          'Upload Prescription',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                      Positioned(
-                          right: 10,
-                          top: 10,
-                          child: GestureDetector(
-                            onTap: () {
-                              changeFavorite(model.id, index);
-                            },
-                            child: Icon(
-                              model.is_favorite == 0
-                                  ? Icons.star_border
-                                  : Icons.star,
-                              color: AppColors.primaryColor,
-                            ),
-                          ))
-                    ],
-                  ),
-                )
-              ],
-            ),
-            Divider(thickness: 3,)
-          ],
-        ),
-      ),
-    );
   }
 
   Future<void> getSearchProductList() async {

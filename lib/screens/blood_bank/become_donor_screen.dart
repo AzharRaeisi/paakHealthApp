@@ -7,8 +7,10 @@ import 'package:paakhealth/models/city_model.dart';
 import 'package:paakhealth/services/bloodbank_services.dart';
 import 'package:paakhealth/services/default_services.dart';
 import 'package:paakhealth/util/colors.dart';
+import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:paakhealth/util/text_style.dart';
+import 'package:paakhealth/widgets/primaryButton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BecomeDonorScreen extends StatefulWidget {
@@ -60,7 +62,7 @@ class _BecomeDonorScreenState extends State<BecomeDonorScreen> {
         iconTheme: IconThemeData(color: AppColors.primaryColor),
         title: Text(
           'Become a Donor',
-          style: AppTextStyle.appTextStyle,
+          style: AppTextStyle.appbarTextStyle,
         ),
         centerTitle: true,
         elevation: 2,
@@ -86,9 +88,19 @@ class _BecomeDonorScreenState extends State<BecomeDonorScreen> {
                 DropdownButtonFormField<CityModel>(
                   isExpanded: true,
                   value: selectedCity,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'City',
+
+                    labelStyle: TextStyle(
+                      fontFamily: AppFont.Avenirl,
+                    ),
+                    hintStyle: TextStyle(
+                      fontFamily: AppFont.Avenirl,
+                    ),
+                  ),
+                  style: TextStyle(
+                    fontFamily: AppFont.Avenirl,
                   ),
                   onChanged: cityList.isNotEmpty
                       ? (value) {
@@ -100,7 +112,9 @@ class _BecomeDonorScreenState extends State<BecomeDonorScreen> {
                   items: cityList.map((CityModel city) {
                     return DropdownMenuItem<CityModel>(
                       value: city,
-                      child: Text(city.name, style: TextStyle(fontSize: 12)),
+                      child: Text(city.name, style: TextStyle(fontSize: 12,
+                          fontFamily: AppFont.Avenirl,
+                          color: AppColors.textColor)),
                     );
                   }).toList(),
                 ),
@@ -109,9 +123,19 @@ class _BecomeDonorScreenState extends State<BecomeDonorScreen> {
                   // hint: Text("Select City"),
                   isExpanded: true,
                   value: selectedGroup,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Blood Group',
+
+                    labelStyle: TextStyle(
+                      fontFamily: AppFont.Avenirl,
+                    ),
+                    hintStyle: TextStyle(
+                      fontFamily: AppFont.Avenirl,
+                    ),
+                  ),
+                  style: TextStyle(
+                    fontFamily: AppFont.Avenirl,
                   ),
                   onChanged: bloodGroupList.isNotEmpty
                       ? (value) {
@@ -123,7 +147,9 @@ class _BecomeDonorScreenState extends State<BecomeDonorScreen> {
                   items: bloodGroupList.map((BloodGroupModel group) {
                     return DropdownMenuItem<BloodGroupModel>(
                       value: group,
-                      child: Text(group.name, style: TextStyle(fontSize: 12)),
+                      child: Text(group.name, style: TextStyle(fontSize: 12,
+                        fontFamily: AppFont.Avenirl,
+                      color: AppColors.textColor)),
                     );
                   }).toList(),
                 ),
@@ -155,9 +181,20 @@ class _BecomeDonorScreenState extends State<BecomeDonorScreen> {
       },
       decoration: InputDecoration(
           border: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey[100], width: 1.0),
+              borderSide: BorderSide(color: AppColors.outlineColor, width: 1.0),
               borderRadius: BorderRadius.circular(5)),
-          labelText: 'Name', hintText: 'Name'),
+          labelText: 'Name', hintText: 'Name',
+
+        labelStyle: TextStyle(
+          fontFamily: AppFont.Avenirl,
+        ),
+        hintStyle: TextStyle(
+          fontFamily: AppFont.Avenirl,
+        ),
+      ),
+      style: TextStyle(
+        fontFamily: AppFont.Avenirl,
+      ),
     );
   }
 
@@ -176,10 +213,21 @@ class _BecomeDonorScreenState extends State<BecomeDonorScreen> {
   //     },
   //     decoration: InputDecoration(
   //         border: OutlineInputBorder(
-  //             borderSide: BorderSide(color: Colors.grey[100], width: 1.0),
+  //             borderSide: BorderSide(color: AppColors.outlineColor , width: 1.0),
   //             borderRadius: BorderRadius.circular(5)),
   //         hintText: 'info@paakhealth.com',
-  //     labelText: 'Email'),
+  //     labelText: 'Email',
+  //
+  //         labelStyle: TextStyle(
+  //           fontFamily: AppFont.Avenirl,
+  //         ),
+  //         hintStyle: TextStyle(
+  //           fontFamily: AppFont.Avenirl,
+  //         ),
+  //       ),
+  //       style: TextStyle(
+  //         fontFamily: AppFont.Avenirl,
+  //       ),
   //   );
   // }
 
@@ -196,10 +244,21 @@ class _BecomeDonorScreenState extends State<BecomeDonorScreen> {
       },
       decoration: InputDecoration(
           border: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey[100], width: 1.0),
+              borderSide: BorderSide(color: AppColors.outlineColor, width: 1.0),
               borderRadius: BorderRadius.circular(5)),
           labelText: 'Address',
-          hintText: 'Address'),
+          hintText: 'Address',
+
+        labelStyle: TextStyle(
+          fontFamily: AppFont.Avenirl,
+        ),
+        hintStyle: TextStyle(
+          fontFamily: AppFont.Avenirl,
+        ),
+      ),
+      style: TextStyle(
+        fontFamily: AppFont.Avenirl,
+      ),
     );
   }
 
@@ -220,7 +279,17 @@ class _BecomeDonorScreenState extends State<BecomeDonorScreen> {
               borderSide: BorderSide(color: Colors.grey, width: 1.0),
               borderRadius: BorderRadius.circular(5)),
           hintText: '343XXXXXXX',
-        labelText: 'Phone',),
+        labelText: 'Phone',
+        labelStyle: TextStyle(
+          fontFamily: AppFont.Avenirl,
+        ),
+        hintStyle: TextStyle(
+          fontFamily: AppFont.Avenirl,
+        ),
+      ),
+      style: TextStyle(
+        fontFamily: AppFont.Avenirl,
+      ),
     );
   }
 
@@ -230,9 +299,19 @@ class _BecomeDonorScreenState extends State<BecomeDonorScreen> {
       maxLines: 5,
       decoration: InputDecoration(
           border: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey[100], width: 1.0),
+              borderSide: BorderSide(color: AppColors.outlineColor, width: 1.0),
               borderRadius: BorderRadius.circular(5)),
-          hintText: 'Comment if any ...',labelText: 'Comment',),
+          hintText: 'Comment if any ...',labelText: 'Comment',
+        labelStyle: TextStyle(
+          fontFamily: AppFont.Avenirl,
+        ),
+        hintStyle: TextStyle(
+          fontFamily: AppFont.Avenirl,
+        ),
+      ),
+      style: TextStyle(
+        fontFamily: AppFont.Avenirl,
+      ),
     );
   }
 
@@ -282,24 +361,7 @@ class _BecomeDonorScreenState extends State<BecomeDonorScreen> {
           }
         }
       },
-      child: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: <Color>[
-              Color(0xFF69C4F0),
-              Color(0xFF00B2EE),
-            ],
-          ),
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-        ),
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(vertical: 10),
-        child: Text(
-          btnText,
-          style: TextStyle(color: Colors.white, fontSize: 18),
-          textAlign: TextAlign.center,
-        ),
-      ),
+      child: AppPrimaryButton(text: btnText,),
     );
   }
 

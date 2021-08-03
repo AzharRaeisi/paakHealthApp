@@ -82,12 +82,7 @@ class DoctorCard extends StatelessWidget {
                       child: Container(
                         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: <Color>[
-                              Color(0xFF69C4F0),
-                              Color(0xFF00B2EE),
-                            ],
-                          ),
+                          color: AppColors.primaryColor,
                           borderRadius: BorderRadius.all(Radius.circular(5.0)),
                         ),
                         child: Text(

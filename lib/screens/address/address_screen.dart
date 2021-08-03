@@ -79,7 +79,7 @@ class _AddressScreenState extends State<AddressScreen> {
         iconTheme: IconThemeData(color: AppColors.primaryColor),
         title: Text(
           widget.add ? 'Add Address' : 'Address',
-          style: AppTextStyle.appTextStyle,
+          style: AppTextStyle.appbarTextStyle,
         ),
         actions: [
           widget.add

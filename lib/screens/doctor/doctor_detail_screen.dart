@@ -15,6 +15,7 @@ import 'package:paakhealth/util/colors.dart';
 import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:paakhealth/util/text_style.dart';
+import 'package:paakhealth/widgets/primaryButton.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -86,7 +87,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
         iconTheme: IconThemeData(color: AppColors.primaryColor),
         title: Text(
           'More Details',
-          style: AppTextStyle.appTextStyle,
+          style: AppTextStyle.appbarTextStyle,
         ),
         centerTitle: true,
         elevation: 2,
@@ -514,22 +515,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
               return basicDetail();
             });
       },
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColors.buttonColor,
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-        ),
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(vertical: 10),
-        child: Text(
-          btnText,
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-              fontFamily: AppFont.Gotham,
-              color: Colors.white, fontSize: 18),
-          textAlign: TextAlign.center,
-        ),
-      ),
+      child: AppPrimaryButton(text: btnText,),
     );
   }
 
@@ -696,24 +682,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
           }
         }
       },
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: <Color>[
-              Color(0xFF69C4F0),
-              Color(0xFF00B2EE),
-            ],
-          ),
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-        ),
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(vertical: 10),
-        child: Text(
-          btnText,
-          style: TextStyle(color: Colors.white, fontSize: 18),
-          textAlign: TextAlign.center,
-        ),
-      ),
+      child: AppPrimaryButton(text: btnText,),
     );
   }
 
@@ -889,24 +858,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
               });
         }
       },
-      child: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: <Color>[
-                Color(0xFF69C4F0),
-                Color(0xFF00B2EE),
-              ],
-            ),
-            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-            border: Border.all(color: Colors.white60)),
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(vertical: 10),
-        child: Text(
-          btnText,
-          style: TextStyle(color: Colors.white, fontSize: 18),
-          textAlign: TextAlign.center,
-        ),
-      ),
+      child: AppPrimaryButton(text: btnText,),
     );
   }
 
@@ -1007,24 +959,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
           }
         }
       },
-      child: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: <Color>[
-                Color(0xFF69C4F0),
-                Color(0xFF00B2EE),
-              ],
-            ),
-            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-            border: Border.all(color: Colors.white60)),
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(vertical: 10),
-        child: Text(
-          'Confirm Appointment',
-          style: TextStyle(color: Colors.white, fontSize: 18),
-          textAlign: TextAlign.center,
-        ),
-      ),
+      child: AppPrimaryButton(text: 'Confirm Appointment',),
     );
   }
 

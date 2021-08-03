@@ -7,6 +7,7 @@ import 'package:paakhealth/screens/pharmacy/pharmacy_detail_screen.dart';
 import 'package:paakhealth/screens/medicine/product_detial_screen.dart';
 import 'package:paakhealth/services/home_services.dart';
 import 'package:paakhealth/util/colors.dart';
+import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:paakhealth/util/text_style.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -70,6 +71,7 @@ class _OnlinePharmacyScreenState extends State<OnlinePharmacyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.bgColor,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_rounded),
@@ -80,21 +82,23 @@ class _OnlinePharmacyScreenState extends State<OnlinePharmacyScreen> {
         iconTheme: IconThemeData(color: AppColors.primaryColor),
         title: Text(
           'Online Pharmacy',
-          style: AppTextStyle.appTextStyle,
+          style: AppTextStyle.appbarTextStyle,
         ),
         centerTitle: true,
         elevation: 2,
         backgroundColor: Colors.white,
       ),
       body: Container(
-        color: Colors.white,
         // child: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-              color: Colors.white,
-              height: 60,
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              height: 45,
+              margin: EdgeInsets.only(left: 12, top: 10, right: 12),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                  border: Border.all(color: Color(0xFFE8E8E2))),
               child: TextField(
                 controller: searchBoxController,
                 onChanged: (val) {
@@ -102,19 +106,18 @@ class _OnlinePharmacyScreenState extends State<OnlinePharmacyScreen> {
                     searchList = [];
                   }
                 },
+                style: TextStyle(
+                    color: AppColors.textColor, fontFamily: AppFont.Avenirl),
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.all(10),
-                  hintText: 'Type to search ...',
-                  hintStyle: TextStyle(color: Colors.grey),
+                  hintText: 'Find pharmacy...',
+                  hintStyle: TextStyle(
+                      color: AppColors.textColor, fontFamily: AppFont.Avenirl),
                   suffixIcon: Container(
                     margin: EdgeInsets.fromLTRB(0, 5, 5, 5),
+                    padding: EdgeInsets.symmetric(horizontal: 3),
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: <Color>[
-                          Color(0xFF69C4F0),
-                          Color(0xFF00B2EE),
-                        ],
-                      ),
+                        color: AppColors.primaryColor,
                       borderRadius: BorderRadius.all(Radius.circular(50.0)),
                     ),
                     child: IconButton(
@@ -124,16 +127,11 @@ class _OnlinePharmacyScreenState extends State<OnlinePharmacyScreen> {
                       color: Colors.white,
                     ),
                   ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                      50,
-                    ),
-                    borderSide:
-                        BorderSide(color: Colors.greenAccent, width: 0.0),
-                  ),
+                  border: InputBorder.none,
                 ),
               ),
             ),
+            SizedBox(height: 10,),
             if (_pharmacyList.length == 0)
               Expanded(
                 child: Text('No pharmacy available...'),
@@ -247,101 +245,114 @@ class _OnlinePharmacyScreenState extends State<OnlinePharmacyScreen> {
 
   Widget pharmacyItem(StoreModel model, int index) {
     return Container(
+      height: 100,
       color: Colors.white,
-      // padding: EdgeInsets.all(10),
-      margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
-      child: IntrinsicHeight(
-        child: Column(
-          children: [
-            IntrinsicHeight(
-              child: Row(
+      padding: EdgeInsets.all(10),
+      margin: EdgeInsets.fromLTRB(0, 0, 0, 7),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+              width: 80,
+              height: 80,
+              padding: EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.outlineColor, )
+              ),
+              child: FadeInImage(
+                image: NetworkImage(model.profile_image),
+                placeholder: AssetImage('assets/p_ph.png'),
+                fit: BoxFit.cover,
+              )),
+          Flexible(
+            flex: 1,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 15,),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  VerticalDivider(
-                    thickness: 3,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Container(
-                      width: 60,
-                      height: 60,
-                      child: FadeInImage(
-                        image: NetworkImage(model.profile_image),
-                        placeholder: AssetImage('assets/p_ph.png'),
-                        fit: BoxFit.cover,
-                      )),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  VerticalDivider(
-                    thickness: 3,
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: Container(
-                      padding: EdgeInsets.fromLTRB(5, 0, 15, 0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                model.name,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 16),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  changeFavorite(model.id, index);
-                                },
-                                child: Icon(
-                                  model.is_favorite == 0
-                                      ? Icons.star_border
-                                      : Icons.star,
-                                  color: AppColors.primaryColor,
-                                  size: 20,
-                                ),
-                              ),
-                            ],
+                          Text(
+                            model.name,
+                            style: TextStyle(
+                                fontFamily: AppFont.Gotham,
+                                fontWeight: FontWeight.w700, fontSize: 16),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  // Get.to(
-                                  //     () => PharcmayDetailScreen(id: model.id));
-                                  pushNewScreen(
-                                    context,
-                                    screen: PharcmayDetailScreen(id: model.id),
-                                    withNavBar: true, // OPTIONAL VALUE. True by default.
-                                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
-                                  );
-                                },
-                                child: Text(
-                                  'View Details',
-                                  style: TextStyle(
-                                      color: AppColors.primaryColor,
-                                      fontSize: 12),
-                                ),
-                              )
-                            ],
-                          )
+
+                          SizedBox(height: 5,),
+                          Text(model.address,
+                            style:
+                            TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontFamily: AppFont.Gotham,
+                                fontSize: 14
+                            ),),
                         ],
                       ),
-                    ),
+                      GestureDetector(
+                        onTap: () {
+                          changeFavorite(model.id, index);
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              model.is_favorite == 0
+                                  ? Icons.star_border
+                                  : Icons.star,
+                              color: AppColors.primaryColor,
+                              size: 20,
+                            ),
+                            Text(model.rating,
+                              style: TextStyle(
+                                  fontFamily: AppFont.Gotham,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 12
+                              ),)
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          // Get.to(
+                          //     () => PharcmayDetailScreen(id: model.id));
+                          pushNewScreen(
+                            context,
+                            screen: PharcmayDetailScreen(id: model.id),
+                            withNavBar: true, // OPTIONAL VALUE. True by default.
+                            pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                          );
+                        },
+                        child: Text(
+                          'View Details',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontFamily: AppFont.Gotham,
+                              color: AppColors.primaryColor,
+                              fontSize: 12),
+                        ),
+                      )
+                    ],
                   )
                 ],
               ),
             ),
-            Divider(
-              height: 30,
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }

@@ -9,6 +9,7 @@ import 'package:paakhealth/util/colors.dart';
 import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:paakhealth/util/text_style.dart';
+import 'package:paakhealth/widgets/primaryButton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductDetialScreen extends StatefulWidget {
@@ -48,7 +49,7 @@ class _ProductDetialScreenState extends State<ProductDetialScreen> {
         iconTheme: IconThemeData(color: AppColors.primaryColor),
         title: Text(
           loading ? 'Loading' : medicineModel.name,
-          style: AppTextStyle.appTextStyle,
+          style: AppTextStyle.appbarTextStyle,
         ),
         centerTitle: true,
         elevation: 2,
@@ -203,22 +204,7 @@ class _ProductDetialScreenState extends State<ProductDetialScreen> {
           // todo handle prescription
         }
       },
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColors.buttonColor,
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-        ),
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(vertical: 15),
-        child: Text(
-          btnText,
-          style: TextStyle(
-            fontFamily: AppFont.Gotham,
-              fontWeight: FontWeight.w700,
-              color: Colors.white, fontSize: 18),
-          textAlign: TextAlign.center,
-        ),
-      ),
+      child: AppPrimaryButton(text: btnText,),
     );
   }
 

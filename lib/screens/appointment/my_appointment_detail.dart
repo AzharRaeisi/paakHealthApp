@@ -35,7 +35,7 @@ class _MyAppointmentDetailState extends State<MyAppointmentDetail> {
         iconTheme: IconThemeData(color: AppColors.primaryColor),
         title: Text(
           'Appointment Detail',
-          style: AppTextStyle.appTextStyle,
+          style: AppTextStyle.appbarTextStyle,
         ),
         centerTitle: true,
         elevation: 2,

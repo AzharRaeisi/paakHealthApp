@@ -7,6 +7,7 @@ import 'package:paakhealth/screens/auth/login_screen.dart';
 import 'package:paakhealth/services/account_services.dart';
 import 'package:paakhealth/util/colors.dart';
 import 'package:paakhealth/util/prefernces.dart';
+import 'package:paakhealth/widgets/primaryButton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -266,24 +267,7 @@ class _SignupScreenState extends State<SignupScreen> {
           }
         }
       },
-      child: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: <Color>[
-              Color(0xFF69C4F0),
-              Color(0xFF00B2EE),
-            ],
-          ),
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-        ),
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(vertical: 15),
-        child: Text(
-          btnText,
-          style: TextStyle(color: Colors.white, fontSize: 18),
-          textAlign: TextAlign.center,
-        ),
-      ),
+      child: AppPrimaryButton(text: btnText,),
     );
   }
 

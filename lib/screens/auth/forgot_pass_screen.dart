@@ -4,6 +4,7 @@ import 'package:paakhealth/models/api_response.dart';
 import 'package:paakhealth/screens/auth/enter_code_screen.dart';
 import 'package:paakhealth/services/account_services.dart';
 import 'package:paakhealth/util/colors.dart';
+import 'package:paakhealth/widgets/primaryButton.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   final bool val;
@@ -137,24 +138,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           isProcessing = false;
         });
       },
-      child: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: <Color>[
-              Color(0xFF69C4F0),
-              Color(0xFF00B2EE),
-            ],
-          ),
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-        ),
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(vertical: 15),
-        child: Text(
-          btnText,
-          style: TextStyle(color: Colors.white, fontSize: 18),
-          textAlign: TextAlign.center,
-        ),
-      ),
+      child: AppPrimaryButton(text: btnText,),
     );
   }
 }

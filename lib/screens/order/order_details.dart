@@ -5,7 +5,7 @@ import 'package:paakhealth/models/order_model.dart';
 import 'package:paakhealth/util/colors.dart';
 import 'package:paakhealth/util/order_status.dart';
 import 'package:paakhealth/util/text_style.dart';
-import 'package:paakhealth/widgets/hero_photo_view_route_wrapper.dart';
+import 'package:paakhealth/widgets/photo/hero_photo_view_route_wrapper.dart';
 
 class OrderDetailScreen extends StatefulWidget {
   final OrderModel model;
@@ -41,7 +41,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
         iconTheme: IconThemeData(color: AppColors.primaryColor),
         title: Text(
           'Order Details',
-          style: AppTextStyle.appTextStyle,
+          style: AppTextStyle.appbarTextStyle,
         ),
         centerTitle: true,
         elevation: 2,

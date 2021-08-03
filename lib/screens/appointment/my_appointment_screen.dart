@@ -46,7 +46,7 @@ class _MyAppointmentScreenState extends State<MyAppointmentScreen> {
           iconTheme: IconThemeData(color: AppColors.primaryColor),
           title: Text(
             'My Appointments',
-            style: AppTextStyle.appTextStyle,
+            style: AppTextStyle.appbarTextStyle,
           ),
           centerTitle: true,
           elevation: 2,

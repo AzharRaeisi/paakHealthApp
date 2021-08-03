@@ -56,7 +56,6 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
                       child: CircularProgressIndicator(),
                     )
                   : Container(),
-              // : _primaryBtn(btnText: 'Verify me'),
             ],
           ),
         ),
@@ -145,58 +144,6 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
         return true;
       },
       appContext: context,
-    );
-  }
-
-  Widget _primaryBtn({String btnText}) {
-    return GestureDetector(
-      onTap: () async {
-        if (_verificationCode.isNotEmpty) {
-          toggleOnProceesing();
-          try {
-            // todo reCaptcha disabled... test it
-            FirebaseAuth.instance
-                .setSettings(appVerificationDisabledForTesting: true);
-            await FirebaseAuth.instance
-                .signInWithCredential(PhoneAuthProvider.credential(
-                    verificationId: _verificationCode,
-                    smsCode: _verificationCode))
-                .then((value) async {
-              if (value.user != null) {
-                print('user logged in');
-                // todo call the /check-verification-code api
-                if (widget.forgetPassword) {
-                  Get.to(() => ResetPasswordScreen(phone: widget.phone));
-                } else {
-                  callCheckVerificationCode();
-                }
-              } else {
-                print('user not logged in');
-              }
-            });
-          } catch (e) {
-            FocusScope.of(context).unfocus();
-          }
-        }
-      },
-      child: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: <Color>[
-              Color(0xFF69C4F0),
-              Color(0xFF00B2EE),
-            ],
-          ),
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-        ),
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(vertical: 15),
-        child: Text(
-          btnText,
-          style: TextStyle(color: Colors.white, fontSize: 18),
-          textAlign: TextAlign.center,
-        ),
-      ),
     );
   }
 

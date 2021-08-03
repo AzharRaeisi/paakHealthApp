@@ -11,6 +11,7 @@ import 'package:paakhealth/util/colors.dart';
 import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:paakhealth/util/text_style.dart';
+import 'package:paakhealth/widgets/primaryButton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -65,7 +66,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         iconTheme: IconThemeData(color: AppColors.primaryColor),
         title: Text(
           'My Profile',
-          style: AppTextStyle.appTextStyle,
+          style: AppTextStyle.appbarTextStyle,
         ),
         centerTitle: true,
         elevation: 2,
@@ -157,7 +158,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       },
       decoration: InputDecoration(
         border: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey[100], width: 1.0),
+            borderSide: BorderSide(color: AppColors.outlineColor, width: 1.0),
             borderRadius: BorderRadius.circular(5)),
         hintText: 'Name',
         labelText: 'Name',
@@ -189,7 +190,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       },
       decoration: InputDecoration(
         border: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey[100], width: 1.0),
+            borderSide: BorderSide(color: AppColors.outlineColor, width: 1.0),
             borderRadius: BorderRadius.circular(5)),
         labelText: 'Email',
         hintText: 'info@paakhealth.com',
@@ -244,7 +245,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   //     },
   //     decoration: InputDecoration(
   //         border: OutlineInputBorder(
-  //             borderSide: BorderSide(color: Colors.grey[100], width: 1.0),
+  //             borderSide: BorderSide(color: AppColors.outlineColor, width: 1.0),
   //             borderRadius: BorderRadius.circular(5)),
   //         labelText: 'Address',
   //         hintText: 'Address'),
@@ -327,24 +328,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           updateProfile();
         }
       },
-      child: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: <Color>[
-              Color(0xFF69C4F0),
-              Color(0xFF00B2EE),
-            ],
-          ),
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-        ),
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(vertical: 10),
-        child: Text(
-          btnText,
-          style: TextStyle(color: Colors.white, fontSize: 18),
-          textAlign: TextAlign.center,
-        ),
-      ),
+      child: AppPrimaryButton(text: btnText,),
     );
   }
 
@@ -430,7 +414,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       },
       decoration: InputDecoration(
         border: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey[100], width: 1.0),
+            borderSide: BorderSide(color: AppColors.outlineColor, width: 1.0),
             borderRadius: BorderRadius.circular(5)),
         hintText: 'male',
         labelText: 'Gender',

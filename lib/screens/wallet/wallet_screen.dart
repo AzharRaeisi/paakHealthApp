@@ -45,7 +45,7 @@ class _WalletScreenState extends State<WalletScreen> {
         iconTheme: IconThemeData(color: AppColors.primaryColor),
         title: Text(
           'My Wallet',
-          style: AppTextStyle.appTextStyle,
+          style: AppTextStyle.appbarTextStyle,
         ),
         centerTitle: true,
         elevation: 2,

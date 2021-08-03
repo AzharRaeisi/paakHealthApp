@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paakhealth/models/api_response.dart';
@@ -6,8 +7,10 @@ import 'package:paakhealth/models/cart_item_model.dart';
 import 'package:paakhealth/screens/purchase/checkout_screen.dart';
 import 'package:paakhealth/services/cart_services.dart';
 import 'package:paakhealth/util/colors.dart';
+import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:paakhealth/util/text_style.dart';
+import 'package:paakhealth/widgets/primaryButton.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -84,12 +87,12 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey[300],
+        backgroundColor: AppColors.bgColor,
         appBar: AppBar(
           iconTheme: IconThemeData(color: AppColors.primaryColor),
           title: Text(
             'Cart',
-            style: AppTextStyle.appTextStyle,
+            style: AppTextStyle.appbarTextStyle,
           ),
           centerTitle: true,
           elevation: 2,
@@ -97,7 +100,6 @@ class _CartScreenState extends State<CartScreen> {
         ),
         body: isLoading
             ? Container(
-                color: Colors.white,
                 child: Center(
                   child: CircularProgressIndicator(),
                 ),
@@ -105,7 +107,6 @@ class _CartScreenState extends State<CartScreen> {
             : Builder(builder: (context) {
                 if (cartItemList.length == 0)
                   return Container(
-                    color: Colors.white,
                     padding: EdgeInsets.all(30),
                     child: Center(
                       child: Column(
@@ -127,9 +128,18 @@ class _CartScreenState extends State<CartScreen> {
                   );
 
                 return Container(
-                  color: Colors.white,
                   child: Column(
                     children: [
+                      Container(
+                        alignment: Alignment.centerRight,
+                        margin: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                        child: Text('Update',
+                        style: TextStyle(
+                          fontFamily: AppFont.Gotham,
+                          fontWeight: FontWeight.w400,
+
+                        ),),
+                      ),
                       Expanded(
                           child: ListView.builder(
                         itemCount: cartItemListItems.length,
@@ -142,36 +152,44 @@ class _CartScreenState extends State<CartScreen> {
                         },
                       )),
                       Container(
-                        padding: EdgeInsets.all(30),
+                        padding: EdgeInsets.all(10),
                         child: Column(
                           children: [
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //   children: [
-                            //     Text(
-                            //       'Subtotal',
-                            //       style: TextStyle(fontWeight: FontWeight.bold),
-                            //     ),
-                            //     Text(
-                            //       'Rs. 600.0',
-                            //       style: TextStyle(
-                            //           fontWeight: FontWeight.bold, color: Colors.grey[700]),
-                            //     ),
-                            //   ],
-                            // ),
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //   children: [
-                            //     Text(
-                            //       'Delivery Fee',
-                            //       style: TextStyle(color: Colors.grey[700], fontSize: 13),
-                            //     ),
-                            //     Text(
-                            //       'Rs. 50.0',
-                            //       style: TextStyle(color: Colors.grey[700], fontSize: 13),
-                            //     ),
-                            //   ],
-                            // ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Subtotal',
+                                  style: TextStyle(
+                                    fontFamily: AppFont.Gotham,
+                                    fontWeight: FontWeight.w700,),
+                                ),
+                                Text(
+                                  'Rs. 600.0',
+                                  style: TextStyle(
+                                      fontFamily: AppFont.Gotham,
+                                      fontWeight: FontWeight.w700, color: Colors.grey[700]),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 5,),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Delivery Fee',
+                                  style: TextStyle(color: Colors.grey[700],
+                                      fontFamily: AppFont.Gotham,
+                                      fontWeight: FontWeight.w400, fontSize: 13),
+                                ),
+                                Text(
+                                  'Rs. 50.0',
+                                  style: TextStyle(color: Colors.grey[700],
+                                      fontFamily: AppFont.Gotham,
+                                      fontWeight: FontWeight.w400, fontSize: 13),
+                                ),
+                              ],
+                            ),
                             SizedBox(height: 15),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -179,21 +197,25 @@ class _CartScreenState extends State<CartScreen> {
                                 Text(
                                   'Total',
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold,
+                                      fontFamily: AppFont.Gotham,
+                                      fontWeight: FontWeight.w700,
                                       color: AppColors.primaryColor,
                                       fontSize: 20),
                                 ),
                                 Text(
                                   'Rs. ' + total,
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold,
+                                      fontFamily: AppFont.Gotham,
+                                      fontWeight: FontWeight.w700,
                                       color: AppColors.primaryColor,
                                       fontSize: 20),
                                 ),
                               ],
                             ),
                             SizedBox(height: 10),
-                            _primaryBtn(btnText: 'Checkout')
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                child: _primaryBtn(btnText: 'Checkout'))
                           ],
                         ),
                       )
@@ -224,118 +246,79 @@ class _CartScreenState extends State<CartScreen> {
           }
         }
       },
-      child: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: <Color>[
-              Color(0xFF69C4F0),
-              Color(0xFF00B2EE),
-            ],
-          ),
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-        ),
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(vertical: 15),
-        child: Text(
-          btnText,
-          style: TextStyle(color: Colors.white, fontSize: 18),
-          textAlign: TextAlign.center,
-        ),
-      ),
+      child: AppPrimaryButton(text: btnText,),
     );
   }
 
   Widget _cartItem(CartItemListItemModel model) {
     return Container(
+      height: 100,
       color: Colors.white,
       padding: EdgeInsets.all(10),
-      // margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
-      child: Column(
+      margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                    width: 60,
-                    height: 70,
-                    child: FadeInImage(
-                      image: NetworkImage(model.medicine_image),
-                      placeholder: AssetImage('assets/m_ph.png'),
-                      fit: BoxFit.cover,
-                    )),
-                Flexible(
-                  flex: 2,
-                  child: Container(
-                    // height: 70,
-                    padding: EdgeInsets.all(10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          model.medicine_name,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                        Text(
-                          'Qty: ' + model.medicine_quantity.toString(),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                              color: Colors.grey),
-                        ),
-                        SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            // incDecBtn(),
-                          ],
-                        )
-                      ],
-                    ),
+              width: 80,
+              height: 80,
+              padding: EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.outlineColor, )
+              ),
+              child: FadeInImage(
+                image: NetworkImage(model.medicine_image),
+                placeholder: AssetImage('assets/p_ph.png'),
+                fit: BoxFit.cover,
+              )),
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 15,),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    model.medicine_name,
+                    style: TextStyle(
+                      fontFamily: AppFont.Gotham,
+                        fontWeight: FontWeight.w400, fontSize: 16),
                   ),
-                ),
-                Flexible(
-                  flex: 1,
-                  child: Container(
-                    width: double.maxFinite,
-                    // height: 70,
-                    padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                          icon: Icon(
-                            Icons.delete,
-                            size: 20,
-                            color: Colors.grey[400],
-                          ),
-                          onPressed: () {
-                            deleteCartItem(
-                                store_id: model.store_id,
-                                medicine_id: model.store_medicine_id,
-                                model: model);
-                          },
-                        ),
-                        Text(
-                          'Rs. ' + model.medicine_subtotal.toString(),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                              color: AppColors.primaryColor),
-                        )
-                      ],
-                    ),
+                  SizedBox(height: 3,),
+                  Text(
+                    'Qty: ' + model.medicine_quantity.toString(),
+                    style: TextStyle(
+                        fontFamily: AppFont.Gotham,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        color: Colors.grey),
                   ),
-                )
-              ],
+                  SizedBox(height: 20),
+                  Spacer(),
+
+                  Text(
+                    'Rs. ' + model.medicine_subtotal.toString(),
+                    style: TextStyle(
+                        fontFamily: AppFont.Gotham,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 14,
+                        color: AppColors.primaryColor),
+                  )
+                ],
+              ),
             ),
           ),
-          Divider(
-            thickness: 3,
-            height: 30,
+          GestureDetector(
+            onTap: (){
+              deleteCartItem(
+                          store_id: model.store_id,
+                          medicine_id: model.store_medicine_id,
+                          model: model);
+            },
+            child: Icon(
+              CupertinoIcons.delete,
+              size: 24,
+              color: AppColors.outlineColor,
+            ),
           )
         ],
       ),

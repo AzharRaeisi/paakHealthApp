@@ -16,7 +16,8 @@ import 'package:paakhealth/services/order_sevices.dart';
 import 'package:paakhealth/util/colors.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:paakhealth/util/text_style.dart';
-import 'package:paakhealth/widgets/hero_photo_view_route_wrapper.dart';
+import 'package:paakhealth/widgets/photo/hero_photo_view_route_wrapper.dart';
+import 'package:paakhealth/widgets/primaryButton.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
@@ -84,7 +85,7 @@ class _DeliveryInfoScreenState extends State<DeliveryInfoScreen> {
         iconTheme: IconThemeData(color: AppColors.primaryColor),
         title: Text(
           shoppingCompleted ? 'Order' : 'Delivery Information',
-          style: AppTextStyle.appTextStyle,
+          style: AppTextStyle.appbarTextStyle,
         ),
         centerTitle: true,
         elevation: 2,
@@ -456,24 +457,7 @@ class _DeliveryInfoScreenState extends State<DeliveryInfoScreen> {
           placeOrderPrescribtion();
         }
       },
-      child: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: <Color>[
-              Color(0xFF69C4F0),
-              Color(0xFF00B2EE),
-            ],
-          ),
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-        ),
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(vertical: 15),
-        child: Text(
-          btnText,
-          style: TextStyle(color: Colors.white, fontSize: 18),
-          textAlign: TextAlign.center,
-        ),
-      ),
+      child: AppPrimaryButton(text: btnText,),
     );
   }
 

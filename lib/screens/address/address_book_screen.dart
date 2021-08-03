@@ -46,7 +46,7 @@ class _CustomerAddressesScreenState extends State<CustomerAddressesScreen> {
           iconTheme: IconThemeData(color: AppColors.primaryColor),
           title: Text(
             'Address Book',
-            style: AppTextStyle.appTextStyle,
+            style: AppTextStyle.appbarTextStyle,
           ),
 
           actions: [

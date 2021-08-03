@@ -122,7 +122,6 @@ flutter:
         - asset: fonts/AvenirLTStd-Roman.otf
           weight: 400
         - asset: fonts/AvenirLTStd-Heavy.ttf
-          weight: 900
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #

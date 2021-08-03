@@ -40,7 +40,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
         iconTheme: IconThemeData(color: AppColors.primaryColor),
         title: Text(
           'My Orders',
-          style: AppTextStyle.appTextStyle,
+          style: AppTextStyle.appbarTextStyle,
         ),
         centerTitle: true,
         elevation: 2,

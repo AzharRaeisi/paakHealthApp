@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paakhealth/models/medicine_model.dart';
 import 'package:paakhealth/screens/medicine/product_detial_screen.dart';
+import 'package:paakhealth/util/colors.dart';
 import 'package:paakhealth/util/font.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
@@ -40,7 +41,7 @@ class MedicineWidget extends StatelessWidget {
               Container(
                 width: double.maxFinite,
                 height: 100.0,
-                color: Color(0xFF519EC8),
+                color: AppColors.primaryColor,
                 child: Stack(
                   children: [
                     FadeInImage(
@@ -92,7 +93,7 @@ class MedicineWidget extends StatelessWidget {
                     fontFamily: AppFont.Gotham,
                     fontWeight: FontWeight.w700,
                     fontSize: 10,
-                    color: Color(0xFF7AC3DC)),
+                    color: AppColors.primaryColor),
               ),
             ],
           )),
