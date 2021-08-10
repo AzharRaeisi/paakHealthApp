@@ -220,15 +220,15 @@ class _ProductDetialScreenState extends State<ProductDetialScreen> {
                   bottomLeft: Radius.circular(40)),
               border: Border.all(
                   width: 1,
-                  color: AppColors.primaryColor,
+                  color: AppColors.outlineColor,
                   style: BorderStyle.solid)),
           child: IconButton(
             padding: EdgeInsets.zero,
-            splashColor: AppColors.primaryColor,
+            // splashColor: AppColors.primaryColor,
             icon: Icon(
               Icons.remove,
               size: 10,
-              color: AppColors.primaryColor,
+              color: AppColors.outlineColor,
             ),
             onPressed: () {
               _decrementQty();
@@ -243,7 +243,7 @@ class _ProductDetialScreenState extends State<ProductDetialScreen> {
               border: Border.symmetric(
             horizontal: BorderSide(
                 width: 1,
-                color: AppColors.primaryColor,
+                color: AppColors.outlineColor,
                 style: BorderStyle.solid),
           )),
           child: Center(
@@ -264,15 +264,15 @@ class _ProductDetialScreenState extends State<ProductDetialScreen> {
                   bottomRight: Radius.circular(40)),
               border: Border.all(
                   width: 1,
-                  color: AppColors.primaryColor,
+                  color: AppColors.outlineColor,
                   style: BorderStyle.solid)),
           child: IconButton(
             padding: EdgeInsets.zero,
-            splashColor: AppColors.primaryColor,
+            // splashColor: AppColors.primaryColor,
             icon: Icon(
               Icons.add,
               size: 12,
-              color: AppColors.primaryColor,
+              color: AppColors.outlineColor,
             ),
             onPressed: () {
               _incrementQty();
@@ -289,6 +289,7 @@ class _ProductDetialScreenState extends State<ProductDetialScreen> {
     if (_productQty > 0) {
       _productQty = _productQty - 1;
       setState(() {});
+      addToCard();
     }
   }
 
@@ -296,6 +297,7 @@ class _ProductDetialScreenState extends State<ProductDetialScreen> {
   void _incrementQty() {
     _productQty = _productQty + 1;
     setState(() {});
+    addToCard();
   }
 
   Future<void> addToCard() async {

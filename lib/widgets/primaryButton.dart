@@ -20,7 +20,7 @@ class AppPrimaryButton extends StatelessWidget {
         text,
         style: TextStyle(
             fontFamily: AppFont.Gotham,
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w500,
             color: Colors.white, fontSize: 18),
         textAlign: TextAlign.center,
       ),

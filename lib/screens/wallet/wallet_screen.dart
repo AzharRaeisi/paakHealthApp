@@ -5,6 +5,7 @@ import 'package:paakhealth/models/api_response.dart';
 import 'package:paakhealth/models/wallet_history_model.dart';
 import 'package:paakhealth/services/account_services.dart';
 import 'package:paakhealth/util/colors.dart';
+import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:paakhealth/util/text_style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,7 +35,7 @@ class _WalletScreenState extends State<WalletScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.bgColor,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_rounded),
@@ -79,16 +80,21 @@ class _WalletScreenState extends State<WalletScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text('Current Balance',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w300,
-                                    fontSize: 12.0,
-                                    color: Colors.white)),
+                              style: TextStyle(
+                                fontSize: 12.0,
+                                fontFamily: AppFont.Gotham,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.boxColor,
+                              ),
+                            ),
                             Text(
                               'Rs ' + walletAmount.toString(),
                               style: TextStyle(
-                                  fontSize: 38.0,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white),
+                                fontSize: 34.0,
+                                fontFamily: AppFont.Gotham,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.boxColor,
+                              ),
                             )
                           ]),
                       Container(
@@ -99,27 +105,35 @@ class _WalletScreenState extends State<WalletScreen> {
                           padding:
                               EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                           child: Text('ADD CASH',
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 12))),
+                            style: TextStyle(
+                              fontSize: 12.0,
+                              fontFamily: AppFont.Gotham,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.primaryColor,
+                            ),)),
                     ]),
               ),
               SizedBox(
                 height: 20,
               ),
               Text('Transaction History',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.primaryColor,
-                  )),
+                style: TextStyle(
+                  fontFamily: AppFont.Gotham,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.primaryColor,
+                ),),
               SizedBox(
                 height: 10,
               ),
               history.length == 0
                   ? Text(
                       ' No details available',
-                      style: TextStyle(fontSize: 12),
+                style: TextStyle(
+                  fontSize: 12.0,
+                  fontFamily: AppFont.Gotham,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.textColor,
+                ),
                     )
                   : Container(),
               history.length != 0
@@ -130,57 +144,88 @@ class _WalletScreenState extends State<WalletScreen> {
                       //     fontWeight: FontWeight.bold,
                       //     color: Colors.black
                       // ),
+                headingRowColor: MaterialStateColor.resolveWith((states) => AppColors.boxColor),
+                dataRowColor: MaterialStateColor.resolveWith((states) => AppColors.boxColor),
                       columns: [
                         DataColumn(
                             label: Text(
                           'Date',
-                          style: TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.black),
+                              style: TextStyle(
+                                fontSize: 13.0,
+                                fontFamily: AppFont.Gotham,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.textColor,
+                              ),
                         )),
                         DataColumn(
                             label: Text(
                           'Dr',
-                          style: TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.black),
+                              style: TextStyle(
+                                fontSize: 13.0,
+                                fontFamily: AppFont.Gotham,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.textColor,
+                              ),
                         )),
                         DataColumn(
                             label: Text(
                           'Cr',
-                          style: TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.black),
+                              style: TextStyle(
+                                fontSize: 13.0,
+                                fontFamily: AppFont.Gotham,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.textColor,
+                              ),
                         )),
                       ],
                       rows: history
                           .map((model) => DataRow(cells: [
-                                DataCell(Text(
-                                  formatDate( DateTime.parse(model.transaction_date), [d, ' ', M, ' ', yyyy]),
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.black38),
+                                DataCell(Column(
+                                  children: [
+                                    Text(
+                                      formatDate( DateTime.parse(model.transaction_date), [d, ' ', M, ' ', yyyy]),
+                                      style: TextStyle(
+                                        fontSize: 12.0,
+                                        fontFamily: AppFont.Gotham,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.textColor,
+                                      ),
+                                    ),
+                                    SizedBox(height: 3,),
+                                    Text(
+                                      formatDate( DateTime.parse(model.transaction_date), [hh, ':', mm]),
+                                      style: TextStyle(
+                                        fontSize: 12.0,
+                                        fontFamily: AppFont.Gotham,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.textColor,
+                                      ),
+                                    ),
+                                  ],
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                 )),
                                 DataCell(Text(
                                   model.transaction_type == 2
                                       ? model.add_deduct_amount.toString()
                                       : '',
                                   style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.black54),
+                                    fontSize: 12.0,
+                                    fontFamily: AppFont.Gotham,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.secondary2Color,
+                                  ),
                                 )),
                                 DataCell(Text(
                                   model.transaction_type == 1
                                       ? model.add_deduct_amount.toString()
                                       : '',
                                   style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
-                                      color: AppColors.primaryColor),
+                                    fontSize: 12.0,
+                                    fontFamily: AppFont.Gotham,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.primaryColor,
+                                  ),
                                 )),
                               ]))
                           .toList(),

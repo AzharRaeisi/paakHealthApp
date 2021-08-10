@@ -107,20 +107,50 @@ class _CartScreenState extends State<CartScreen> {
             : Builder(builder: (context) {
                 if (cartItemList.length == 0)
                   return Container(
-                    padding: EdgeInsets.all(30),
+                    padding: EdgeInsets.all(10),
                     child: Center(
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          Container(
+                            alignment: Alignment.centerRight,
+                            margin: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                            child: GestureDetector(
+                              onTap: (){
+                                if(!isLoading){
+                                  setState(() {
+                                    isLoading = true;
+                                  });
+                                  getCartList();
+                                }
+
+                              },
+                              child: Text('Update',
+                                style: TextStyle(
+                                  fontFamily: AppFont.Gotham,
+                                  fontWeight: FontWeight.w400,
+
+                                ),),
+                            ),
+                          ),
                           Text(
                             'Shopping cart is Empty!',
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Color(0xFF939598),
-                                fontWeight: FontWeight.w700),
+                            style:
+                            TextStyle(
+                              fontSize: 20.0,
+                              fontFamily: AppFont.Gotham,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.buttonColor,
+                            ),
                           ),
                           Text(
                             'You have no items in your shopping cart.',
+                            style: TextStyle(
+                              fontSize: 12.0,
+                              fontFamily: AppFont.Gotham,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.textColor,
+                            ),
                           ),
                         ],
                       ),
@@ -133,16 +163,28 @@ class _CartScreenState extends State<CartScreen> {
                       Container(
                         alignment: Alignment.centerRight,
                         margin: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                        child: Text('Update',
-                        style: TextStyle(
-                          fontFamily: AppFont.Gotham,
-                          fontWeight: FontWeight.w400,
+                        child: GestureDetector(
+                          onTap: (){
+                            if(!isLoading){
+                              setState(() {
+                                isLoading = true;
+                              });
+                              getCartList();
+                            }
 
-                        ),),
+                          },
+                          child: Text('Update',
+                          style: TextStyle(
+                            fontFamily: AppFont.Gotham,
+                            fontWeight: FontWeight.w400,
+
+                          ),),
+                        ),
                       ),
                       Expanded(
                           child: ListView.builder(
                         itemCount: cartItemListItems.length,
+                        physics: BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
                           CartItemListItemModel model =
                               cartItemListItems[index];
@@ -165,7 +207,7 @@ class _CartScreenState extends State<CartScreen> {
                                     fontWeight: FontWeight.w700,),
                                 ),
                                 Text(
-                                  'Rs. 600.0',
+                                  'Rs. ' + total,
                                   style: TextStyle(
                                       fontFamily: AppFont.Gotham,
                                       fontWeight: FontWeight.w700, color: Colors.grey[700]),
@@ -183,7 +225,7 @@ class _CartScreenState extends State<CartScreen> {
                                       fontWeight: FontWeight.w400, fontSize: 13),
                                 ),
                                 Text(
-                                  'Rs. 50.0',
+                                  'Rs. ',
                                   style: TextStyle(color: Colors.grey[700],
                                       fontFamily: AppFont.Gotham,
                                       fontWeight: FontWeight.w400, fontSize: 13),
@@ -272,52 +314,73 @@ class _CartScreenState extends State<CartScreen> {
                 fit: BoxFit.cover,
               )),
           Expanded(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 15,),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    model.medicine_name,
-                    style: TextStyle(
-                      fontFamily: AppFont.Gotham,
-                        fontWeight: FontWeight.w400, fontSize: 16),
-                  ),
-                  SizedBox(height: 3,),
-                  Text(
-                    'Qty: ' + model.medicine_quantity.toString(),
-                    style: TextStyle(
-                        fontFamily: AppFont.Gotham,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14,
-                        color: Colors.grey),
-                  ),
-                  SizedBox(height: 20),
-                  Spacer(),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
 
-                  Text(
-                    'Rs. ' + model.medicine_subtotal.toString(),
-                    style: TextStyle(
-                        fontFamily: AppFont.Gotham,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14,
-                        color: AppColors.primaryColor),
-                  )
-                ],
-              ),
-            ),
-          ),
-          GestureDetector(
-            onTap: (){
-              deleteCartItem(
-                          store_id: model.store_id,
-                          medicine_id: model.store_medicine_id,
-                          model: model);
-            },
-            child: Icon(
-              CupertinoIcons.delete,
-              size: 24,
-              color: AppColors.outlineColor,
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 15,),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              model.medicine_name,
+                              style: TextStyle(
+                                  fontFamily: AppFont.Gotham,
+                                  fontWeight: FontWeight.w400, fontSize: 16),
+                            ),
+                            SizedBox(height: 3,),
+                            Text(
+                              'Qty: ' + model.medicine_quantity.toString(),
+                              style: TextStyle(
+                                  fontFamily: AppFont.Gotham,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14,
+                                  color: Colors.grey),
+                            ),
+
+                          ],
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: (){
+                        deleteCartItem(
+                            store_id: model.store_id,
+                            medicine_id: model.store_medicine_id,
+                            model: model);
+                      },
+                      child: Icon(
+                        CupertinoIcons.delete,
+                        size: 24,
+                        color: AppColors.outlineColor,
+                      ),
+                    )
+                  ],
+                ),
+
+
+                Container(
+                  padding: EdgeInsets.only(left: 15,),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Rs. ' + model.medicine_subtotal.toString(),
+                        style: TextStyle(
+                            fontFamily: AppFont.Gotham,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14,
+                            color: AppColors.primaryColor),
+                      ),
+                      incDecBtn()
+                    ],
+                  ),
+                )
+              ],
             ),
           )
         ],
@@ -325,6 +388,7 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
+  // todo make this button funcitonal
   Row incDecBtn() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -337,15 +401,15 @@ class _CartScreenState extends State<CartScreen> {
                   bottomLeft: Radius.circular(40)),
               border: Border.all(
                   width: 1,
-                  color: AppColors.primaryColor,
+                  color: AppColors.outlineColor,
                   style: BorderStyle.solid)),
           child: IconButton(
             padding: EdgeInsets.zero,
-            splashColor: AppColors.primaryColor,
+            // splashColor: AppColors.primaryColor,
             icon: Icon(
               Icons.remove,
               size: 10,
-              color: AppColors.primaryColor,
+              color: AppColors.outlineColor,
             ),
             onPressed: () {
               _decrementQty();
@@ -360,7 +424,7 @@ class _CartScreenState extends State<CartScreen> {
               border: Border.symmetric(
             horizontal: BorderSide(
                 width: 1,
-                color: AppColors.primaryColor,
+                color: AppColors.outlineColor,
                 style: BorderStyle.solid),
           )),
           child: Center(
@@ -379,15 +443,15 @@ class _CartScreenState extends State<CartScreen> {
                   bottomRight: Radius.circular(40)),
               border: Border.all(
                   width: 1,
-                  color: AppColors.primaryColor,
+                  color: AppColors.outlineColor,
                   style: BorderStyle.solid)),
           child: IconButton(
             padding: EdgeInsets.zero,
-            splashColor: AppColors.primaryColor,
+            // splashColor: AppColors.primaryColor,
             icon: Icon(
               Icons.add,
               size: 12,
-              color: AppColors.primaryColor,
+              color: AppColors.outlineColor,
             ),
             onPressed: () {
               _incrementQty();

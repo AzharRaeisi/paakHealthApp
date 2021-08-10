@@ -9,8 +9,10 @@ import 'package:paakhealth/models/city_model.dart';
 import 'package:paakhealth/services/account_services.dart';
 import 'package:paakhealth/services/default_services.dart';
 import 'package:paakhealth/util/colors.dart';
+import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:paakhealth/util/text_style.dart';
+import 'package:paakhealth/widgets/primaryButton.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AddressScreen extends StatefulWidget {
@@ -99,73 +101,96 @@ class _AddressScreenState extends State<AddressScreen> {
           widget.add
               ? Container()
               : IconButton(
-              onPressed: () {
-                deleteAddress();
-              },
-              icon: Icon(
-                Icons.delete,
-                color: AppColors.primaryColor,
-              ))
+                  onPressed: () {
+                    deleteAddress();
+                  },
+                  icon: Icon(
+                    Icons.delete,
+                    color: AppColors.primaryColor,
+                  ))
         ],
         centerTitle: true,
         elevation: 2,
         backgroundColor: Colors.white,
       ),
       body: Container(
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.all(10),
         child: Form(
           key: _key,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(height: 20),
-                buildNameTextField(),
-                SizedBox(height: 12),
-                Obx(() => DropdownButtonFormField<CityModel>(
-                      // hint: Text("Select City"),
-                      isExpanded: true,
-                      value: selectedCity,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'City',
-                      ),
-                      onChanged: controller.editable.value
-                          ? (value) {
-                              // setState(() {
-                              selectedCity = value;
-                              // });
-                            }
-                          : null,
-                      items: cityList.map((CityModel city) {
-                        return DropdownMenuItem<CityModel>(
-                          value: city,
-                          child: Text(city.name),
-                        );
-                      }).toList(),
-                    )),
-                SizedBox(height: 12),
-                buildAddTypeTextField(),
-                SizedBox(height: 12),
-                buildAddressTextField(),
-                SizedBox(height: 12),
-                buildPhoneTextField(),
-                SizedBox(
-                  height: 40,
+          child: LayoutBuilder(
+            builder: (context, constraint){
+              return SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints:
+                  BoxConstraints(minHeight: constraint.maxHeight),
+                  child: IntrinsicHeight(
+                    child: Column(
+                      children: [
+                        SizedBox(height: 20),
+                        buildNameTextField(),
+                        SizedBox(height: 12),
+                        Obx(() => DropdownButtonFormField<CityModel>(
+                          // hint: Text("Select City"),
+                          isExpanded: true,
+                          value: selectedCity,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'City',
+                            labelStyle: TextStyle(
+                              fontSize: 12.0,
+                              fontFamily: AppFont.Gotham,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.textColor,
+                            ),
+                          ),
+                          onChanged: controller.editable.value
+                              ? (value) {
+                            // setState(() {
+                            selectedCity = value;
+                            // });
+                          }
+                              : null,
+                          items: cityList.map((CityModel city) {
+                            return DropdownMenuItem<CityModel>(
+                              value: city,
+                              child: Text(
+                                city.name,
+                                style: TextStyle(
+                                  fontSize: 12.0,
+                                  fontFamily: AppFont.Gotham,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.textColor,
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                        )),
+                        SizedBox(height: 12),
+                        buildAddTypeTextField(),
+                        SizedBox(height: 12),
+                        buildAddressTextField(),
+                        SizedBox(height: 12),
+                        buildPhoneTextField(),
+                        Spacer(),
+
+                        Obx(() => controller.editable.value
+                            ? Obx(() => controller.isProcessing.value
+                            ? Center(child: CircularProgressIndicator())
+                            : _primaryBtn(btnText: 'Save'))
+                            : Container())
+                        // editable
+                        //     ? isProcessing
+                        //     ? Center(
+                        //   child: CircularProgressIndicator(),
+                        // )
+                        //     : _primaryBtn(btnText: 'Save')
+                        //     : Container()
+                      ],
+                    ),
+                  ),
                 ),
-                Obx(() => controller.editable.value
-                    ? Obx(() => controller.isProcessing.value
-                        ? Center(child: CircularProgressIndicator())
-                        : _primaryBtn(btnText: 'Save'))
-                    : Container())
-                // editable
-                //     ? isProcessing
-                //     ? Center(
-                //   child: CircularProgressIndicator(),
-                // )
-                //     : _primaryBtn(btnText: 'Save')
-                //     : Container()
-              ],
-            ),
+              );
+            },
           ),
         ),
       ),
@@ -183,11 +208,29 @@ class _AddressScreenState extends State<AddressScreen> {
             else
               return 'Name must be at least of 3 characters';
           },
+      style: TextStyle(
+        fontSize: 12.0,
+        fontFamily: AppFont.Gotham,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textColor,
+      ),
           decoration: InputDecoration(
               border: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey[100], width: 1.0),
                   borderRadius: BorderRadius.circular(5)),
               labelText: 'Name',
+              labelStyle: TextStyle(
+                fontSize: 12.0,
+                fontFamily: AppFont.Gotham,
+                fontWeight: FontWeight.w400,
+                color: AppColors.textColor,
+              ),
+              hintStyle: TextStyle(
+                fontSize: 12.0,
+                fontFamily: AppFont.Gotham,
+                fontWeight: FontWeight.w400,
+                color: AppColors.textColor,
+              ),
               hintText: 'Name'),
         ));
   }
@@ -205,11 +248,30 @@ class _AddressScreenState extends State<AddressScreen> {
               return 'Enter your address';
           },
           decoration: InputDecoration(
-              border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey[100], width: 1.0),
-                  borderRadius: BorderRadius.circular(5)),
-              labelText: 'Address',
-              hintText: 'Address'),
+            border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey[100], width: 1.0),
+                borderRadius: BorderRadius.circular(5)),
+            labelText: 'Address',
+            hintText: 'Address',
+            labelStyle: TextStyle(
+              fontSize: 12.0,
+              fontFamily: AppFont.Gotham,
+              fontWeight: FontWeight.w400,
+              color: AppColors.textColor,
+            ),
+            hintStyle: TextStyle(
+              fontSize: 12.0,
+              fontFamily: AppFont.Gotham,
+              fontWeight: FontWeight.w400,
+              color: AppColors.textColor,
+            ),
+          ),
+      style: TextStyle(
+        fontSize: 12.0,
+        fontFamily: AppFont.Gotham,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textColor,
+      ),
         ));
   }
 
@@ -224,12 +286,31 @@ class _AddressScreenState extends State<AddressScreen> {
             else
               return 'Username must be at least of 6 characters';
           },
+      style: TextStyle(
+        fontSize: 12.0,
+        fontFamily: AppFont.Gotham,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textColor,
+      ),
           decoration: InputDecoration(
-              border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey[100], width: 1.0),
-                  borderRadius: BorderRadius.circular(5)),
-              labelText: 'Address Type',
-              hintText: 'Address Type'),
+            border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey[100], width: 1.0),
+                borderRadius: BorderRadius.circular(5)),
+            labelText: 'Address Type',
+            hintText: 'Address Type',
+            labelStyle: TextStyle(
+              fontSize: 12.0,
+              fontFamily: AppFont.Gotham,
+              fontWeight: FontWeight.w400,
+              color: AppColors.textColor,
+            ),
+            hintStyle: TextStyle(
+              fontSize: 12.0,
+              fontFamily: AppFont.Gotham,
+              fontWeight: FontWeight.w400,
+              color: AppColors.textColor,
+            ),
+          ),
         ));
   }
 
@@ -246,12 +327,30 @@ class _AddressScreenState extends State<AddressScreen> {
             else
               return 'Enter valid phone number';
           },
+      style: TextStyle(
+        fontSize: 12.0,
+        fontFamily: AppFont.Gotham,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textColor,
+      ),
           decoration: InputDecoration(
             border: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey, width: 1.0),
                 borderRadius: BorderRadius.circular(5)),
             labelText: 'Phone',
             hintText: '343XXXXXXX',
+            labelStyle: TextStyle(
+              fontSize: 12.0,
+              fontFamily: AppFont.Gotham,
+              fontWeight: FontWeight.w400,
+              color: AppColors.textColor,
+            ),
+            hintStyle: TextStyle(
+              fontSize: 12.0,
+              fontFamily: AppFont.Gotham,
+              fontWeight: FontWeight.w400,
+              color: AppColors.textColor,
+            ),
           ),
         ));
   }
@@ -272,7 +371,10 @@ class _AddressScreenState extends State<AddressScreen> {
       Get.snackbar('', 'Oops! Server is Down');
     }
 
-    setState(() {});
+    if(mounted){
+      setState(() {});
+
+    }
   }
 
   Future<void> addAddress() async {
@@ -327,24 +429,7 @@ class _AddressScreenState extends State<AddressScreen> {
           }
         }
       },
-      child: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: <Color>[
-              Color(0xFF69C4F0),
-              Color(0xFF00B2EE),
-            ],
-          ),
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-        ),
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(vertical: 15),
-        child: Text(
-          btnText,
-          style: TextStyle(color: Colors.white, fontSize: 18),
-          textAlign: TextAlign.center,
-        ),
-      ),
+      child: AppPrimaryButton(text: 'Save'),
     );
   }
 
@@ -371,7 +456,8 @@ class _AddressScreenState extends State<AddressScreen> {
     );
     if (response != null) {
       if (response.status == '1') {
-        Get.snackbar('Address Changed', 'Please go back and refresh the screen.');
+        Get.snackbar(
+            'Address Changed', 'Please go back and refresh the screen.');
         // editable = false;
         controller.updateEditable(false);
         controller.updateIsProcessing(false);
@@ -386,7 +472,6 @@ class _AddressScreenState extends State<AddressScreen> {
   }
 
   Future<void> deleteAddress() async {
-
     SharedPreferences prefs = await SharedPreferences.getInstance();
     logger.i(prefs.getString(SharedPreVariables.TOKEN));
     Position position = await Geolocator.getCurrentPosition(
@@ -399,7 +484,8 @@ class _AddressScreenState extends State<AddressScreen> {
     );
     if (response != null) {
       if (response.status == '1') {
-        Get.snackbar('Address Deleted', 'Please go back and refresh the screen.');
+        Get.snackbar(
+            'Address Deleted', 'Please go back and refresh the screen.');
         // editable = false;
         controller.updateEditable(false);
         controller.updateIsProcessing(false);

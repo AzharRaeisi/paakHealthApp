@@ -163,14 +163,23 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         hintText: 'Name',
         labelText: 'Name',
         labelStyle: TextStyle(
-          fontFamily: AppFont.Avenirl,
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
         ),
         hintStyle: TextStyle(
-          fontFamily: AppFont.Avenirl,
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
         ),
       ),
       style: TextStyle(
-        fontFamily: AppFont.Avenirl,
+        fontSize: 12.0,
+        fontFamily: AppFont.Gotham,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textColor,
       ),
     );
   }
@@ -195,14 +204,23 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         labelText: 'Email',
         hintText: 'info@paakhealth.com',
         labelStyle: TextStyle(
-          fontFamily: AppFont.Avenirl,
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
         ),
         hintStyle: TextStyle(
-          fontFamily: AppFont.Avenirl,
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
         ),
       ),
       style: TextStyle(
-        fontFamily: AppFont.Avenirl,
+        fontSize: 12.0,
+        fontFamily: AppFont.Gotham,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textColor,
       ),
     );
   }
@@ -218,16 +236,24 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             borderRadius: BorderRadius.circular(5)),
         hintText: '343XXXXXXX',
         labelText: 'Phone',
-
         labelStyle: TextStyle(
-          fontFamily: AppFont.Avenirl,
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
         ),
         hintStyle: TextStyle(
-          fontFamily: AppFont.Avenirl,
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
         ),
       ),
       style: TextStyle(
-        fontFamily: AppFont.Avenirl,
+        fontSize: 12.0,
+        fontFamily: AppFont.Gotham,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textColor,
       ),
     );
   }
@@ -418,16 +444,24 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             borderRadius: BorderRadius.circular(5)),
         hintText: 'male',
         labelText: 'Gender',
-
         labelStyle: TextStyle(
-          fontFamily: AppFont.Avenirl,
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
         ),
         hintStyle: TextStyle(
-          fontFamily: AppFont.Avenirl,
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
         ),
       ),
       style: TextStyle(
-        fontFamily: AppFont.Avenirl,
+        fontSize: 12.0,
+        fontFamily: AppFont.Gotham,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textColor,
       ),
     );
   }

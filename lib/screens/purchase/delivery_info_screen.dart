@@ -14,6 +14,7 @@ import 'package:paakhealth/services/account_services.dart';
 import 'package:paakhealth/services/default_services.dart';
 import 'package:paakhealth/services/order_sevices.dart';
 import 'package:paakhealth/util/colors.dart';
+import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:paakhealth/util/text_style.dart';
 import 'package:paakhealth/widgets/photo/hero_photo_view_route_wrapper.dart';
@@ -291,11 +292,17 @@ class _DeliveryInfoScreenState extends State<DeliveryInfoScreen> {
                           buildAddressTextField(),
                           SizedBox(height: 7),
                           DropdownButtonFormField<PaymentModel>(
-                            hint: Text("Select Payment Method"),
                             isExpanded: true,
                             value: selectedPayment,
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                               border: OutlineInputBorder(),
+                              labelText: 'Select Payment Method',
+                              labelStyle: TextStyle(
+                                fontSize: 12.0,
+                                fontFamily: AppFont.Gotham,
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.textColor,
+                              ),
                             ),
                             onChanged: (value) {
                               setState(() {
@@ -305,7 +312,14 @@ class _DeliveryInfoScreenState extends State<DeliveryInfoScreen> {
                             items: paymentList.map((PaymentModel payment) {
                               return DropdownMenuItem<PaymentModel>(
                                 value: payment,
-                                child: Text(payment.name),
+                                child: Text(payment.name,
+
+                                  style: TextStyle(
+                                    fontSize: 12.0,
+                                    fontFamily: AppFont.Gotham,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.textColor,
+                                  ),),
                               );
                             }).toList(),
                           ),
@@ -370,7 +384,26 @@ class _DeliveryInfoScreenState extends State<DeliveryInfoScreen> {
           border: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.grey[100], width: 1.0),
               borderRadius: BorderRadius.circular(5)),
-          hintText: 'Your Comments'),
+          hintText: 'Your Comments',
+        labelStyle: TextStyle(
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
+        ),
+        hintStyle: TextStyle(
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
+        ),
+      ),
+      style: TextStyle(
+        fontSize: 12.0,
+        fontFamily: AppFont.Gotham,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textColor,
+      ),
     );
   }
 
@@ -401,7 +434,26 @@ class _DeliveryInfoScreenState extends State<DeliveryInfoScreen> {
           border: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.grey[100], width: 1.0),
               borderRadius: BorderRadius.circular(5)),
-          hintText: 'Address'),
+          hintText: 'Address',
+        labelStyle: TextStyle(
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
+        ),
+        hintStyle: TextStyle(
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
+        ),
+      ),
+        style: TextStyle(
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
+        ),
     );
   }
 

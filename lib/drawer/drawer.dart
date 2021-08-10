@@ -12,6 +12,7 @@ import 'package:paakhealth/screens/profile/edit_profile_screen.dart';
 import 'package:paakhealth/screens/wallet/wallet_screen.dart';
 import 'package:paakhealth/services/account_services.dart';
 import 'package:paakhealth/util/colors.dart';
+import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -76,10 +77,12 @@ class _MainDrawerState extends State<MainDrawer> {
                     Text(
                       customer_name == null ? 'username' : customer_name,
                       style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          letterSpacing: 1,
-                          fontSize: 20),
+                        fontSize: 20.0,
+                        fontFamily: AppFont.Gotham,
+                        letterSpacing: 1,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.boxColor,
+                      ),
                     ),
                   ],
                 ),
@@ -201,10 +204,12 @@ class _MainDrawerState extends State<MainDrawer> {
                     title,
                     textAlign: TextAlign.start,
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1,
-                        fontSize: 16,
-                        color: Colors.white),
+                      fontSize: 16.0,
+                      fontFamily: AppFont.Gotham,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 1,
+                      color: AppColors.boxColor,
+                    ),
                   ),
                 ),
               )

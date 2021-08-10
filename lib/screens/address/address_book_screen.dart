@@ -6,6 +6,7 @@ import 'package:paakhealth/models/api_response.dart';
 import 'package:paakhealth/screens/address/address_screen.dart';
 import 'package:paakhealth/services/account_services.dart';
 import 'package:paakhealth/util/colors.dart';
+import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:paakhealth/util/text_style.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -70,15 +71,18 @@ class _CustomerAddressesScreenState extends State<CustomerAddressesScreen> {
           elevation: 2,
           backgroundColor: Colors.white,
         ),
-      body: RefreshIndicator(
-        onRefresh: () async{
-          getAddress();
-        },
-        child: ListView.builder(
-            itemCount: addresses.length,
-            itemBuilder: (context, index){
-              return addressItem(addresses[index]);
-            }),
+      body: Container(
+        color: AppColors.bgColor,
+        child: RefreshIndicator(
+          onRefresh: () async{
+            getAddress();
+          },
+          child: ListView.builder(
+              itemCount: addresses.length,
+              itemBuilder: (context, index){
+                return addressItem(addresses[index]);
+              }),
+        ),
       ),
     );
   }
@@ -117,7 +121,7 @@ class _CustomerAddressesScreenState extends State<CustomerAddressesScreen> {
     return Container(
       color: Colors.white,
       padding: EdgeInsets.all(10),
-      margin: EdgeInsets.only(bottom: 5),
+      margin:  EdgeInsets.only(top: 10, left: 10, right: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -143,14 +147,21 @@ class _CustomerAddressesScreenState extends State<CustomerAddressesScreen> {
                     children: [
                       Text(
                         'Name: ',
-                        style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                        style: TextStyle(
+                          fontSize: 12.0,
+                          fontFamily: AppFont.Gotham,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.textColor,
+                        ),
                       ),
                       Text(
                         model.name,
                         style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                            color: Colors.grey[700]),
+                          fontSize: 12.0,
+                          fontFamily: AppFont.Gotham,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.textColor,
+                        ),
                       ),
                     ],
                   ),
@@ -158,14 +169,21 @@ class _CustomerAddressesScreenState extends State<CustomerAddressesScreen> {
                     children: [
                       Text(
                         'Address Type: ',
-                        style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                        style: TextStyle(
+                          fontSize: 12.0,
+                          fontFamily: AppFont.Gotham,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.textColor,
+                        ),
                       ),
                       Text(
                         model.type_name,
                         style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                            color: Colors.grey[700]),
+                          fontSize: 12.0,
+                          fontFamily: AppFont.Gotham,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.textColor,
+                        ),
                       ),
                     ],
                   ),
@@ -174,14 +192,21 @@ class _CustomerAddressesScreenState extends State<CustomerAddressesScreen> {
                     children: [
                       Text(
                         'Phone: ',
-                        style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                        style: TextStyle(
+                          fontSize: 12.0,
+                          fontFamily: AppFont.Gotham,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.textColor,
+                        ),
                       ),
                       Text(
                         model.phone,
                         style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                            color: Colors.grey[700]),
+                          fontSize: 12.0,
+                          fontFamily: AppFont.Gotham,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.textColor,
+                        ),
                       ),
                       Expanded(child: Container()),
                       GestureDetector(
@@ -197,7 +222,11 @@ class _CustomerAddressesScreenState extends State<CustomerAddressesScreen> {
                         child: Text(
                           'View',
                           style: TextStyle(
-                              color: AppColors.primaryColor, fontSize: 12),
+                            fontSize: 12.0,
+                            fontFamily: AppFont.Gotham,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.primaryColor,
+                          ),
                         ),
                       )
                     ],

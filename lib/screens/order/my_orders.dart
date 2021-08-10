@@ -8,6 +8,7 @@ import 'package:paakhealth/models/order_model.dart';
 import 'package:paakhealth/screens/order/order_details.dart';
 import 'package:paakhealth/services/order_sevices.dart';
 import 'package:paakhealth/util/colors.dart';
+import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/util/order_status.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:paakhealth/util/text_style.dart';
@@ -35,8 +36,14 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.bgColor,
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_rounded),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         iconTheme: IconThemeData(color: AppColors.primaryColor),
         title: Text(
           'My Orders',
@@ -46,7 +53,6 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
         elevation: 2,
         backgroundColor: Colors.white,
       ),
-      drawer: MainDrawer(title: 'My Orders'),
       body: ListView.builder(
         itemCount: orders.length,
           itemBuilder: (context, index){
@@ -83,71 +89,63 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
     return Container(
       color: Colors.white,
       padding: EdgeInsets.all(10),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      margin:  EdgeInsets.only(top: 10, left: 10, right: 10),
+      child: Column(
         children: [
-          Container(
-              width: 60,
-              height: 60,
-              child: FadeInImage(
-                image: NetworkImage(
-                    model.order_image),
-                placeholder: AssetImage('assets/app_logo.png'),
-                fit: BoxFit.cover,
-              )),
-          Flexible(
-            flex: 1,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                  width: 60,
+                  height: 60,
+                  child: FadeInImage(
+                    image: NetworkImage(
+                        model.order_image),
+                    placeholder: AssetImage('assets/app_logo.png'),
+                    fit: BoxFit.cover,
+                  )),
+              Flexible(
+                flex: 1,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Order ID: ',
-                        style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                      Row(
+                        children: [
+                          Text(
+                            'Order ID: ',
+                            style: TextStyle(
+                              fontSize: 12.0,
+                              fontFamily: AppFont.Gotham,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.textColor,
+                            ),
+                          ),
+                          Text(
+                            model.order_number,
+                            style: TextStyle(
+                              fontSize: 12.0,
+                              fontFamily: AppFont.Gotham,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.textColor,
+                            ),
+                          ),
+                        ],
                       ),
+
+                      SizedBox(height: 3,),
                       Text(
-                        model.order_number,
+                        'Placed on ' + model.order_time,
                         style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                            color: Colors.grey[700]),
+                          fontSize: 12.0,
+                          fontFamily: AppFont.Gotham,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.textColor,
+                        ),
                       ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        'Order time: ',
-                        style: TextStyle(color: Colors.grey[600], fontSize: 12),
-                      ),
-                      Text(
-                        model.order_time,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                            color: Colors.grey[700]),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Text(
-                        'Order Status: ',
-                        style: TextStyle(color: Colors.grey[600], fontSize: 12),
-                      ),
-                      Text(
-                        OrderStatus.status(model.order_status),
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                            color: Colors.grey[700]),
-                      ),
-                      Expanded(child: Container()),
+                      SizedBox(height: 10),
                       GestureDetector(
                         onTap: () {
                           // Navigator.push(
@@ -164,14 +162,66 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                         child: Text(
                           'View Details',
                           style: TextStyle(
-                              color: AppColors.primaryColor, fontSize: 12),
+                            fontSize: 12.0,
+                            fontFamily: AppFont.Gotham,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.primaryColor,
+                          ),
                         ),
-                      )
+                      ),
+
                     ],
-                  )
-                ],
+                  ),
+                ),
+              )
+            ],
+          ),
+
+          SizedBox(height: 3,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                model.order_details.length.toString() + ' item(s), total: ',
+                style: TextStyle(
+                  fontSize: 12.0,
+                  fontFamily: AppFont.Gotham,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textColor,
+                ),
               ),
-            ),
+              Text(
+                'Rs. ' + model.total_paid_amount.toString(),
+                style: TextStyle(
+                  fontSize: 12.0,
+                  fontFamily: AppFont.Gotham,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.primaryColor,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Text(
+                'Order Status: ',
+                style: TextStyle(
+                  fontSize: 12.0,
+                  fontFamily: AppFont.Gotham,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.textColor,
+                ),
+              ),
+              Text(
+                OrderStatus.status(model.order_status),
+                style: TextStyle(
+                  fontSize: 12.0,
+                  fontFamily: AppFont.Gotham,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.primaryColor,
+                ),
+              ),
+            ],
           )
         ],
       ),
