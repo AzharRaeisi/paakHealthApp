@@ -6,8 +6,10 @@ import 'package:paakhealth/screens/home/landing_screen.dart';
 import 'package:paakhealth/screens/auth/login_screen.dart';
 import 'package:paakhealth/services/account_services.dart';
 import 'package:paakhealth/util/colors.dart';
+import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:paakhealth/widgets/primaryButton.dart';
+import 'package:paakhealth/widgets/toast/toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -53,9 +55,11 @@ class _SignupScreenState extends State<SignupScreen> {
                   Text(
                     'Welcome',
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.primaryColor,
-                        fontSize: 20),
+                      fontSize: 20.0,
+                      fontFamily: AppFont.Gotham,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.primaryColor,
+                    ),
                   ),
                   SizedBox(height: 25),
                   buildNameTextField(),
@@ -82,7 +86,11 @@ class _SignupScreenState extends State<SignupScreen> {
                               setState(() {});
                             },
                           ),
-                          title: Text('Male'),
+                          title: Text('Male', style: TextStyle(
+                            fontFamily: AppFont.Gotham,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.textColor,
+                          ),),
                         ),
                       ),
                       Expanded(
@@ -98,7 +106,11 @@ class _SignupScreenState extends State<SignupScreen> {
                               setState(() {});
                             },
                           ),
-                          title: Text('Female'),
+                          title: Text('Female', style: TextStyle(
+                            fontFamily: AppFont.Gotham,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.textColor,
+                          ),),
                         ),
                       ),
                     ],
@@ -136,7 +148,26 @@ class _SignupScreenState extends State<SignupScreen> {
           border: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.grey[100], width: 1.0),
               borderRadius: BorderRadius.circular(5)),
-          hintText: 'Username'),
+          hintText: 'Username',
+        labelStyle: TextStyle(
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
+        ),
+        hintStyle: TextStyle(
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
+        ),
+      ),
+      style: TextStyle(
+        fontSize: 12.0,
+        fontFamily: AppFont.Gotham,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textColor,
+      ),
     );
   }
 
@@ -157,7 +188,26 @@ class _SignupScreenState extends State<SignupScreen> {
           border: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.grey[100], width: 1.0),
               borderRadius: BorderRadius.circular(5)),
-          hintText: 'Email'),
+          hintText: 'Email',
+        labelStyle: TextStyle(
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
+        ),
+        hintStyle: TextStyle(
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
+        ),
+      ),
+      style: TextStyle(
+        fontSize: 12.0,
+        fontFamily: AppFont.Gotham,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textColor,
+      ),
     );
   }
 
@@ -177,7 +227,26 @@ class _SignupScreenState extends State<SignupScreen> {
           border: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.grey, width: 1.0),
               borderRadius: BorderRadius.circular(5)),
-          hintText: 'Phone (343XXXXXXX)'),
+          hintText: 'Phone (343XXXXXXX)',
+        labelStyle: TextStyle(
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
+        ),
+        hintStyle: TextStyle(
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
+        ),
+      ),
+      style: TextStyle(
+        fontSize: 12.0,
+        fontFamily: AppFont.Gotham,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textColor,
+      ),
     );
   }
 
@@ -196,7 +265,26 @@ class _SignupScreenState extends State<SignupScreen> {
           border: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.grey[100], width: 1.0),
               borderRadius: BorderRadius.circular(5)),
-          hintText: 'Password'),
+          hintText: 'Password',
+        labelStyle: TextStyle(
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
+        ),
+        hintStyle: TextStyle(
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
+        ),
+      ),
+      style: TextStyle(
+        fontSize: 12.0,
+        fontFamily: AppFont.Gotham,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textColor,
+      ),
     );
   }
 
@@ -215,7 +303,26 @@ class _SignupScreenState extends State<SignupScreen> {
           border: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.grey[100], width: 1.0),
               borderRadius: BorderRadius.circular(5)),
-          hintText: 'Re-enter Password'),
+          hintText: 'Re-enter Password',
+        labelStyle: TextStyle(
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
+        ),
+        hintStyle: TextStyle(
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
+        ),
+      ),
+      style: TextStyle(
+        fontSize: 12.0,
+        fontFamily: AppFont.Gotham,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textColor,
+      ),
     );
   }
 
@@ -224,7 +331,7 @@ class _SignupScreenState extends State<SignupScreen> {
       onTap: () async {
         if (_key.currentState.validate()) {
           if (_gender == 0) {
-            Get.snackbar('', 'Select gender.');
+            ShowMessage.message(message: 'Select gender.');
           } else {
             // SetupProfileModel model = SetupProfileModel(
             //     name: _userNameController.text,
@@ -249,14 +356,14 @@ class _SignupScreenState extends State<SignupScreen> {
                 device_token: '1234');
             if (response != null) {
               if (response.status == '1') {
-                Get.snackbar('', response.message);
+                ShowMessage.message(message: response.message);
                 Get.to(EnterCodeScreen(phone: _phoneController.text));
               } else {
-                Get.snackbar('', response.message);
+                ShowMessage.message(message: response.message);
               }
             } else {
               print('API response is null');
-              Get.snackbar('', 'Oops! Server is Down');
+              ShowMessage.message(message: 'Oops! Server is Down');
 
             }
 
@@ -277,7 +384,11 @@ class _SignupScreenState extends State<SignupScreen> {
       children: [
         Text(
           firstStr,
-          style: TextStyle(color: Colors.grey[500]),
+          style: TextStyle(
+            fontFamily: AppFont.Gotham,
+            fontWeight: FontWeight.w400,
+            color: AppColors.textColor,
+          ),
         ),
         SizedBox(width: 5),
         GestureDetector(
@@ -289,7 +400,11 @@ class _SignupScreenState extends State<SignupScreen> {
           },
           child: Text(
             secondStr,
-            style: TextStyle(color: AppColors.primaryColor),
+            style: TextStyle(
+              fontFamily: AppFont.Gotham,
+              fontWeight: FontWeight.w500,
+              color: AppColors.primaryColor,
+            ),
           ),
         )
       ],

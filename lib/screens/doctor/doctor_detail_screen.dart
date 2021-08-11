@@ -16,6 +16,7 @@ import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:paakhealth/util/text_style.dart';
 import 'package:paakhealth/widgets/primaryButton.dart';
+import 'package:paakhealth/widgets/toast/toast.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -533,11 +534,11 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
         loading = false;
         setState(() {});
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
   }
 
@@ -615,7 +616,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
     return GestureDetector(
       onTap: () async {
         if (selectedAppointment == null || selectedConsultation == null) {
-          Get.snackbar('', 'Please Select Appointment and Consultation Type');
+          ShowMessage.message(message: 'Please Select Appointment and Consultation Type');
         } else {
           Get.back();
           setState(() {
@@ -674,11 +675,11 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                     });
               }
             } else {
-              Get.snackbar('', response.message);
+              ShowMessage.message(message: response.message);
             }
           } else {
             print('API response is null');
-            Get.snackbar('', 'Oops! Server is Down');
+            ShowMessage.message(message: 'Oops! Server is Down');
           }
         }
       },
@@ -829,7 +830,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
       onTap: () async {
         print(controller.selectedSlot.value.length);
         if (controller.selectedSlot.value.isEmpty) {
-          Get.snackbar('', 'Please Select a Slot');
+          ShowMessage.message(message: 'Please Select a Slot');
         } else {
           Get.back();
 
@@ -842,11 +843,11 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
               paymentList =
                   iterable1.map((list) => PaymentModel.fromMap(list)).toList();
             } else {
-              Get.snackbar('', responSe.message);
+              ShowMessage.message(message: responSe.message);
             }
           } else {
             print('API response is null');
-            Get.snackbar('', 'Oops! Server is Down');
+            ShowMessage.message(message: 'Oops! Server is Down');
           }
 
           showModalBottomSheet(
@@ -952,7 +953,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
       onTap: () {
         if (_key.currentState.validate()) {
           if (selectedPayment == null) {
-            Get.snackbar('', 'Please Select Paymnent Method');
+            ShowMessage.message(message: 'Please Select Paymnent Method');
           } else {
             Get.back();
             confirmBookAppointment();
@@ -983,13 +984,13 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
         logger.i(response.message);
         print('response.data');
 
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
   }
 }

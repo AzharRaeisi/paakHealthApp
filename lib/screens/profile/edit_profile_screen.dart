@@ -12,6 +12,7 @@ import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:paakhealth/util/text_style.dart';
 import 'package:paakhealth/widgets/primaryButton.dart';
+import 'package:paakhealth/widgets/toast/toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -334,16 +335,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
     if (response != null) {
       if (response.status == '1') {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
         imageUrl = response.url;
         updateProfile();
         print(imageUrl);
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
   }
 
@@ -373,7 +374,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
     if (response != null) {
       if (response.status == '1') {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
 
         await prefs.setString(
             SharedPreVariables.CUSTOMER_NAME, _userNameController.text);
@@ -382,11 +383,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         print(prefs.getString(SharedPreVariables.CUSTOMER_IMAGE));
         setState(() {});
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
   }
 
@@ -399,7 +400,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     APIResponse response = await accountServices.getProfile(token);
     if (response != null) {
       if (response.status == '1') {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
 
         Map<String, dynamic> map = response.data;
         _userNameController.text = map['name'];
@@ -420,11 +421,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           loading = false;
         });
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
   }
 

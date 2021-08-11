@@ -17,6 +17,7 @@ import 'package:paakhealth/util/prefernces.dart';
 import 'package:paakhealth/util/text_style.dart';
 import 'package:paakhealth/widgets/doctor/doctor_card.dart';
 import 'package:paakhealth/widgets/primaryButton.dart';
+import 'package:paakhealth/widgets/toast/toast.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -88,16 +89,16 @@ class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen> {
           elevation: 2,
           backgroundColor: Colors.white,
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            showModalBottomSheet(
-                context: context,
-                builder: (context) {
-                  return _findDoctor();
-                });
-          },
-          child: Icon(Icons.search),
-        ),
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () {
+        //     showModalBottomSheet(
+        //         context: context,
+        //         builder: (context) {
+        //           return _findDoctor();
+        //         });
+        //   },
+        //   child: Icon(Icons.search),
+        // ),
         body: Container(
           child: Column(
             children: [
@@ -121,7 +122,8 @@ class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen> {
                     contentPadding: EdgeInsets.all(10),
                     hintText: 'Find a doctor...',
                     hintStyle: TextStyle(
-                        color: AppColors.textColor, fontFamily: AppFont.Avenirl),
+                        color: AppColors.textColor,
+                        fontFamily: AppFont.Avenirl),
                     suffixIcon: Container(
                       margin: EdgeInsets.fromLTRB(0, 5, 5, 5),
                       padding: EdgeInsets.symmetric(horizontal: 3),
@@ -133,7 +135,16 @@ class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen> {
                       ),
                       child: IconButton(
                         padding: EdgeInsets.zero,
-                        // onPressed: _searchMedicine,
+                        onPressed: (){
+                          print('clicked');
+                          if (selectedGender == null ||
+                              selectedCity == null ||
+                              selectConsultationType == null) {
+                            ShowMessage.message(message: 'Please Select Gender, City and Consultation Type');
+                          } else {
+                            searchDoctor();
+                          }
+                        },
                         icon: Icon(
                           Icons.search,
                           color: Colors.white,
@@ -144,22 +155,410 @@ class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen> {
                   ),
                 ),
               ),
-              Row(
-                children: [
-                  Chip(
-                    labelStyle: TextStyle(
-              fontFamily: AppFont.Gotham,
-                  color: Color(0xFF519EC8),
-                  fontSize: 10,
-                  fontWeight: FontWeight.w400),
-                    label: Text(
-                      'Male',
-                    ),
-                    onDeleted: (){},
-                    backgroundColor: Colors.transparent,
-                    shape: StadiumBorder(side: BorderSide(color: Color(0xFF519EC8))),
-                  )
-                ],
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (context) {
+                                double h = 7;
+                                TextStyle s = TextStyle(fontSize: 12);
+                                if (loading) {
+                                  return SingleChildScrollView(
+                                    child: Container(
+                                      padding: EdgeInsets.all(10),
+                                      child: Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  return Container(
+                                    padding: EdgeInsets.all(10),
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text('Gender', style: s),
+                                          DropdownButtonFormField<GenderModel>(
+                                            // hint: Text("Select City"),
+                                            isExpanded: true,
+                                            value: selectedGender,
+                                            // decoration: const InputDecoration(
+                                            //   border: OutlineInputBorder(),
+                                            //   labelText: 'City',
+                                            // ),
+                                            onChanged: genderList.isNotEmpty
+                                                ? (value) {
+                                                    // setState(() {
+                                                    selectedGender = value;
+                                                    // });
+                                                  }
+                                                : null,
+                                            items: genderList
+                                                .map((GenderModel gender) {
+                                              return DropdownMenuItem<
+                                                  GenderModel>(
+                                                value: gender,
+                                                child:
+                                                    Text(gender.name, style: s),
+                                              );
+                                            }).toList(),
+                                          ),
+                                          _applyBtn(btnText: 'Apply')
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                }
+                              });
+                        },
+                        child: Chip(
+                          labelStyle: TextStyle(
+                              fontFamily: AppFont.Gotham,
+                              color: selectedGender == null
+                                  ? AppColors.primaryColor
+                                  : AppColors.boxColor,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w400),
+                          label: Text(
+                            selectedGender == null
+                                ? 'Gender'
+                                : selectedGender.name,
+                          ),
+                          onDeleted: selectedGender == null
+                              ? null
+                              : () {
+                                  selectedGender = null;
+                                  setState(() {});
+                                  print('delete function triggered');
+                                },
+                          backgroundColor: selectedGender == null
+                              ? AppColors.boxColor
+                              : AppColors.primaryColor,
+                          shape: StadiumBorder(
+                              side: BorderSide(color: Color(0xFF519EC8))),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (context) {
+                                double h = 7;
+                                TextStyle s = TextStyle(fontSize: 12);
+                                if (loading) {
+                                  return SingleChildScrollView(
+                                    child: Container(
+                                      padding: EdgeInsets.all(10),
+                                      child: Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  return Container(
+                                    padding: EdgeInsets.all(10),
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text('City', style: s),
+                                          DropdownButtonFormField<CityModel>(
+                                            // hint: Text("Select City"),
+                                            isExpanded: true,
+                                            value: selectedCity,
+                                            // decoration: const InputDecoration(
+                                            //   border: OutlineInputBorder(),
+                                            //   labelText: 'City',
+                                            // ),
+                                            onChanged: cityList.isNotEmpty
+                                                ? (value) {
+                                                    // setState(() {
+                                                    selectedCity = value;
+                                                    // });
+                                                  }
+                                                : null,
+                                            items:
+                                                cityList.map((CityModel city) {
+                                              return DropdownMenuItem<
+                                                  CityModel>(
+                                                value: city,
+                                                child:
+                                                    Text(city.name, style: s),
+                                              );
+                                            }).toList(),
+                                          ),
+                                          _applyBtn(btnText: 'Apply')
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                }
+                              });
+                        },
+                        child: Chip(
+                          labelStyle: TextStyle(
+                              fontFamily: AppFont.Gotham,
+                              color: selectedCity == null
+                                  ? AppColors.primaryColor
+                                  : AppColors.boxColor,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w400),
+                          label: Text(
+                            selectedCity == null ? 'City' : selectedCity.name,
+                          ),
+                          onDeleted: selectedCity == null
+                              ? null
+                              : () {
+                                  selectedCity = null;
+                                  setState(() {});
+                                  print('delete function triggered');
+                                },
+                          backgroundColor: selectedCity == null
+                              ? AppColors.boxColor
+                              : AppColors.primaryColor,
+                          shape: StadiumBorder(
+                              side: BorderSide(color: Color(0xFF519EC8))),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (context) {
+                                double h = 7;
+                                TextStyle s = TextStyle(fontSize: 12);
+                                if (loading) {
+                                  return SingleChildScrollView(
+                                    child: Container(
+                                      padding: EdgeInsets.all(10),
+                                      child: Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  return Container(
+                                    padding: EdgeInsets.all(10),
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text('Consultation Type', style: s),
+                                          DropdownButtonFormField<
+                                              ConsultationTypeModel>(
+                                            // hint: Text("Select City"),
+                                            isExpanded: true,
+                                            value: selectConsultationType,
+                                            // decoration: const InputDecoration(
+                                            //   border: OutlineInputBorder(),
+                                            //   labelText: 'Consultation Type',
+                                            // ),
+                                            onChanged:
+                                                consultationList.isNotEmpty
+                                                    ? (value) {
+                                                        // setState(() {
+                                                        selectConsultationType =
+                                                            value;
+                                                        // });
+                                                      }
+                                                    : null,
+                                            items: consultationList.map(
+                                                (ConsultationTypeModel type) {
+                                              return DropdownMenuItem<
+                                                  ConsultationTypeModel>(
+                                                value: type,
+                                                child:
+                                                    Text(type.type, style: s),
+                                              );
+                                            }).toList(),
+                                          ),
+                                          _applyBtn(btnText: 'Apply')
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                }
+                              });
+                        },
+                        child: Chip(
+                          labelStyle: TextStyle(
+                              fontFamily: AppFont.Gotham,
+                              color: selectConsultationType == null
+                                  ? AppColors.primaryColor
+                                  : AppColors.boxColor,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w400),
+                          label: Text(
+                            selectConsultationType == null
+                                ? 'Consultation Type'
+                                : selectConsultationType.type,
+                          ),
+                          onDeleted: selectConsultationType == null
+                              ? null
+                              : () {
+                                  selectConsultationType = null;
+                                  setState(() {});
+                                  print('delete function triggered');
+                                },
+                          backgroundColor: selectConsultationType == null
+                              ? AppColors.boxColor
+                              : AppColors.primaryColor,
+                          shape: StadiumBorder(
+                              side: BorderSide(color: Color(0xFF519EC8))),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Obx(() => controller.selectedExpertise.value.isEmpty
+                          ? GestureDetector(
+                              onTap: () {
+                                showModalBottomSheet(
+                                    context: context,
+                                    builder: (context) {
+                                      double h = 7;
+                                      TextStyle s = TextStyle(fontSize: 12);
+                                      if (loading) {
+                                        return SingleChildScrollView(
+                                          child: Container(
+                                            padding: EdgeInsets.all(10),
+                                            child: Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            ),
+                                          ),
+                                        );
+                                      } else {
+                                        return Container(
+                                          padding: EdgeInsets.all(10),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text('Speciality', style: s),
+                                              Expanded(
+                                                child: ResponsiveGridList(
+                                                    desiredItemWidth:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width /
+                                                            3,
+                                                    minSpacing: 1,
+                                                    children:
+                                                        expertiseList.map((i) {
+                                                      return Obx(() =>
+                                                          CheckboxListTile(
+                                                            title: Text(
+                                                              i.name,
+                                                              style: s,
+                                                            ),
+                                                            value: controller
+                                                                    .selectedExpertise
+                                                                    .value
+                                                                    .contains(i)
+                                                                ? true
+                                                                : false,
+                                                            onChanged: (val) {
+                                                              print(
+                                                                  '===================================');
+                                                              print(val);
+                                                              if (val) {
+                                                                // selectedExpertise.add(i);
+                                                                controller
+                                                                    .addToExpertList(
+                                                                        i);
+                                                                print('if');
+                                                              } else {
+                                                                print('else');
+                                                                controller
+                                                                    .removeFromExpertList(
+                                                                        i);
+                                                                // selectedExpertise.remove(i);
+                                                              }
+                                                              print(
+                                                                  '===================================');
+
+                                                              setState(() {});
+                                                            },
+                                                            contentPadding:
+                                                                EdgeInsets.zero,
+                                                            controlAffinity:
+                                                                ListTileControlAffinity
+                                                                    .leading,
+                                                            selectedTileColor:
+                                                                AppColors
+                                                                    .primaryColor,
+                                                          ));
+                                                    }).toList()),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      }
+                                    });
+                              },
+                              child: Chip(
+                                labelStyle: TextStyle(
+                                    fontFamily: AppFont.Gotham,
+                                    color: AppColors.primaryColor,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w400),
+                                label: Text('Speciality'),
+                                onDeleted: null,
+                                backgroundColor: AppColors.boxColor,
+                                shape: StadiumBorder(
+                                    side: BorderSide(color: Color(0xFF519EC8))),
+                              ),
+                            )
+                          : Container()),
+                      ...controller.selectedExpertise.map((e) {
+                        print('inside loop');
+                        return Container(
+                          margin: EdgeInsets.only(right: 5),
+                          child: Chip(
+                                labelStyle: TextStyle(
+                                    fontFamily: AppFont.Gotham,
+                                    color: AppColors.boxColor,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w400),
+                                label: Text(
+                                  e.name,
+                                ),
+                                onDeleted: () {
+                                  // selectedExpertise.remove(e);
+                                  controller.removeFromExpertList(e);
+                                  setState(() {});
+                                  print('delete function triggered');
+                                },
+                                backgroundColor: AppColors.primaryColor,
+                                shape: StadiumBorder(
+                                    side: BorderSide(color: Color(0xFF519EC8))),
+                              ),
+                        );
+                      }).toList()
+                    ],
+                  ),
+                ),
               ),
               Builder(builder: (context) {
                 if (searching) {
@@ -168,34 +567,40 @@ class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen> {
                   if (searchingCompleted) {
                     print('searching  complete');
 
-                    return Column(
-                      children: [
-                        Align(
-                            alignment: Alignment.centerRight,
-                            child: Container(
-                                padding: EdgeInsets.only(right: 10, top: 10),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      searching = false;
-                                      searchingCompleted = false;
-                                    });
-                                  },
-                                  child: Text('Clear search list',
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          color: AppColors.primaryColor)),
-                                ))),
-                        Expanded(
-                          child: ResponsiveGridList(
-                              desiredItemWidth:
-                                  MediaQuery.of(context).size.width / 3,
-                              minSpacing: 1,
-                              children: searchDoctors.map((i) {
-                                return DoctorCard(doctor: i);
-                              }).toList()),
-                        ),
-                      ],
+                    return Expanded(
+                      child: Column(
+                        children: [
+                          Align(
+                              alignment: Alignment.centerRight,
+                              child: Container(
+                                  padding: EdgeInsets.only(right: 10, top: 10),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      selectedGender = null;
+                                      selectConsultationType = null;
+                                      selectedCity = null;
+                                      controller.removeAllExpertise();
+                                      setState(() {
+                                        searching = false;
+                                        searchingCompleted = false;
+                                      });
+                                    },
+                                    child: Text('Clear search list',
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            color: AppColors.primaryColor)),
+                                  ))),
+                          Expanded(
+                            child: ResponsiveGridList(
+                                desiredItemWidth:
+                                    MediaQuery.of(context).size.width / 3,
+                                minSpacing: 1,
+                                children: searchDoctors.map((i) {
+                                  return DoctorCard(doctor: i);
+                                }).toList()),
+                          ),
+                        ],
+                      ),
                     );
                   } else {
                     print('searching not complete');
@@ -329,13 +734,15 @@ class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen> {
                             print('===================================');
                             print(val);
                             if (val) {
-                              // selectedExpertise.add(i);
+                              selectedExpertise.add(i);
                               controller.addToExpertList(i);
                               print('if');
+                              print('selectedExpertise.length');
+                              print(selectedExpertise.length);
                             } else {
                               print('else');
                               controller.removeFromExpertList(i);
-                              // selectedExpertise.remove(i);
+                              selectedExpertise.remove(i);
                             }
                             print('===================================');
 
@@ -357,18 +764,33 @@ class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen> {
     }
   }
 
+
   Widget _primaryBtn({String btnText}) {
     return GestureDetector(
       onTap: () async {
         if (selectedGender == null ||
             selectedCity == null ||
             selectConsultationType == null) {
-          Get.snackbar('', 'Please Select Gender, City and Consultation Type');
+          ShowMessage.message(message: 'Please Select Gender, City and Consultation Type');
         } else {
-          placeOrderPrescribtion();
+          searchDoctor();
         }
       },
-      child: AppPrimaryButton(text: btnText,),
+      child: AppPrimaryButton(
+        text: btnText,
+      ),
+    );
+  }
+
+  Widget _applyBtn({String btnText}) {
+    return GestureDetector(
+      onTap: () async {
+        Navigator.pop(context);
+        setState(() {});
+      },
+      child: AppPrimaryButton(
+        text: btnText,
+      ),
     );
   }
 
@@ -381,11 +803,11 @@ class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen> {
         Iterable iterable1 = response.list;
         cityList = iterable1.map((list) => CityModel.fromMap(list)).toList();
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
 
     response = await defaultServices.getExpertiseList();
@@ -396,18 +818,18 @@ class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen> {
             .map((list) => DoctorExpertiseModel.fromMap(list))
             .toList();
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
     loading = false;
     setState(() {});
   }
 
-  Future<void> placeOrderPrescribtion() async {
-    Navigator.pop(context);
+  Future<void> searchDoctor() async {
+    // Navigator.pop(context);
 
     print('searching');
     print(searching);
@@ -450,7 +872,7 @@ class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen> {
         longitude: position.longitude.toString());
     if (response != null) {
       if (response.status == '1') {
-        // Get.snackbar('', response.message);
+        // ShowMessage.message(message: response.message);
         print('response.data');
         print(response);
         print(response.list);
@@ -462,22 +884,22 @@ class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen> {
 
         // print(searchList.length);
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
-    // if (mounted) {
+    if (mounted) {
     setState(() {
       searchingCompleted = true;
     });
-    // }
+    }
 
     // put it at the end of funciton
-    selectedGender = null;
-    selectConsultationType = null;
-    selectedCity = null;
-    controller.removeAllExpertise();
+    // selectedGender = null;
+    // selectConsultationType = null;
+    // selectedCity = null;
+    // controller.removeAllExpertise();
   }
 }

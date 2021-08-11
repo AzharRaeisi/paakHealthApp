@@ -6,7 +6,9 @@ import 'package:paakhealth/screens/home/landing_screen.dart';
 import 'package:paakhealth/screens/auth/reset_password_screen.dart';
 import 'package:paakhealth/services/account_services.dart';
 import 'package:paakhealth/util/colors.dart';
+import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/util/prefernces.dart';
+import 'package:paakhealth/widgets/toast/toast.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -41,15 +43,56 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
               Text(
                 'Enter Code',
                 style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.primaryColor,
-                    fontSize: 20),
+                  fontSize: 20.0,
+                  fontFamily: AppFont.Gotham,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.primaryColor,
+                ),
               ),
               SizedBox(height: 30),
 
-              Text('Enter the code we sent via SMS'),
+              Text('Enter the code we sent via SMS to +92-${widget.phone}',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                fontFamily: AppFont.Gotham,
+                fontWeight: FontWeight.w400,
+                color: AppColors.textColor,
+              ),),
               SizedBox(height: 15),
               _buildPinField(),
+              SizedBox(
+                height: 20,
+              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Text(
+              //       "Didn't receive the code? ",
+              //       style: TextStyle(
+              //         fontSize: 12,
+              //         fontFamily: AppFont.Gotham,
+              //         fontWeight: FontWeight.w400,
+              //         color: AppColors.textColor,
+              //       ),
+              //     ),
+              //     TextButton(
+              //         onPressed: () {
+              //
+              //         },
+              //         child: Text(
+              //           "RESEND",
+              //           style: TextStyle(
+              //             fontSize: 14,
+              //             fontFamily: AppFont.Gotham,
+              //             fontWeight: FontWeight.w500,
+              //             color: AppColors.primaryColor,
+              //           ),
+              //         ))
+              //   ],
+              // ),
+              SizedBox(
+                height: 14,
+              ),
               Expanded(child: Container()),
               processing
                   ? Center(
@@ -107,7 +150,7 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
                 callCheckVerificationCode();
               }
             } else {
-              Get.snackbar('then else', value.toString());
+              ShowMessage.message(message: value.toString());
 
               print('user not logged in');
             }
@@ -117,17 +160,19 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
             print(onError.toString());
             if (onError.hashCode == 81129831) {
               print('Invalid Code');
-              Get.snackbar('Failed', 'Invalid Code Entered or Code Expired');
+              ShowMessage.message(title: 'Failed', message: 'Invalid Code Entered or Code Expired');
             }
-            if (onError.hashCode == 21005953) {
+            else if (onError.hashCode == 21005953) {
               print('Invalid Code');
-              Get.snackbar('Failed', 'The sms code has expired');
+              ShowMessage.message(title: 'Failed', message: 'The sms code has expired');
+            }else{
+              ShowMessage.message(title: 'Failed', message: onError.toString());
             }
           });
         } catch (e) {
           print('e.toString()');
           print(e.toString());
-          Get.snackbar('catch ', e.toString());
+          ShowMessage.message(title: 'catch ', message: e.toString());
 
           FocusScope.of(context).unfocus();
         }
@@ -175,6 +220,7 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
           });
         },
         verificationFailed: (FirebaseAuthException e) {
+          print(e.message);
           print(e.message);
         },
         codeSent: (String verificationID, int resendToken) {
@@ -238,15 +284,15 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
         await accountServices.checkVerificationCode(phone: widget.phone);
     if (response != null) {
       if (response.status == '1') {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
         _setData(response.data);
         Get.to(HomeScreen());
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
   }
 }

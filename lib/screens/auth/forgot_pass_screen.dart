@@ -4,7 +4,9 @@ import 'package:paakhealth/models/api_response.dart';
 import 'package:paakhealth/screens/auth/enter_code_screen.dart';
 import 'package:paakhealth/services/account_services.dart';
 import 'package:paakhealth/util/colors.dart';
+import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/widgets/primaryButton.dart';
+import 'package:paakhealth/widgets/toast/toast.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   final bool val;
@@ -37,19 +39,26 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Image.asset('assets/paakhealth.png'),
+                  Align(alignment: Alignment.center,child: Image.asset('assets/paakhealth.png')),
                   SizedBox(height: 20),
                   Text(
                     forgetPassword ? 'Password Recovery' : 'Username Recovery',
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.primaryColor,
-                        fontSize: 20),
+                      fontSize: 20.0,
+                      fontFamily: AppFont.Gotham,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.primaryColor,
+                    ),
                   ),
                   SizedBox(height: 30),
                   Text(
                     'Please enter your registered contact number for recovery',
-                    style: TextStyle(color: Colors.grey, fontSize: 12),
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontFamily: AppFont.Gotham,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.textColor,
+                    ),
                   ),
                   // SizedBox(height: 15),
                   // buildEmailTextField(),
@@ -92,7 +101,26 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           border: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.grey, width: 1.0),
               borderRadius: BorderRadius.circular(5)),
-          prefixText: '+92',),
+          prefixText: '+92',
+        labelStyle: TextStyle(
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
+        ),
+        hintStyle: TextStyle(
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
+        ),
+      ),
+      style: TextStyle(
+        fontSize: 12.0,
+        fontFamily: AppFont.Gotham,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textColor,
+      ),
     );
   }
 
@@ -119,19 +147,19 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   username = responsee.name;
                   setState(() {});
                 } else {
-                  Get.snackbar('', responsee.message);
+                  ShowMessage.message(message: responsee.message);
                 }
               } else {
                 print('API response is null');
-                Get.snackbar('', 'Oops! Server is Down');
+                ShowMessage.message(message: 'Oops! Server is Down');
               }
             }
           }else {
-            Get.snackbar('', response.message);
+            ShowMessage.message(message: response.message);
           }
         } else {
           print('API response is null');
-          Get.snackbar('', 'Oops! Server is Down');
+          ShowMessage.message(message: 'Oops! Server is Down');
         }
 
         setState(() {

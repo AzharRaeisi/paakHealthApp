@@ -11,6 +11,7 @@ import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:paakhealth/util/text_style.dart';
 import 'package:paakhealth/widgets/primaryButton.dart';
+import 'package:paakhealth/widgets/toast/toast.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,7 +21,6 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  int _productQty = 0;
   bool isLoading = true;
 
   // AnimationController _controller;
@@ -44,7 +44,7 @@ class _CartScreenState extends State<CartScreen> {
     APIResponse response = await cartServices.getCart(token: token);
     if (response != null) {
       if (response.status == '1') {
-        // Get.snackbar('', response.message);
+        // ShowMessage.message(message: response.message);
         print('response.data');
 
         Iterable iterable = response.list;
@@ -62,13 +62,13 @@ class _CartScreenState extends State<CartScreen> {
         });
         print(response.total_amount);
         total = response.total_amount;
-        // Get.snackbar('', response.message);
+        // ShowMessage.message(message: response.message);
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
 
     print(cartItemListItems.length);
@@ -255,9 +255,7 @@ class _CartScreenState extends State<CartScreen> {
                               ],
                             ),
                             SizedBox(height: 10),
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                                child: _primaryBtn(btnText: 'Checkout'))
+                            _primaryBtn(btnText: 'Checkout')
                           ],
                         ),
                       )
@@ -376,7 +374,7 @@ class _CartScreenState extends State<CartScreen> {
                             fontSize: 14,
                             color: AppColors.primaryColor),
                       ),
-                      incDecBtn()
+                      incDecBtn(model)
                     ],
                   ),
                 )
@@ -389,7 +387,7 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   // todo make this button funcitonal
-  Row incDecBtn() {
+  Row incDecBtn(CartItemListItemModel model) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -405,14 +403,14 @@ class _CartScreenState extends State<CartScreen> {
                   style: BorderStyle.solid)),
           child: IconButton(
             padding: EdgeInsets.zero,
-            // splashColor: AppColors.primaryColor,
+            splashColor: Colors.transparent,
             icon: Icon(
               Icons.remove,
               size: 10,
               color: AppColors.outlineColor,
             ),
             onPressed: () {
-              _decrementQty();
+              _decrementQty(model);
             },
           ),
           width: 24,
@@ -429,7 +427,7 @@ class _CartScreenState extends State<CartScreen> {
           )),
           child: Center(
               child: Text(
-            _productQty.toString(),
+                model.medicine_quantity.toString(),
             style: TextStyle(fontSize: 12),
           )),
 
@@ -447,14 +445,14 @@ class _CartScreenState extends State<CartScreen> {
                   style: BorderStyle.solid)),
           child: IconButton(
             padding: EdgeInsets.zero,
-            // splashColor: AppColors.primaryColor,
+            splashColor: Colors.transparent,
             icon: Icon(
               Icons.add,
               size: 12,
               color: AppColors.outlineColor,
             ),
             onPressed: () {
-              _incrementQty();
+              _incrementQty(model);
             },
           ),
           width: 24,
@@ -464,18 +462,59 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  void _decrementQty() {
-    if (_productQty > 0) {
-      _productQty = _productQty - 1;
-      setState(() {});
+  void _decrementQty(CartItemListItemModel model) {
+    if (model.medicine_quantity > 0) {
+
+      if(model.medicine_quantity - 1 == 0){
+        deleteCartItem(
+            store_id: model.store_id,
+            medicine_id: model.store_medicine_id,
+            model: model);
+      }else{
+        addToCard(model, model.medicine_quantity - 1);
+      }
+      // setState(() {});
     }
   }
 
+
   //
-  void _incrementQty() {
-    _productQty = _productQty + 1;
-    setState(() {});
+  void _incrementQty(CartItemListItemModel model) {
+    addToCard(model, model.medicine_quantity + 1);
+    // setState(() {});
   }
+
+  Future<void> addToCard(CartItemListItemModel model, int q) async {
+    var cartServices = CartServices();
+    // todo change device token
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString(SharedPreVariables.TOKEN);
+
+    print(token);
+    APIResponse response = await cartServices.addToCart(
+        token: token,
+        store_id: model.store_id,
+        medicine_id: model.store_medicine_id,
+        quantity: q);
+    if (response != null) {
+      if (response.status == '1') {
+        // ShowMessage.message(message: response.message);
+        print('response.data');
+        if(!isLoading){
+          // setState(() {
+          //   isLoading = true;
+          // });
+          getCartList();
+        }
+      } else {
+        ShowMessage.message(message: response.message);
+      }
+    } else {
+      print('API response is null');
+      ShowMessage.message(message: 'Oops! Server is Down');
+    }
+  }
+
 
   Future<void> deleteCartItem(
       {int store_id, int medicine_id, CartItemListItemModel model}) async {
@@ -490,7 +529,7 @@ class _CartScreenState extends State<CartScreen> {
     if (response != null) {
       if (response.status == '1') {
         cartItemListItems.remove(model);
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
         int totall = int.parse(total) - model.medicine_subtotal;
         total = totall.toString();
         if (cartItemListItems.length != 0) {
@@ -499,11 +538,13 @@ class _CartScreenState extends State<CartScreen> {
 
         setState(() {});
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
   }
+
+
 }

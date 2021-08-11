@@ -13,8 +13,10 @@ import 'package:paakhealth/screens/home/landing_screen.dart';
 import 'package:paakhealth/screens/auth/verifyme_screen.dart';
 import 'package:paakhealth/services/account_services.dart';
 import 'package:paakhealth/util/colors.dart';
+import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:paakhealth/widgets/primaryButton.dart';
+import 'package:paakhealth/widgets/toast/toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -52,9 +54,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   Text(
                     'Welcome Back',
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.primaryColor,
-                        fontSize: 20),
+                      fontSize: 20.0,
+                      fontFamily: AppFont.Gotham,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.primaryColor,
+                    ),
                   ),
                   SizedBox(height: 30),
                   SizedBox(height: 15),
@@ -78,7 +82,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         child: Text(
                           'Verify me',
-                          style: TextStyle(color: AppColors.primaryColor),
+                          style: TextStyle(
+                            fontFamily: AppFont.Gotham,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.primaryColor,
+                          ),
                         )),
                   ),
                   SizedBox(height: 20),
@@ -102,7 +110,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           child: Text(
                             'Forgot Username?',
-                            style: TextStyle(color: Colors.grey),
+                            style: TextStyle(
+                            fontFamily: AppFont.Gotham,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.textColor,
+                          ),
                           ),
                         ),
                         VerticalDivider(
@@ -116,7 +128,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           child: Text(
                             'Forgot Password?',
-                            style: TextStyle(color: Colors.grey),
+                            style: TextStyle(
+                              fontFamily: AppFont.Gotham,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.textColor,
+                            ),
                           ),
                         )
                       ],
@@ -174,7 +190,26 @@ class _LoginScreenState extends State<LoginScreen> {
           border: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.grey[100], width: 1.0),
               borderRadius: BorderRadius.circular(5)),
-          hintText: 'Username'),
+          hintText: 'Username',
+        labelStyle: TextStyle(
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
+        ),
+        hintStyle: TextStyle(
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
+        ),
+      ),
+      style: TextStyle(
+        fontSize: 12.0,
+        fontFamily: AppFont.Gotham,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textColor,
+      ),
     );
   }
 
@@ -224,7 +259,26 @@ class _LoginScreenState extends State<LoginScreen> {
           border: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.grey[100], width: 1.0),
               borderRadius: BorderRadius.circular(5)),
-          hintText: 'Password'),
+          hintText: 'Password',
+        labelStyle: TextStyle(
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
+        ),
+        hintStyle: TextStyle(
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
+        ),
+      ),
+      style: TextStyle(
+        fontSize: 12.0,
+        fontFamily: AppFont.Gotham,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textColor,
+      ),
     );
   }
 
@@ -234,7 +288,11 @@ class _LoginScreenState extends State<LoginScreen> {
       children: [
         Text(
           firstStr,
-          style: TextStyle(color: Colors.grey[500]),
+          style: TextStyle(
+            fontFamily: AppFont.Gotham,
+            fontWeight: FontWeight.w400,
+            color: AppColors.textColor,
+          ),
         ),
         SizedBox(width: 5),
         GestureDetector(
@@ -247,7 +305,11 @@ class _LoginScreenState extends State<LoginScreen> {
           },
           child: Text(
             secondStr,
-            style: TextStyle(color: AppColors.primaryColor),
+            style: TextStyle(
+              fontFamily: AppFont.Gotham,
+              fontWeight: FontWeight.w500,
+              color: AppColors.primaryColor,
+            ),
           ),
         )
       ],
@@ -274,15 +336,15 @@ class _LoginScreenState extends State<LoginScreen> {
           );
           if (response != null) {
             if (response.status == '1') {
-              Get.snackbar('', response.message);
+              ShowMessage.message(message: response.message);
               _setData(response.data);
               Get.offAll(HomeScreen());
             } else {
-              Get.snackbar('', response.message);
+              ShowMessage.message(message: response.message);
             }
           } else {
             print('API response is null');
-            Get.snackbar('', 'Oops! Server is Down');
+            ShowMessage.message(message: 'Oops! Server is Down');
           }
           setState(() {
             isProcessing = false;
@@ -445,15 +507,15 @@ class _LoginScreenState extends State<LoginScreen> {
     );
     if (response != null) {
       if (response.status == '1') {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
         _setData(response.data);
         Get.offAll(HomeScreen());
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
 
     setState(() {

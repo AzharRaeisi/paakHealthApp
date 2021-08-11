@@ -18,6 +18,7 @@ import 'package:paakhealth/util/prefernces.dart';
 import 'package:paakhealth/util/text_style.dart';
 import 'package:paakhealth/widgets/blood_bnak/donor_item.dart';
 import 'package:paakhealth/widgets/primaryButton.dart';
+import 'package:paakhealth/widgets/toast/toast.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -367,7 +368,7 @@ class _BloodBankScreenState extends State<BloodBankScreen> {
         long: position.longitude.toString());
     if (response != null) {
       if (response.status == '1') {
-        // Get.snackbar('', response.message);
+        // ShowMessage.message(message: response.message);
         // print("response.data['result']");
         // print(response.data['store']);
         // print(response.data['medicine']);
@@ -392,11 +393,11 @@ class _BloodBankScreenState extends State<BloodBankScreen> {
 
         setState(() {});
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
   }
 
@@ -478,11 +479,11 @@ class _BloodBankScreenState extends State<BloodBankScreen> {
         Iterable iterable1 = response.list;
         cityList = iterable1.map((list) => CityModel.fromMap(list)).toList();
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
 
     response = await defaultServices.getBloodGroupList();
@@ -492,11 +493,11 @@ class _BloodBankScreenState extends State<BloodBankScreen> {
         bloodGroupList =
             iterable1.map((list) => BloodGroupModel.fromMap(list)).toList();
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
     loading = false;
     setState(() {});
@@ -506,7 +507,7 @@ class _BloodBankScreenState extends State<BloodBankScreen> {
     return GestureDetector(
       onTap: () async {
         if (selectedGroup == null || selectedCity == null) {
-          Get.snackbar('', 'Please Select City and Blood Group');
+          ShowMessage.message(message: 'Please Select City and Blood Group');
         } else {
           searchDonor();
         }
@@ -580,11 +581,11 @@ class _BloodBankScreenState extends State<BloodBankScreen> {
 
         setState(() {});
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
 
     setState(() {

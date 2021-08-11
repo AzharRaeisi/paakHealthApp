@@ -4,7 +4,9 @@ import 'package:paakhealth/models/api_response.dart';
 import 'package:paakhealth/screens/auth/login_screen.dart';
 import 'package:paakhealth/services/account_services.dart';
 import 'package:paakhealth/util/colors.dart';
+import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/widgets/primaryButton.dart';
+import 'package:paakhealth/widgets/toast/toast.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   final String phone;
@@ -33,17 +35,23 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset('assets/paakhealth.png'),
+              Align(alignment: Alignment.center,child: Image.asset('assets/paakhealth.png')),
               SizedBox(height: 20),
               Text(
                 'Reset Password',
                 style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.primaryColor,
-                    fontSize: 20),
+                  fontSize: 20.0,
+                  fontFamily: AppFont.Gotham,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.primaryColor,
+                ),
               ),
               SizedBox(height: 30),
-              Text('Enter your new password'),
+              Text('Enter your new password',style: TextStyle(
+                fontFamily: AppFont.Gotham,
+                fontWeight: FontWeight.w400,
+                color: AppColors.textColor,
+              ),),
               SizedBox(height: 15),
               Form(
                   key: _key,
@@ -79,7 +87,26 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           border: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.grey[100], width: 1.0),
               borderRadius: BorderRadius.circular(5)),
-          hintText: 'Password'),
+          hintText: 'Password',
+        labelStyle: TextStyle(
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
+        ),
+        hintStyle: TextStyle(
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
+        ),
+      ),
+      style: TextStyle(
+        fontSize: 12.0,
+        fontFamily: AppFont.Gotham,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textColor,
+      ),
     );
   }
 
@@ -98,7 +125,26 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           border: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.grey[100], width: 1.0),
               borderRadius: BorderRadius.circular(5)),
-          hintText: 'Re-enter Password'),
+          hintText: 'Re-enter Password',
+        labelStyle: TextStyle(
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
+        ),
+        hintStyle: TextStyle(
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
+        ),
+      ),
+      style: TextStyle(
+        fontSize: 12.0,
+        fontFamily: AppFont.Gotham,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textColor,
+      ),
     );
   }
 
@@ -117,15 +163,15 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               password: _passwordController.text);
           if (response != null){
             if (response.status == '1'){
-              Get.snackbar('', response.message);
+              ShowMessage.message(message: response.message);
 
               Get.offAll(LoginScreen());
             }else{
-              Get.snackbar('', response.message);
+              ShowMessage.message(message: response.message);
             }
           }else{
             print('API response is null');
-            Get.snackbar('','Oops! Server is Down');
+            ShowMessage.message(message:'Oops! Server is Down');
           }
 
 

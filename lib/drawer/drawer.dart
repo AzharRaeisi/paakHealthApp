@@ -14,6 +14,7 @@ import 'package:paakhealth/services/account_services.dart';
 import 'package:paakhealth/util/colors.dart';
 import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/util/prefernces.dart';
+import 'package:paakhealth/widgets/toast/toast.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -243,11 +244,11 @@ class _MainDrawerState extends State<MainDrawer> {
 
         setState(() {});
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
   }
 

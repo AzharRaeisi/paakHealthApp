@@ -5,7 +5,9 @@ import 'package:paakhealth/models/api_response.dart';
 import 'package:paakhealth/screens/auth/enter_code_screen.dart';
 import 'package:paakhealth/services/account_services.dart';
 import 'package:paakhealth/util/colors.dart';
+import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/widgets/primaryButton.dart';
+import 'package:paakhealth/widgets/toast/toast.dart';
 
 class VerifyMeScreen extends StatelessWidget {
   GlobalKey<FormState> _key = GlobalKey<FormState>();
@@ -30,12 +32,18 @@ class VerifyMeScreen extends StatelessWidget {
               Text(
                 'Verify your mobile number',
                 style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.primaryColor,
-                    fontSize: 20),
+                  fontSize: 20.0,
+                  fontFamily: AppFont.Gotham,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.primaryColor,
+                ),
               ),
               SizedBox(height: 30),
-              Text('Enter your mobile number'),
+              Text('Enter your mobile number',  style: TextStyle(
+                fontFamily: AppFont.Gotham,
+                fontWeight: FontWeight.w400,
+                color: AppColors.textColor,
+              ),),
               SizedBox(height: 15),
               Form(
                   key: _key,
@@ -79,7 +87,26 @@ class VerifyMeScreen extends StatelessWidget {
           border: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.grey, width: 1.0),
               borderRadius: BorderRadius.circular(5)),
-          prefixText: '+92'),
+          prefixText: '+92',
+        labelStyle: TextStyle(
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
+        ),
+        hintStyle: TextStyle(
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
+        ),
+      ),
+      style: TextStyle(
+        fontSize: 12.0,
+        fontFamily: AppFont.Gotham,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textColor,
+      ),
     );
   }
 
@@ -121,16 +148,16 @@ class VerifyMeScreen extends StatelessWidget {
           APIResponse response = await accountServices.checkPhoneVerification(phone: _phoneController.text);
           if (response != null){
             if (response.status == '1'){
-              Get.snackbar('', response.message);
+              ShowMessage.message(message: response.message);
             }else if(response.status == '2'){
               Get.to(() => EnterCodeScreen(phone: _phoneController.text, forgetPassword: false,));
             }
             else{
-              Get.snackbar('', response.message);
+              ShowMessage.message(message: response.message);
             }
           }else{
             print('API response is null');
-            Get.snackbar('','Oops! Server is Down');
+            ShowMessage.message(message:'Oops! Server is Down');
           }
 
           controller.processing(false);

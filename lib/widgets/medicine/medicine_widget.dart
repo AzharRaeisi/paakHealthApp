@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paakhealth/models/medicine_model.dart';
-import 'package:paakhealth/screens/medicine/product_detial_screen.dart';
+import 'package:paakhealth/screens/medicine/medicine_detial_screen.dart';
 import 'package:paakhealth/util/colors.dart';
 import 'package:paakhealth/util/font.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';

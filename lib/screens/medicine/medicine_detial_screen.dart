@@ -10,6 +10,7 @@ import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:paakhealth/util/text_style.dart';
 import 'package:paakhealth/widgets/primaryButton.dart';
+import 'package:paakhealth/widgets/toast/toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductDetialScreen extends StatefulWidget {
@@ -224,7 +225,7 @@ class _ProductDetialScreenState extends State<ProductDetialScreen> {
                   style: BorderStyle.solid)),
           child: IconButton(
             padding: EdgeInsets.zero,
-            // splashColor: AppColors.primaryColor,
+            splashColor: Colors.transparent,
             icon: Icon(
               Icons.remove,
               size: 10,
@@ -268,7 +269,7 @@ class _ProductDetialScreenState extends State<ProductDetialScreen> {
                   style: BorderStyle.solid)),
           child: IconButton(
             padding: EdgeInsets.zero,
-            // splashColor: AppColors.primaryColor,
+            splashColor: Colors.transparent,
             icon: Icon(
               Icons.add,
               size: 12,
@@ -314,15 +315,15 @@ class _ProductDetialScreenState extends State<ProductDetialScreen> {
         quantity: _productQty);
     if (response != null) {
       if (response.status == '1') {
-        // Get.snackbar('', response.message);
+        // ShowMessage.message(message: response.message);
         print('response.data');
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
   }
 
@@ -340,11 +341,11 @@ class _ProductDetialScreenState extends State<ProductDetialScreen> {
         loading = false;
         setState(() {});
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
   }
 }

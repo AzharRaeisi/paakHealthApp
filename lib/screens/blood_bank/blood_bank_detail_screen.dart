@@ -7,6 +7,7 @@ import 'package:paakhealth/util/colors.dart';
 import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:paakhealth/util/text_style.dart';
+import 'package:paakhealth/widgets/toast/toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -206,13 +207,13 @@ class _BloodBankDetailScreenState extends State<BloodBankDetailScreen> {
                                             blood_bank_id: widget.model.id);
                                     if (response != null) {
                                       if (response.status == '1') {
-                                        Get.snackbar('', response.message);
+                                        ShowMessage.message(message: response.message);
                                       } else {
-                                        Get.snackbar('', response.message);
+                                        ShowMessage.message(message: response.message);
                                       }
                                     } else {
                                       print('API response is null');
-                                      Get.snackbar('', 'Oops! Server is Down');
+                                      ShowMessage.message(message: 'Oops! Server is Down');
                                     }
                                   },
                                   child: Card(

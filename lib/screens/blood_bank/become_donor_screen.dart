@@ -11,6 +11,7 @@ import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:paakhealth/util/text_style.dart';
 import 'package:paakhealth/widgets/primaryButton.dart';
+import 'package:paakhealth/widgets/toast/toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BecomeDonorScreen extends StatefulWidget {
@@ -91,12 +92,11 @@ class _BecomeDonorScreenState extends State<BecomeDonorScreen> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'City',
-
                     labelStyle: TextStyle(
-                      fontFamily: AppFont.Avenirl,
-                    ),
-                    hintStyle: TextStyle(
-                      fontFamily: AppFont.Avenirl,
+                      fontSize: 12.0,
+                      fontFamily: AppFont.Gotham,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.textColor,
                     ),
                   ),
                   style: TextStyle(
@@ -112,9 +112,13 @@ class _BecomeDonorScreenState extends State<BecomeDonorScreen> {
                   items: cityList.map((CityModel city) {
                     return DropdownMenuItem<CityModel>(
                       value: city,
-                      child: Text(city.name, style: TextStyle(fontSize: 12,
-                          fontFamily: AppFont.Avenirl,
-                          color: AppColors.textColor)),
+                      child: Text(city.name,
+                        style: TextStyle(
+                          fontSize: 12.0,
+                          fontFamily: AppFont.Gotham,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.textColor,
+                        ),),
                     );
                   }).toList(),
                 ),
@@ -126,12 +130,11 @@ class _BecomeDonorScreenState extends State<BecomeDonorScreen> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Blood Group',
-
                     labelStyle: TextStyle(
-                      fontFamily: AppFont.Avenirl,
-                    ),
-                    hintStyle: TextStyle(
-                      fontFamily: AppFont.Avenirl,
+                      fontSize: 12.0,
+                      fontFamily: AppFont.Gotham,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.textColor,
                     ),
                   ),
                   style: TextStyle(
@@ -147,9 +150,13 @@ class _BecomeDonorScreenState extends State<BecomeDonorScreen> {
                   items: bloodGroupList.map((BloodGroupModel group) {
                     return DropdownMenuItem<BloodGroupModel>(
                       value: group,
-                      child: Text(group.name, style: TextStyle(fontSize: 12,
-                        fontFamily: AppFont.Avenirl,
-                      color: AppColors.textColor)),
+                      child: Text(group.name,
+                      style: TextStyle(
+                        fontSize: 12.0,
+                        fontFamily: AppFont.Gotham,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.textColor,
+                      ),),
                     );
                   }).toList(),
                 ),
@@ -184,16 +191,24 @@ class _BecomeDonorScreenState extends State<BecomeDonorScreen> {
               borderSide: BorderSide(color: AppColors.outlineColor, width: 1.0),
               borderRadius: BorderRadius.circular(5)),
           labelText: 'Name', hintText: 'Name',
-
         labelStyle: TextStyle(
-          fontFamily: AppFont.Avenirl,
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
         ),
         hintStyle: TextStyle(
-          fontFamily: AppFont.Avenirl,
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
         ),
       ),
       style: TextStyle(
-        fontFamily: AppFont.Avenirl,
+        fontSize: 12.0,
+        fontFamily: AppFont.Gotham,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textColor,
       ),
     );
   }
@@ -248,16 +263,24 @@ class _BecomeDonorScreenState extends State<BecomeDonorScreen> {
               borderRadius: BorderRadius.circular(5)),
           labelText: 'Address',
           hintText: 'Address',
-
         labelStyle: TextStyle(
-          fontFamily: AppFont.Avenirl,
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
         ),
         hintStyle: TextStyle(
-          fontFamily: AppFont.Avenirl,
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
         ),
       ),
       style: TextStyle(
-        fontFamily: AppFont.Avenirl,
+        fontSize: 12.0,
+        fontFamily: AppFont.Gotham,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textColor,
       ),
     );
   }
@@ -281,14 +304,23 @@ class _BecomeDonorScreenState extends State<BecomeDonorScreen> {
           hintText: '343XXXXXXX',
         labelText: 'Phone',
         labelStyle: TextStyle(
-          fontFamily: AppFont.Avenirl,
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
         ),
         hintStyle: TextStyle(
-          fontFamily: AppFont.Avenirl,
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
         ),
       ),
       style: TextStyle(
-        fontFamily: AppFont.Avenirl,
+        fontSize: 12.0,
+        fontFamily: AppFont.Gotham,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textColor,
       ),
     );
   }
@@ -303,14 +335,23 @@ class _BecomeDonorScreenState extends State<BecomeDonorScreen> {
               borderRadius: BorderRadius.circular(5)),
           hintText: 'Comment if any ...',labelText: 'Comment',
         labelStyle: TextStyle(
-          fontFamily: AppFont.Avenirl,
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
         ),
         hintStyle: TextStyle(
-          fontFamily: AppFont.Avenirl,
+          fontSize: 12.0,
+          fontFamily: AppFont.Gotham,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
         ),
       ),
       style: TextStyle(
-        fontFamily: AppFont.Avenirl,
+        fontSize: 12.0,
+        fontFamily: AppFont.Gotham,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textColor,
       ),
     );
   }
@@ -325,11 +366,11 @@ class _BecomeDonorScreenState extends State<BecomeDonorScreen> {
         Iterable iterable1 = response.list;
         cityList = iterable1.map((list) => CityModel.fromMap(list)).toList();
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
 
     response = await defaultServices.getBloodGroupList();
@@ -340,11 +381,11 @@ class _BecomeDonorScreenState extends State<BecomeDonorScreen> {
             .map((list) => BloodGroupModel.fromMap(list))
             .toList();
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
     loading = false;
     setState(() {});
@@ -355,7 +396,7 @@ class _BecomeDonorScreenState extends State<BecomeDonorScreen> {
       onTap: () async {
         if (_key.currentState.validate()) {
           if (selectedGroup == null ||selectedCity == null) {
-            Get.snackbar('', 'Please Select City and Blood Group');
+            ShowMessage.message(message: 'Please Select City and Blood Group');
           } else {
             becomeDonor();
           }
@@ -387,14 +428,14 @@ class _BecomeDonorScreenState extends State<BecomeDonorScreen> {
     );
     if (response != null) {
       if (response.status == '1') {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
 
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
   }
 

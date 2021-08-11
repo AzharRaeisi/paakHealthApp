@@ -19,6 +19,7 @@ import 'package:paakhealth/util/prefernces.dart';
 import 'package:paakhealth/util/text_style.dart';
 import 'package:paakhealth/widgets/photo/hero_photo_view_route_wrapper.dart';
 import 'package:paakhealth/widgets/primaryButton.dart';
+import 'package:paakhealth/widgets/toast/toast.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
@@ -319,7 +320,8 @@ class _DeliveryInfoScreenState extends State<DeliveryInfoScreen> {
                                     fontFamily: AppFont.Gotham,
                                     fontWeight: FontWeight.w400,
                                     color: AppColors.textColor,
-                                  ),),
+                                  ),
+                                ),
                               );
                             }).toList(),
                           ),
@@ -501,7 +503,7 @@ class _DeliveryInfoScreenState extends State<DeliveryInfoScreen> {
     return GestureDetector(
       onTap: () {
         if (selectedAddress == null || selectedPayment == null) {
-          Get.snackbar('', 'Please Select Address and Payment Method');
+          ShowMessage.message(message: 'Please Select Address and Payment Method');
         } else {
           setState(() {
             isProcessing = true;
@@ -522,7 +524,7 @@ class _DeliveryInfoScreenState extends State<DeliveryInfoScreen> {
 
     if (response != null) {
       if (response.status == '1') {
-        // Get.snackbar('', response.message);
+        // ShowMessage.message(message: response.message);
         if (imageUrl.isEmpty) {
           imageUrl = response.url;
         } else {
@@ -531,11 +533,11 @@ class _DeliveryInfoScreenState extends State<DeliveryInfoScreen> {
 
         logger.i(imageUrl);
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
   }
 
@@ -554,11 +556,11 @@ class _DeliveryInfoScreenState extends State<DeliveryInfoScreen> {
         addressList =
             iterable1.map((list) => AddressModel.fromMap(list)).toList();
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
 
     APIResponse responSe = await defaultServices.getPaymentList();
@@ -568,11 +570,11 @@ class _DeliveryInfoScreenState extends State<DeliveryInfoScreen> {
         paymentList =
             iterable1.map((list) => PaymentModel.fromMap(list)).toList();
       } else {
-        Get.snackbar('', responSe.message);
+        ShowMessage.message(message: responSe.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
 
     isLoading = false;
@@ -593,17 +595,17 @@ class _DeliveryInfoScreenState extends State<DeliveryInfoScreen> {
         prescription_images: imageUrl);
     if (response != null) {
       if (response.status == '1') {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
 
         setState(() {
           shoppingCompleted = true;
         });
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       logger.i('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
   }
 

@@ -3,7 +3,9 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:logger/logger.dart';
 import 'package:paakhealth/screens/home/landing_screen.dart';
 import 'package:paakhealth/screens/auth/login_screen.dart';
+import 'package:paakhealth/util/colors.dart';
 import 'package:paakhealth/util/prefernces.dart';
+import 'package:paakhealth/widgets/toast/toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
 class LoadingScreen extends StatefulWidget {
@@ -30,13 +32,22 @@ class _LoadingScreenState extends State<LoadingScreen> {
         backgroundColor: Colors.transparent,
         body: SafeArea(
           child: Container(
-              padding: EdgeInsets.all(20),
-              child: Center(
-                child: SpinKitFadingFour(
-                  color: Colors.white,
-                  size: 50.0,
-                ),
-              )),
+            width: double.infinity,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(bottom: 110),
+                  child: Center(
+                    child: SpinKitWave(
+                      color: AppColors.primaryColor,
+                      size: 50.0,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -76,7 +87,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
         //     SnackBar(content: Text('Your Token Expired, please Login Again')));
         // Navigator.pushReplacement(
         //     context, MaterialPageRoute(builder: (context) => WelcomeBackScreen()));
-        Get.snackbar('', 'Your Token Expired, please Login Again');
+        ShowMessage.message(message: 'Your Token Expired, please Login Again');
         Get.off(() => LoginScreen());
       }
     } else {

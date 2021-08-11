@@ -8,7 +8,7 @@ import 'package:paakhealth/models/api_response.dart';
 import 'package:paakhealth/models/medicine_model.dart';
 import 'package:paakhealth/models/store_model.dart';
 import 'package:paakhealth/screens/purchase/delivery_info_screen.dart';
-import 'package:paakhealth/screens/medicine/product_detial_screen.dart';
+import 'package:paakhealth/screens/medicine/medicine_detial_screen.dart';
 import 'package:paakhealth/services/cart_services.dart';
 import 'package:paakhealth/services/home_services.dart';
 import 'package:paakhealth/util/colors.dart';
@@ -18,6 +18,7 @@ import 'package:paakhealth/util/text_style.dart';
 import 'package:paakhealth/widgets/medicine/medicine_widget.dart';
 import 'package:paakhealth/widgets/medicine/medicine_widget_add_to_cart.dart';
 import 'package:paakhealth/widgets/primaryButton.dart';
+import 'package:paakhealth/widgets/toast/toast.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -273,7 +274,7 @@ class _MedicinesScreenState extends State<MedicinesScreen> {
 
     if (response != null) {
       if (response.status == '1') {
-        // Get.snackbar('', response.message);
+        // ShowMessage.message(message: response.message);
         print('response.data');
         print(response.list);
         Iterable seachListItr = response.list;
@@ -283,11 +284,11 @@ class _MedicinesScreenState extends State<MedicinesScreen> {
 
         print(searchList.length);
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
 
 
@@ -318,15 +319,15 @@ class _MedicinesScreenState extends State<MedicinesScreen> {
         quantity: 1);
     if (response != null) {
       if (response.status == '1') {
-        // Get.snackbar('', response.message);
+        // ShowMessage.message(message: response.message);
         print('response.data');
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
   }
 
@@ -389,20 +390,20 @@ class _MedicinesScreenState extends State<MedicinesScreen> {
         await homeService.markMedicineFavorite(token: token, medicine_id: id);
     if (response != null) {
       if (response.status == '1') {
-        // Get.snackbar('', response.message);
+        // ShowMessage.message(message: response.message);
         print('response.data');
 
         medicines[index].is_favorite = response.favoriteStatus;
         setState(() {
 
         });
-        // Get.snackbar('', response.message);
+        // ShowMessage.message(message: response.message);
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
   }
 }

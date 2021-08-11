@@ -16,6 +16,7 @@ import 'package:paakhealth/util/text_style.dart';
 import 'package:paakhealth/widgets/medicine/medicine_widget.dart';
 import 'package:paakhealth/widgets/medicine/medicine_widget_add_to_cart.dart';
 import 'package:paakhealth/widgets/primaryButton.dart';
+import 'package:paakhealth/widgets/toast/toast.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -222,11 +223,11 @@ class _PharcmayDetailScreenState extends State<PharcmayDetailScreen> {
         loading = false;
         setState(() {});
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
   }
 
@@ -309,20 +310,20 @@ class _PharcmayDetailScreenState extends State<PharcmayDetailScreen> {
     await homeService.markMedicineFavorite(token: token, medicine_id: id);
     if (response != null) {
       if (response.status == '1') {
-        // Get.snackbar('', response.message);
+        // ShowMessage.message(message: response.message);
         print('response.data');
 
         sampleMedicineList[index].is_favorite = response.favoriteStatus;
         setState(() {
 
         });
-        // Get.snackbar('', response.message);
+        // ShowMessage.message(message: response.message);
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
   }
 }

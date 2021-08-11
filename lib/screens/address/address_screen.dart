@@ -13,6 +13,7 @@ import 'package:paakhealth/util/font.dart';
 import 'package:paakhealth/util/prefernces.dart';
 import 'package:paakhealth/util/text_style.dart';
 import 'package:paakhealth/widgets/primaryButton.dart';
+import 'package:paakhealth/widgets/toast/toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AddressScreen extends StatefulWidget {
@@ -364,11 +365,11 @@ class _AddressScreenState extends State<AddressScreen> {
         Iterable iterable1 = response.list;
         cityList = iterable1.map((list) => CityModel.fromMap(list)).toList();
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       print('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
 
     if(mounted){
@@ -402,11 +403,11 @@ class _AddressScreenState extends State<AddressScreen> {
         controller.updateIsProcessing(false);
         // isProcessing = false;
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       logger.i('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
   }
 
@@ -463,11 +464,11 @@ class _AddressScreenState extends State<AddressScreen> {
         controller.updateIsProcessing(false);
         // isProcessing = false;
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       logger.i('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
   }
 
@@ -484,18 +485,18 @@ class _AddressScreenState extends State<AddressScreen> {
     );
     if (response != null) {
       if (response.status == '1') {
-        Get.snackbar(
-            'Address Deleted', 'Please go back and refresh the screen.');
+        ShowMessage.message(
+            title: 'Address Deleted',message: 'Please go back and refresh the screen.');
         // editable = false;
         controller.updateEditable(false);
         controller.updateIsProcessing(false);
         // isProcessing = false;
       } else {
-        Get.snackbar('', response.message);
+        ShowMessage.message(message: response.message);
       }
     } else {
       logger.i('API response is null');
-      Get.snackbar('', 'Oops! Server is Down');
+      ShowMessage.message(message: 'Oops! Server is Down');
     }
   }
 }

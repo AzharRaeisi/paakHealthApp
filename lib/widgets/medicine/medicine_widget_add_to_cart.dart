@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:paakhealth/models/api_response.dart';
 import 'package:paakhealth/models/medicine_model.dart';
 import 'package:paakhealth/screens/purchase/delivery_info_screen.dart';
-import 'package:paakhealth/screens/medicine/product_detial_screen.dart';
+import 'package:paakhealth/screens/medicine/medicine_detial_screen.dart';
 import 'package:paakhealth/services/cart_services.dart';
 import 'package:paakhealth/util/colors.dart';
 import 'package:paakhealth/util/prefernces.dart';
