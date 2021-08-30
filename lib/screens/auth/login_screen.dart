@@ -139,7 +139,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(height: 25),
-                  Center(child: Text('Or')),
+                  Center(child: Text('Or',
+          style: TextStyle(
+            fontFamily: AppFont.Gotham,
+            fontWeight: FontWeight.w400,
+            color: AppColors.textColor,
+          ),)),
                   SizedBox(height: 25),
                   _fbAndGmailRow(),
                   SizedBox(height: 40),

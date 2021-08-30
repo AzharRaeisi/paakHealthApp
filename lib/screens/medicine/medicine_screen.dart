@@ -207,7 +207,8 @@ class _MedicinesScreenState extends State<MedicinesScreen> {
                 );
               }
               return Container();
-            })
+            }),
+          _primaryBtn(btnText: 'Upload Prescription',)
         ],
       ),
     );

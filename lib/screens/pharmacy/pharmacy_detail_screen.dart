@@ -167,8 +167,8 @@ class _PharcmayDetailScreenState extends State<PharcmayDetailScreen> {
                                 fontWeight: FontWeight.w400,
                               )),
                         ))),
-                // _primaryBtn(
-                //     btnText: 'Upload Prescribtion to ' + storeModel.name)
+                _primaryBtn(
+                    btnText: 'Upload Prescribtion')
               ],
             ),
     );
@@ -243,7 +243,7 @@ class _PharcmayDetailScreenState extends State<PharcmayDetailScreen> {
           builder: ((builder) => bottomSheet()),
         );
       },
-      child: AppPrimaryButton(text: btnText,),
+      child: AppPrimaryButton(text: btnText, ),
     );
   }
 

@@ -4,15 +4,15 @@ import 'package:paakhealth/util/font.dart';
 
 class AppPrimaryButton extends StatelessWidget {
   final String text;
-
-  const AppPrimaryButton({Key key, @required this.text}) : super(key: key);
+  final double radius;
+  const AppPrimaryButton({Key key, @required this.text, this.radius = 5.0}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.primaryColor,
-        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+        borderRadius: BorderRadius.all(Radius.circular(radius)),
       ),
       alignment: Alignment.center,
       padding: EdgeInsets.symmetric(vertical: 15),

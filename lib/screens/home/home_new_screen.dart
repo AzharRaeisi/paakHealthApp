@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:paakhealth/drawer/drawer.dart';
 import 'package:paakhealth/models/api_response.dart';
 import 'package:paakhealth/models/doctor_model.dart';
 import 'package:paakhealth/models/medicine_model.dart';
@@ -41,13 +42,14 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
     return Scaffold(
       backgroundColor: AppColors.bgColor,
       appBar: AppBar(
-        // iconTheme: IconThemeData(color: AppColors.primaryColor),
-        leading: Container(),
+        iconTheme: IconThemeData(color: AppColors.primaryColor),
+        // leading: Icon(Icons.menu_outlined),
         title: Image.asset('assets/paakhealth.png'),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.white,
       ),
+      drawer: MainDrawer(),
       body: SafeArea(
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
@@ -76,30 +78,43 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Container(
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5.0)),
-                              color: Color(0xFFC6EAF1)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              textWidget('MEDICINES', Color(0xFF509EC8)),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              button('ORDER NOW', Color(0xFF509EC8)),
-                              // Spacer(),
-                              Expanded(
-                                  child: Align(
-                                      alignment: Alignment.center,
-                                      child: Image.asset(
-                                        'assets/medicine.png',
-                                        fit: BoxFit.cover,
-                                      )))
-                            ],
-                          )),
+                      child: GestureDetector(
+                        onTap: (){
+                          pushNewScreen(
+                            context,
+                            screen: MedicinesScreen(
+                              medicines: medicines,
+                              storeId: 0,
+                            ),
+                            withNavBar: true, // OPTIONAL VALUE. True by default.
+                            pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                          );
+                        },
+                        child: Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5.0)),
+                                color: Color(0xFFC6EAF1)),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                textWidget('MEDICINES', Color(0xFF509EC8)),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                button('ORDER NOW', Color(0xFF509EC8)),
+                                // Spacer(),
+                                Expanded(
+                                    child: Align(
+                                        alignment: Alignment.center,
+                                        child: Image.asset(
+                                          'assets/medicine.png',
+                                          fit: BoxFit.cover,
+                                        )))
+                              ],
+                            )),
+                      ),
                     ),
                     SizedBox(
                       width: 5,
@@ -109,67 +124,89 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Expanded(
-                            child: Container(
-                                padding: EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5.0)),
-                                    color: Color(0xFFC3E8E3)),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    textWidget(
-                                        'ONLINE DOCTOR', Color(0xFF1B2780)),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    button('CONSULT NOW', Color(0xFF1B2780)),
-                                    Expanded(
-                                        child: Align(
-                                      alignment: Alignment.centerRight,
-                                      child: Image.asset('assets/doctor.png'),
-                                    ))
-                                  ],
-                                )),
+                            child: GestureDetector(
+                              onTap: (){
+                                pushNewScreen(
+                                        context,
+                                        screen: DoctorAppointmentScreen(doctors: doctors),
+                                        withNavBar: true, // OPTIONAL VALUE. True by default.
+                                        pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                                      );
+                              },
+                              child: Container(
+                                  padding: EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(5.0)),
+                                      color: Color(0xFFC3E8E3)),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      textWidget(
+                                          'ONLINE DOCTOR', Color(0xFF1B2780)),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      button('CONSULT NOW', Color(0xFF1B2780)),
+                                      Expanded(
+                                          child: Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Image.asset('assets/doctor.png'),
+                                      ))
+                                    ],
+                                  )),
+                            ),
                           ),
                           SizedBox(
                             height: 5,
                           ),
                           Expanded(
-                            child: Container(
-                                padding: EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5.0)),
-                                    color: Color(0xFFFDDFE0)),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    textWidget('BLOOD BANK', Color(0xFFFA5A60)),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Expanded(
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          button(
-                                              'DONATE NOW', Color(0xFFFA5A60)),
-                                          SizedBox(
-                                            width: 5,
-                                          ),
-                                          Expanded(
-                                              child: Image.asset(
-                                            'assets/blood.png',
-                                          ))
-                                        ],
+                            child: GestureDetector(
+                              onTap: (){
+                                pushNewScreen(
+                                  context,
+                                  screen: BloodBankScreen(),
+                                  withNavBar: true,
+                                  // OPTIONAL VALUE. True by default.
+                                  pageTransitionAnimation:
+                                      PageTransitionAnimation.cupertino,
+                                );
+                              },
+                              child: Container(
+                                  padding: EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(5.0)),
+                                      color: Color(0xFFFDDFE0)),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      textWidget('BLOOD BANK', Color(0xFFFA5A60)),
+                                      SizedBox(
+                                        width: 5,
                                       ),
-                                    )
-                                  ],
-                                )),
+                                      Expanded(
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            button(
+                                                'DONATE NOW', Color(0xFFFA5A60)),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            Expanded(
+                                                child: Image.asset(
+                                              'assets/blood.png',
+                                            ))
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  )),
+                            ),
                           ),
                         ],
                       ),
@@ -184,7 +221,7 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
                 children: [
                   Container(
                     margin: EdgeInsets.only(left: 10, top: 10, bottom: 10),
-                    child: Text('Online Pharmacy',
+                    child: Text('Top Rated Pharmacies',
                         style: TextStyle(
                             color: AppColors.primaryColor,
                             fontSize: 14,
@@ -232,7 +269,7 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
                 children: [
                   Container(
                     margin: EdgeInsets.only(left: 10),
-                    child: Text('Medicines',
+                    child: Text('Essential Medicine',
                         style: TextStyle(
                             color: AppColors.primaryColor,
                             fontSize: 14,
@@ -799,63 +836,27 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
   }
 
   button(String s, Color color) {
-    return GestureDetector(
-      onTap: () {
-        print(s + 'clicked');
-        if (s.contains("CONSULT NOW")) {
-          // Get.to(() => DoctorAppointmentScreen(doctors: doctors));
-          pushNewScreen(
-            context,
-            screen: DoctorAppointmentScreen(doctors: doctors),
-            withNavBar: true, // OPTIONAL VALUE. True by default.
-            pageTransitionAnimation: PageTransitionAnimation.cupertino,
-          );
-        } else if (s.contains("ORDER NOW")) {
-          // Get.to(() => MedicinesScreen(
-          //       medicines: medicines,
-          //       storeId: 0,
-          //     ));
-          pushNewScreen(
-            context,
-            screen: MedicinesScreen(
-              medicines: medicines,
-              storeId: 0,
-            ),
-            withNavBar: true, // OPTIONAL VALUE. True by default.
-            pageTransitionAnimation: PageTransitionAnimation.cupertino,
-          );
-        } else if (s.contains("DONATE NOW")) {
-          // Get.to(() => BloodBankScreen());
-          pushNewScreen(
-            context,
-            screen: BloodBankScreen(),
-            withNavBar: true, // OPTIONAL VALUE. True by default.
-            pageTransitionAnimation: PageTransitionAnimation.cupertino,
-          );
-        }
-      },
-      child: Row(
-        children: [
-          Container(
-            constraints: BoxConstraints(maxHeight: 23),
-            decoration: BoxDecoration(
-              color: color,
-              borderRadius: BorderRadius.all(Radius.circular(12.0)),
-            ),
-            alignment: Alignment.center,
-            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-            child: Text(
-              s,
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 10,
-                  fontFamily: AppFont.Gotham,
-                  fontWeight: FontWeight.w500),
-              textAlign: TextAlign.center,
-            ),
+    return Row(
+      children: [
+        Container(
+          constraints: BoxConstraints(maxHeight: 23),
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.all(Radius.circular(12.0)),
           ),
-        ],
-      ),
+          alignment: Alignment.center,
+          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+          child: Text(
+            s,
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 10,
+                fontFamily: AppFont.Gotham,
+                fontWeight: FontWeight.w500),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ],
     );
   }
 

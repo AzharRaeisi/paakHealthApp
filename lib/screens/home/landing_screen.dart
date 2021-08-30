@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
 
-    _controller = PersistentTabController(initialIndex: 1);
+    _controller = PersistentTabController(initialIndex: 0);
 
   }
   @override
@@ -104,7 +104,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> _buildScreens() {
     return [
-      MainDrawer(),
+      // MainDrawer(),
+      // MainHomeScreen(),
       MainHomeScreen(),
       CartScreen()
     ];
@@ -112,11 +113,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
-      PersistentBottomNavBarItem(
-        icon: Icon(Icons.menu_outlined),
-        activeColorPrimary: AppColors.primaryColor,
-        inactiveColorPrimary: CupertinoColors.systemGrey,
-      ),
+      // PersistentBottomNavBarItem(
+      //   icon: Icon(Icons.menu_outlined),
+      //   activeColorPrimary: AppColors.primaryColor,
+      //   inactiveColorPrimary: CupertinoColors.systemGrey,
+      // ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.home),
         activeColorPrimary: AppColors.primaryColor,
