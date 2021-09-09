@@ -1,4 +1,4 @@
-package com.paakhealth.paakhealth;
+package com.paakhealth.app;
 
 import io.flutter.embedding.android.FlutterActivity;
 

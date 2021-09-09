@@ -7,12 +7,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:420482979366:android:1ba8d4f6430ca3cc2f78e7",
+        "mobilesdk_app_id": "1:420482979366:android:7d749e3ef760cf6d2f78e7",
         "android_client_info": {
-          "package_name": "com.paakhealth.paakhealth"
+          "package_name": "com.paakhealth.app"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "420482979366-amvpn65b4a23bo6rndp0p5evkenuog1k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.paakhealth.app",
+            "certificate_hash": "f5cfa8898f5c372c8c2a298d75d2b9a5f142ea28"
+          }
+        },
         {
           "client_id": "420482979366-olc2dmd361anuhq24hmidpekev19qspr.apps.googleusercontent.com",
           "client_type": 3
